@@ -1,0 +1,46 @@
+/* docs/stylesheets/extra.css - ciąg dalszy */
+
+/* Wymuszenie pełnej szerokości (Full Width) */
+.md-grid {
+    max-width: 86% !important; /* Użyj 86% szerokości ekranu zamiast sztywnej wartości */
+    width: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Zmniejszenie czcionki w treści */
+.md-content {
+    font-size: 0.75rem !important;
+}
+
+/* Zmniejszenie czcionki w nagłówkach */
+.md-typeset h1 {
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+}
+
+.md-typeset h2 {
+    font-size: 1.00rem !important;
+    font-weight: bold !important;
+}
+
+.md-typeset h3 {
+    font-size: 0.85rem !important;
+    font-weight: bold !important;
+}
+
+.md-typeset h4 {
+    font-size: 0.75rem !important;
+    font-weight: bold !important;
+}
+
+.md-typeset h5 {
+    font-size: 0.75rem !important;
+    font-weight: bold !important;
+}
+
+.md-typeset h6 {
+    font-size: 0.75rem !important;
+    font-weight: bold !important;
+}
+
