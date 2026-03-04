@@ -99,6 +99,8 @@ plugins:
               - Relativity: 'Your_solutions/10_Relativity_solution/index.md'
               - 'Modern Physics 1': 'Your_solutions/11_Modern_Physics_1_solution/index.md'
               - 'Modern Physics 2': 'Your_solutions/12_Modern_Physics_2_solution/index.md'
+            - Notes:  
+              - 'Mechanics 1': 'Notes/01_Mechanics.md'
             - Animations:
               - 'Projectile Motion': 'Animations/projectile_motion.html'
               - 'Pendulum': 'Animations/pendulum.html'

@@ -1,6 +1,6 @@
 ## 10. Infinite Series
 
-Moves: 1 m east, 1/2 m north, 1/3 m west, 1/4 m south, 1/5 m east, and so on.
+Determine the final position of an ant that starts at the origin and moves according to the following pattern: 1 m east, 1/2 m north, 1/3 m west, 1/4 m south, 1/5 m east, and so on.
 
 **Step-by-step solution:**
 

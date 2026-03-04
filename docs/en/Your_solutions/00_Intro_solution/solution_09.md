@@ -13,6 +13,7 @@ Rectangle under $y = 3 - x^2$ in the first quadrant. Maximum area dimensions?
 4. Take the derivative of $A(x)$ with respect to $x$ and set it to zero:
 
    $A'(x) = 3 - 3x^2 = 0$
+   
    $3x^2 = 3 \implies x^2 = 1 \implies x = 1$ (since $x > 0$)
 
 5. Verify it's a maximum using the second derivative:
