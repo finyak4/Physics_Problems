@@ -105,7 +105,20 @@ When moving in a circle at a constant speed $v$, the velocity vector's *magnitud
   $$ a_{rad} = \frac{v^2}{R} $$
 The time it takes to complete one revolution is the period $T = \frac{2\pi R}{v}$. Therefore, $a_{rad}$ can also be written in terms of period: $a_{rad} = \frac{4\pi^2 R}{T^2}$.
 
-### 4. Relative Velocity
+### 4. Angular Velocity, Angular Acceleration, and Non-Uniform Circular Motion
+While uniform circular motion deals with constant speed, an object can also speed up or slow down as it moves in a circle. In these cases, we evaluate motion using angles ($\theta$, measured in radians) rather than linear distance:
+
+* **Angular Velocity ($\omega$):** The rate of change of the angle with respect to time.
+  $$ \omega = \frac{d\theta}{dt} $$
+  It relates directly to the linear tangential speed $v$ by the equation: $v = \omega R$. (Since $a_{rad} = \frac{v^2}{R}$, this gives another common form for centripetal force: **$a_{rad} = \omega^2 R$**).
+
+* **Angular Acceleration ($\alpha$):** The rate of change of angular velocity.
+  $$ \alpha = \frac{d\omega}{dt} = \frac{d^2\theta}{dt^2} $$
+  When $\alpha \neq 0$, the object has a **tangential acceleration ($a_{tan}$)** along the edge of the circle:
+  $$ a_{tan} = \alpha R $$
+  Unlike centripetal acceleration (which strictly changes the *direction* of the movement), tangential acceleration strictly changes the *speed* of the rotation. Total acceleration is the vector sum: $\vec{a} = \vec{a}_{rad} + \vec{a}_{tan}$.
+
+### 5. Relative Velocity
 Velocities depend on your frame of reference. If a Patient walks at $v_{P/T}$ (Patient relative to Train) on a moving Train traveling at $v_{T/G}$ (Train relative to Ground), velocity to the Ground $v_{P/G}$ is:
 
 $$ 
