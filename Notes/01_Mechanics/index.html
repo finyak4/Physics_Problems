@@ -966,15 +966,26 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-relative-velocity" class="md-nav__link">
+  <a href="#4-angular-velocity-angular-acceleration-and-non-uniform-circular-motion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Relative Velocity
+        4. Angular Velocity, Angular Acceleration, and Non-Uniform Circular Motion
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4. Relative Velocity">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-relative-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Relative Velocity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Relative Velocity">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2062,15 +2073,26 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-relative-velocity" class="md-nav__link">
+  <a href="#4-angular-velocity-angular-acceleration-and-non-uniform-circular-motion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Relative Velocity
+        4. Angular Velocity, Angular Acceleration, and Non-Uniform Circular Motion
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4. Relative Velocity">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-relative-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Relative Velocity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Relative Velocity">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2382,7 +2404,23 @@ Thus, we split into two simultaneous 1D problems:</p>
   $$ a_{rad} = \frac{v^2}{R} $$
 The time it takes to complete one revolution is the period <span class="arithmatex">\(T = \frac{2\pi R}{v}\)</span>. Therefore, <span class="arithmatex">\(a_{rad}\)</span> can also be written in terms of period: <span class="arithmatex">\(a_{rad} = \frac{4\pi^2 R}{T^2}\)</span>.</li>
 </ul>
-<h3 id="4-relative-velocity">4. Relative Velocity</h3>
+<h3 id="4-angular-velocity-angular-acceleration-and-non-uniform-circular-motion">4. Angular Velocity, Angular Acceleration, and Non-Uniform Circular Motion</h3>
+<p>While uniform circular motion deals with constant speed, an object can also speed up or slow down as it moves in a circle. In these cases, we evaluate motion using angles (<span class="arithmatex">\(\theta\)</span>, measured in radians) rather than linear distance:</p>
+<ul>
+<li>
+<p><strong>Angular Velocity (<span class="arithmatex">\(\omega\)</span>):</strong> The rate of change of the angle with respect to time.
+  $$ \omega = \frac{d\theta}{dt} $$
+  It relates directly to the linear tangential speed <span class="arithmatex">\(v\)</span> by the equation: <span class="arithmatex">\(v = \omega R\)</span>. (Since <span class="arithmatex">\(a_{rad} = \frac{v^2}{R}\)</span>, this gives another common form for centripetal force: <strong><span class="arithmatex">\(a_{rad} = \omega^2 R\)</span></strong>).</p>
+</li>
+<li>
+<p><strong>Angular Acceleration (<span class="arithmatex">\(\alpha\)</span>):</strong> The rate of change of angular velocity.
+  $$ \alpha = \frac{d\omega}{dt} = \frac{d^2\theta}{dt^2} $$
+  When <span class="arithmatex">\(\alpha \neq 0\)</span>, the object has a <strong>tangential acceleration (<span class="arithmatex">\(a_{tan}\)</span>)</strong> along the edge of the circle:
+  $$ a_{tan} = \alpha R $$
+  Unlike centripetal acceleration (which strictly changes the <em>direction</em> of the movement), tangential acceleration strictly changes the <em>speed</em> of the rotation. Total acceleration is the vector sum: <span class="arithmatex">\(\vec{a} = \vec{a}_{rad} + \vec{a}_{tan}\)</span>.</p>
+</li>
+</ul>
+<h3 id="5-relative-velocity">5. Relative Velocity</h3>
 <p>Velocities depend on your frame of reference. If a Patient walks at <span class="arithmatex">\(v_{P/T}\)</span> (Patient relative to Train) on a moving Train traveling at <span class="arithmatex">\(v_{T/G}\)</span> (Train relative to Ground), velocity to the Ground <span class="arithmatex">\(v_{P/G}\)</span> is:</p>
 <div class="arithmatex">\[ 
 \vec{v}_{P/G} = \vec{v}_{P/T} + \vec{v}_{T/G}
