@@ -96,6 +96,8 @@ plugins:
               - Cosmology: 'Your_solutions/09_Cosmology_solution/index.md'
               - Relativity: 'Your_solutions/10_Relativity_solution/index.md'
               - 'Modern Physics': 'Your_solutions/11_Modern_Physics_solution/index.md'
+            - Notes:  
+              - 'Mechanics 1': 'Notes/01_Mechanics.md'
             - Animations:
               - 'Projectile Motion': 'Animations/projectile_motion.html'
               - 'Pendulum': 'Animations/pendulum.html'
