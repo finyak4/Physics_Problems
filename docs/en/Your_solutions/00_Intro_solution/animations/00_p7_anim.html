@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimization Problem: Maximum Area Rectangle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        canvas {
+            touch-action: none;
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+        }
+        
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #e2e8f0;
+            border-radius: 3px;
+        }
+        
+        .math-block {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen p-4 md:p-8 flex flex-col items-center">
+
+    <div class="max-w-6xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+        
+        <!-- Left Panel: Controls & Information -->
+        <div class="w-full md:w-5/12 p-6 md:p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col bg-slate-50">
+            <h1 class="text-2xl font-bold text-slate-900 mb-2">Optimization Problem</h1>
+            <p class="text-slate-600 mb-6 text-sm">
+                A rectangle is constructed under the curve <span class="math-block italic">y = 3 - x²</span> in the first quadrant. 
+                What are the dimensions of the rectangle with the maximum area?
+            </p>
+
+            <!-- Real-time Stats -->
+            <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-semibold text-slate-700">Current Rectangle</h2>
+                    <span id="max-badge" class="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full opacity-0 transition-opacity duration-300">MAXIMUM AREA</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Width (x)</div>
+                        <div class="text-xl font-bold text-indigo-600" id="val-x">0.00</div>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Height (y)</div>
+                        <div class="text-xl font-bold text-indigo-600" id="val-y">0.00</div>
+                    </div>
+                </div>
+                
+                <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-xs text-indigo-800 uppercase tracking-wider font-semibold">Area (A = x · y)</div>
+                        <div class="text-3xl font-bold text-indigo-700" id="val-area">0.00</div>
+                    </div>
+                    <!-- Area progress bar background -->
+                    <div id="area-bar" class="absolute bottom-0 left-0 h-1 bg-indigo-500 transition-all duration-150" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Interactive Slider -->
+            <div class="mb-8">
+                <label for="x-slider" class="flex justify-between text-sm font-medium text-slate-700 mb-2">
+                    <span>Drag to adjust width (<span class="math-block italic">x</span>)</span>
+                    <span class="text-slate-500">0 ≤ x ≤ √3</span>
+                </label>
+                <input type="range" id="x-slider" min="0" max="1.732" step="0.01" value="0.5">
+            </div>
+
+            <!-- Calculus Solution -->
+            <details class="group bg-white rounded-xl border border-slate-200 shadow-sm" open>
+                <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50">
+                    Calculus Solution
+                    <svg class="w-5 h-5 text-slate-400 group-open:-rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </summary>
+                <div class="p-4 pt-0 text-sm text-slate-600 space-y-3 math-block border-t border-slate-100 pt-4">
+                    <p><strong>1. Objective Function:</strong></p>
+                    <p class="pl-4">Area <span class="italic">A = x · y</span></p>
+                    
+                    <p><strong>2. Constraint:</strong></p>
+                    <p class="pl-4">The point (x, y) is on the curve: <br><span class="italic">y = 3 - x²</span></p>
+                    
+                    <p><strong>3. Substitute y into Area:</strong></p>
+                    <p class="pl-4"><span class="italic">A(x) = x(3 - x²) = 3x - x³</span></p>
+                    
+                    <p><strong>4. Find the derivative A'(x):</strong></p>
+                    <p class="pl-4"><span class="italic">A'(x) = 3 - 3x²</span></p>
+                    
+                    <p><strong>5. Set A'(x) = 0 to find critical points:</strong></p>
+                    <p class="pl-4"><span class="italic">3 - 3x² = 0</span><br>
+                    <span class="italic">3x² = 3</span><br>
+                    <span class="italic">x² = 1</span>  &#8594;  <span class="italic text-indigo-600 font-bold">x = 1</span> (since x > 0)</p>
+                    
+                    <p><strong>6. Find maximum dimensions:</strong></p>
+                    <p class="pl-4">Width = <span class="italic font-bold text-indigo-600">1</span><br>
+                    Height = 3 - (1)² = <span class="italic font-bold text-indigo-600">2</span><br>
+                    Max Area = 1 · 2 = <span class="italic font-bold text-indigo-600">2</span></p>
+                </div>
+            </details>
+
+        </div>
+
+        <!-- Right Panel: Canvas Visualization -->
+        <div class="w-full md:w-7/12 p-6 flex flex-col items-center justify-center relative bg-white" id="canvas-container">
+            <h3 class="absolute top-6 left-6 text-lg font-semibold text-slate-700 z-10">Geometric Visualization</h3>
+            <canvas id="graphCanvas" class="w-full max-w-[600px] aspect-square"></canvas>
+            <p class="text-xs text-slate-400 mt-4 text-center">Interactive graph: Observe how the area (shaded blue) changes as the width varies.</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('graphCanvas');
+            const ctx = canvas.getContext('2d');
+            const container = document.getElementById('canvas-container');
+            const slider = document.getElementById('x-slider');
+            
+            // DOM Elements for Stats
+            const valX = document.getElementById('val-x');
+            const valY = document.getElementById('val-y');
+            const valArea = document.getElementById('val-area');
+            const maxBadge = document.getElementById('max-badge');
+            const areaBar = document.getElementById('area-bar');
+
+            // Math Constants
+            const X_MAX = 2.0; 
+            const Y_MAX = 3.5;
+            const X_ROOT = Math.sqrt(3);
+            const MAX_POSSIBLE_AREA = 2.0;
+
+            // Canvas configuration
+            let width, height;
+            const padding = { top: 40, right: 40, bottom: 60, left: 60 };
+
+            function resizeCanvas() {
+                // Keep it square based on container width
+                const size = Math.min(container.clientWidth - 48, 600); // 48 is padding
+                canvas.width = size * window.devicePixelRatio;
+                canvas.height = size * window.devicePixelRatio;
+                canvas.style.width = `${size}px`;
+                canvas.style.height = `${size}px`;
+                ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                width = size;
+                height = size;
+                draw();
+            }
+
+            // Coordinate mapping functions
+            function mapX(x) {
+                return padding.left + (x / X_MAX) * (width - padding.left - padding.right);
+            }
+
+            function mapY(y) {
+                return height - padding.bottom - (y / Y_MAX) * (height - padding.top - padding.bottom);
+            }
+
+            function drawAxes() {
+                ctx.beginPath();
+                ctx.strokeStyle = '#94a3b8'; // slate-400
+                ctx.lineWidth = 2;
+
+                // Y-axis
+                ctx.moveTo(mapX(0), mapY(Y_MAX));
+                ctx.lineTo(mapX(0), mapY(0));
+                
+                // X-axis
+                ctx.moveTo(mapX(0), mapY(0));
+                ctx.lineTo(mapX(X_MAX), mapY(0));
+                ctx.stroke();
+
+                // Draw Ticks & Labels
+                ctx.fillStyle = '#64748b'; // slate-500
+                ctx.font = '12px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+
+                // X-axis ticks
+                for (let i = 0.5; i <= X_MAX; i += 0.5) {
+                    const xPos = mapX(i);
+                    const yPos = mapY(0);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(xPos, yPos);
+                    ctx.lineTo(xPos, yPos + 6);
+                    ctx.stroke();
+                    
+                    let label = i.toString();
+                    if (Math.abs(i - X_ROOT) < 0.01) label = '√3';
+                    ctx.fillText(label, xPos, yPos + 10);
+                }
+
+                // Add root tick explicitly if needed
+                ctx.beginPath();
+                ctx.moveTo(mapX(X_ROOT), mapY(0));
+                ctx.lineTo(mapX(X_ROOT), mapY(0) + 6);
+                ctx.stroke();
+                ctx.fillText('√3 ≈ 1.73', mapX(X_ROOT), mapY(0) + 24);
+
+                // Y-axis ticks
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                for (let i = 0.5; i <= 3; i += 0.5) {
+                    const xPos = mapX(0);
+                    const yPos = mapY(i);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(xPos - 6, yPos);
+                    ctx.lineTo(xPos, yPos);
+                    ctx.stroke();
+                    
+                    ctx.fillText(i.toString(), xPos - 10, yPos);
+                }
+
+                // Axis Labels
+                ctx.fillStyle = '#334155'; // slate-700
+                ctx.font = 'italic 14px Times New Roman';
+                ctx.fillText('x', mapX(X_MAX) + 15, mapY(0));
+                ctx.textAlign = 'center';
+                ctx.fillText('y', mapX(0), mapY(Y_MAX) - 15);
+            }
+
+            function drawCurve() {
+                ctx.beginPath();
+                ctx.strokeStyle = '#0f172a'; // slate-900
+                ctx.lineWidth = 3;
+                
+                // Draw curve y = 3 - x^2
+                for (let x = 0; x <= X_ROOT + 0.1; x += 0.02) {
+                    const y = 3 - Math.pow(x, 2);
+                    if (y < -0.2) break; // Don't draw too far below axis
+                    
+                    const canvasX = mapX(x);
+                    const canvasY = mapY(y);
+                    
+                    if (x === 0) {
+                        ctx.moveTo(canvasX, canvasY);
+                    } else {
+                        ctx.lineTo(canvasX, canvasY);
+                    }
+                }
+                ctx.stroke();
+                
+                // Curve Label
+                ctx.fillStyle = '#0f172a';
+                ctx.font = 'italic 16px Times New Roman';
+                ctx.textAlign = 'left';
+                ctx.fillText('y = 3 - x²', mapX(1.2), mapY(2.5));
+            }
+
+            function drawRectangleAndPoint(currentX) {
+                const currentY = 3 - Math.pow(currentX, 2);
+                
+                const x0 = mapX(0);
+                const y0 = mapY(0);
+                const x1 = mapX(currentX);
+                const y1 = mapY(currentY);
+
+                // Check if it's the optimal value (x=1)
+                const isOptimal = Math.abs(currentX - 1.0) < 0.02;
+                
+                // Draw Rectangle Area
+                ctx.beginPath();
+                ctx.rect(x0, y1, x1 - x0, y0 - y1);
+                
+                if (isOptimal) {
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.2)'; // Emerald-500 semi-transparent
+                    ctx.strokeStyle = '#059669'; // Emerald-600
+                } else {
+                    ctx.fillStyle = 'rgba(79, 70, 229, 0.15)'; // Indigo-600 semi-transparent
+                    ctx.strokeStyle = '#4f46e5'; // Indigo-600
+                }
+                
+                ctx.fill();
+                ctx.lineWidth = 2;
+                // Only stroke the top and right sides of the rectangle to clearly show bounds without overwriting axes
+                ctx.beginPath();
+                ctx.moveTo(x0, y1);
+                ctx.lineTo(x1, y1);
+                ctx.lineTo(x1, y0);
+                ctx.stroke();
+
+                // Draw Point (x,y)
+                ctx.beginPath();
+                ctx.arc(x1, y1, 6, 0, Math.PI * 2);
+                ctx.fillStyle = isOptimal ? '#059669' : '#4f46e5';
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Point coordinates text
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '13px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                // Adjust text position based on where we are on the curve
+                let textOffsetX = 10;
+                let textOffsetY = -10;
+                if (currentX > 1.4) { textOffsetX = -60; }
+                
+                ctx.fillText(`(${currentX.toFixed(2)}, ${currentY.toFixed(2)})`, x1 + textOffsetX, y1 + textOffsetY);
+                
+                // Draw dimensions labels
+                ctx.fillStyle = isOptimal ? '#059669' : '#4f46e5';
+                ctx.font = 'italic 14px Times New Roman';
+                ctx.textAlign = 'center';
+                
+                // Width label (x)
+                if (currentX > 0.1) {
+                    ctx.fillText('x', x0 + (x1 - x0) / 2, y0 - 10);
+                }
+                
+                // Height label (y)
+                ctx.textAlign = 'right';
+                if (currentY > 0.2) {
+                    ctx.fillText('y', x1 - 10, y1 + (y0 - y1) / 2);
+                }
+            }
+
+            function updateUI(x) {
+                const y = 3 - Math.pow(x, 2);
+                const area = x * y;
+                const isOptimal = Math.abs(x - 1.0) < 0.02;
+
+                // Update text
+                valX.textContent = x.toFixed(2);
+                valY.textContent = y.toFixed(2);
+                valArea.textContent = area.toFixed(3);
+
+                // Update colors and badges based on state
+                if (isOptimal) {
+                    maxBadge.style.opacity = '1';
+                    valArea.classList.replace('text-indigo-700', 'text-emerald-600');
+                    areaBar.classList.replace('bg-indigo-500', 'bg-emerald-500');
+                    valX.parentElement.classList.add('border-emerald-300', 'bg-emerald-50');
+                    valY.parentElement.classList.add('border-emerald-300', 'bg-emerald-50');
+                } else {
+                    maxBadge.style.opacity = '0';
+                    valArea.classList.replace('text-emerald-600', 'text-indigo-700');
+                    areaBar.classList.replace('bg-emerald-500', 'bg-indigo-500');
+                    valX.parentElement.classList.remove('border-emerald-300', 'bg-emerald-50');
+                    valY.parentElement.classList.remove('border-emerald-300', 'bg-emerald-50');
+                }
+
+                // Update progress bar
+                const percentage = (area / MAX_POSSIBLE_AREA) * 100;
+                areaBar.style.width = `${Math.max(0, percentage)}%`;
+            }
+
+            function draw() {
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+                
+                const currentX = parseFloat(slider.value);
+
+                drawAxes();
+                drawCurve();
+                drawRectangleAndPoint(currentX);
+                updateUI(currentX);
+            }
+
+            // Event Listeners
+            window.addEventListener('resize', resizeCanvas);
+            slider.addEventListener('input', draw);
+
+            // Initial setup
+            resizeCanvas();
+        });
+    </script>
+</body>
+</html>

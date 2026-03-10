@@ -25,3 +25,5 @@ Rectangle under $y = 3 - x^2$ in the first quadrant. Maximum area dimensions?
    $y = 3 - (1)^2 = 2$
 
 **Answer:** Width $x = 1$, Height $y = 2$. Maximum area is $2$.
+
+[Open the demo](animations/00_p7_anim.html)
