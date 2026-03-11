@@ -25,3 +25,5 @@ A projectile is fired from the ground with an initial velocity of $100 \text{ m/
 - Time of flight: $\approx 12.27 \text{ s}$
 - Max height: $\approx 184.6 \text{ m}$
 - Range: $\approx 979.9 \text{ m}$
+
+[Open the demo](animations/01_01_anim.html)
