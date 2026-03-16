@@ -1414,28 +1414,40 @@
 
 <h2 id="1-projectile-motion">1. Projectile Motion</h2>
 <p>A projectile is fired from the ground with an initial velocity of <span class="arithmatex">\(100 \text{ m/s}\)</span> at an angle of <span class="arithmatex">\(37^\circ\)</span> above the horizontal. Assume no air resistance. Use <span class="arithmatex">\(g = 9.81 \text{ m/s}^2\)</span> and <span class="arithmatex">\(\sin(37^\circ) \approx 0.6018, \cos(37^\circ) \approx 0.7986\)</span>.</p>
-<p><strong>Step-by-step solution:</strong>
-1. <strong>Differential equations of motion:</strong>
-   By Newton's second law, the only force is gravity <span class="arithmatex">\(\vec{F} = (0, -mg)\)</span>.
-   <span class="arithmatex">\(m \frac{d^2x}{dt^2} = 0 \implies a_x = \frac{d^2x}{dt^2} = 0\)</span>
-   <span class="arithmatex">\(m \frac{d^2y}{dt^2} = -mg \implies a_y = \frac{d^2y}{dt^2} = -g\)</span>
-2. <strong>Time of flight (<span class="arithmatex">\(T\)</span>):</strong>
-   The time of flight is the time it takes for the projectile to return to the ground (<span class="arithmatex">\(y = 0\)</span>).
-   <span class="arithmatex">\(y(t) = v_{0y}t - \frac{1}{2}gt^2 = (v_0 \sin\theta)t - \frac{1}{2}gt^2 = 0\)</span>
-   <span class="arithmatex">\(t \left( v_0 \sin\theta - \frac{1}{2}gt \right) = 0\)</span> 
-   <span class="arithmatex">\(t = 0\)</span> (launch) or <span class="arithmatex">\(T = \frac{2v_0 \sin\theta}{g}\)</span>
-   <span class="arithmatex">\(T = \frac{2(100)\sin(37^\circ)}{9.81} \approx \frac{200(0.6018)}{9.81} \approx 12.27 \text{ s}\)</span>
-3. <strong>Maximum height (<span class="arithmatex">\(H\)</span>):</strong>
-   Occurs at <span class="arithmatex">\(t = T/2\)</span>, when <span class="arithmatex">\(v_y = 0\)</span>.
-   <span class="arithmatex">\(H = \frac{(v_0 \sin\theta)^2}{2g} = \frac{(100 \times 0.6018)^2}{2(9.81)} \approx \frac{3621.6}{19.62} \approx 184.59 \text{ m}\)</span>
-4. <strong>Range (<span class="arithmatex">\(R\)</span>):</strong>
-   Horizontal distance at <span class="arithmatex">\(t = T\)</span>.
-   <span class="arithmatex">\(R = v_{0x}T = \frac{v_0^2 \sin(2\theta)}{g} = \frac{(100)^2 \sin(74^\circ)}{9.81} \approx \frac{10000 \times 0.9613}{9.81} \approx 979.9 \text{ m}\)</span></p>
-<p><strong>Answer:</strong>
-- Diff. eqs: <span class="arithmatex">\(\ddot{x} = 0, \ddot{y} = -g\)</span>
-- Time of flight: <span class="arithmatex">\(\approx 12.27 \text{ s}\)</span>
-- Max height: <span class="arithmatex">\(\approx 184.6 \text{ m}\)</span>
-- Range: <span class="arithmatex">\(\approx 979.9 \text{ m}\)</span></p>
+<p><strong>Step-by-step solution:</strong></p>
+<ol>
+<li><strong>Differential equations of motion:</strong></li>
+</ol>
+<p>By Newton's second law, the only force is gravity <span class="arithmatex">\(\vec{F} = (0, -mg)\)</span>.</p>
+<p><span class="arithmatex">\(m \frac{d^2x}{dt^2} = 0 \implies a_x = \frac{d^2x}{dt^2} = 0\)</span></p>
+<p><span class="arithmatex">\(m \frac{d^2y}{dt^2} = -mg \implies a_y = \frac{d^2y}{dt^2} = -g\)</span></p>
+<ol>
+<li><strong>Time of flight (<span class="arithmatex">\(T\)</span>):</strong></li>
+</ol>
+<p>The time of flight is the time it takes for the projectile to return to the ground (<span class="arithmatex">\(y = 0\)</span>).</p>
+<p><span class="arithmatex">\(y(t) = v_{0y}t - \frac{1}{2}gt^2 = (v_0 \sin\theta)t - \frac{1}{2}gt^2 = 0\)</span></p>
+<p><span class="arithmatex">\(t \left( v_0 \sin\theta - \frac{1}{2}gt \right) = 0\)</span> </p>
+<p><span class="arithmatex">\(t = 0\)</span> (launch) or <span class="arithmatex">\(T = \frac{2v_0 \sin\theta}{g}\)</span></p>
+<p><span class="arithmatex">\(T = \frac{2(100)\sin(37^\circ)}{9.81} \approx \frac{200(0.6018)}{9.81} \approx 12.27 \text{ s}\)</span></p>
+<ol>
+<li><strong>Maximum height (<span class="arithmatex">\(H\)</span>):</strong></li>
+</ol>
+<p>Occurs at <span class="arithmatex">\(t = T/2\)</span>, when <span class="arithmatex">\(v_y = 0\)</span>.</p>
+<p><span class="arithmatex">\(H = \frac{(v_0 \sin\theta)^2}{2g} = \frac{(100 \times 0.6018)^2}{2(9.81)} \approx \frac{3621.6}{19.62} 
+   \approx 184.59 \text{ m}\)</span></p>
+<ol>
+<li><strong>Range (<span class="arithmatex">\(R\)</span>):</strong></li>
+</ol>
+<p>Horizontal distance at <span class="arithmatex">\(t = T\)</span>.</p>
+<p><span class="arithmatex">\(R = v_{0x}T = \frac{v_0^2 \sin(2\theta)}{g} = \frac{(100)^2 \sin(74^\circ)}{9.81} \approx \frac{10000 \times 0.9613}{9.81} \approx 979.9 \text{ m}\)</span></p>
+<p><strong>Answer:</strong></p>
+<ul>
+<li>Diff. eqs: <span class="arithmatex">\(\ddot{x} = 0, \ddot{y} = -g\)</span></li>
+<li>Time of flight: <span class="arithmatex">\(\approx 12.27 \text{ s}\)</span></li>
+<li>Max height: <span class="arithmatex">\(\approx 184.6 \text{ m}\)</span></li>
+<li>Range: <span class="arithmatex">\(\approx 979.9 \text{ m}\)</span></li>
+</ul>
+<p><a href="../../../../Your_solutions/01_Mechanics_1_solution/animations/01_01_anim.html">Open the demo</a></p>
 
 
 

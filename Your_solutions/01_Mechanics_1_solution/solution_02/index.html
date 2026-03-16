@@ -697,7 +697,7 @@
   <span class="md-ellipsis">
     
   
-    Notes
+    Animations
   
 
     
@@ -710,88 +710,6 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Notes
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../Notes/01_Mechanics/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Mechanics 1
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Animations
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1496,16 +1414,25 @@
 
 <h2 id="2-range-optimization">2. Range Optimization</h2>
 <p>Show analytically that the maximum range <span class="arithmatex">\(R(\theta)=\frac{v_0^2 \sin(2\theta)}{g}\)</span> is achieved at a launch angle of <span class="arithmatex">\(45^\circ\)</span>.</p>
-<p><strong>Step-by-step solution:</strong>
-1. To find the maximum of a function with respect to <span class="arithmatex">\(\theta\)</span>, take the first derivative and set it to zero:
-   <span class="arithmatex">\(\frac{dR}{d\theta} = \frac{d}{d\theta} \left( \frac{v_0^2}{g} \sin(2\theta) \right) = \frac{v_0^2}{g} \cdot 2\cos(2\theta) = 0\)</span>
-2. Since <span class="arithmatex">\(\frac{2v_0^2}{g}\)</span> is a non-zero constant, we must have:
-   <span class="arithmatex">\(\cos(2\theta) = 0\)</span>
-3. The principal solution for realistic launch angles (<span class="arithmatex">\(0 \le \theta \le 90^\circ\)</span>) is:
-   <span class="arithmatex">\(2\theta = 90^\circ \implies \theta = 45^\circ\)</span>
-4. To verify it's a maximum, take the second derivative:
-   <span class="arithmatex">\(\frac{d^2R}{d\theta^2} = -\frac{4v_0^2}{g} \sin(2\theta)\)</span>
-   At <span class="arithmatex">\(\theta = 45^\circ\)</span>, <span class="arithmatex">\(\frac{d^2R}{d\theta^2} = -\frac{4v_0^2}{g} &lt; 0\)</span>. Since it's negative, <span class="arithmatex">\(\theta = 45^\circ\)</span> indeed gives the maximum range.</p>
+<p><strong>Step-by-step solution:</strong></p>
+<ol>
+<li>To find the maximum of a function with respect to <span class="arithmatex">\(\theta\)</span>, take the first derivative and set it to zero:</li>
+</ol>
+<p><span class="arithmatex">\(\frac{dR}{d\theta} = \frac{d}{d\theta} \left( \frac{v_0^2}{g} \sin(2\theta) \right) = \frac{v_0^2}{g} \cdot 2\cos(2\theta) = 0\)</span></p>
+<ol>
+<li>Since <span class="arithmatex">\(\frac{2v_0^2}{g}\)</span> is a non-zero constant, we must have:</li>
+</ol>
+<p><span class="arithmatex">\(\cos(2\theta) = 0\)</span></p>
+<ol>
+<li>The principal solution for realistic launch angles (<span class="arithmatex">\(0 \le \theta \le 90^\circ\)</span>) is:</li>
+</ol>
+<p><span class="arithmatex">\(2\theta = 90^\circ \implies \theta = 45^\circ\)</span></p>
+<ol>
+<li>To verify it's a maximum, take the second derivative:</li>
+</ol>
+<p><span class="arithmatex">\(\frac{d^2R}{d\theta^2} = -\frac{4v_0^2}{g} \sin(2\theta)\)</span></p>
+<p>At <span class="arithmatex">\(\theta = 45^\circ\)</span>, <span class="arithmatex">\(\frac{d^2R}{d\theta^2} = -\frac{4v_0^2}{g} &lt; 0\)</span>. Since it's negative, <span class="arithmatex">\(\theta = 45^\circ\)</span> indeed gives the maximum range.</p>
+<p><a href="../animations/01_02_anim.html">Open the demo</a></p>
 
 
 

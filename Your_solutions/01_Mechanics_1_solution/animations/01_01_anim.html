@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projectile Motion: Kinematics Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        canvas {
+            touch-action: none;
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+        }
+        
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        
+        .math-block {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.05rem;
+            letter-spacing: 0.3px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen p-4 md:p-8 flex flex-col items-center">
+
+    <div class="max-w-7xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+        
+        <!-- Left Panel: Controls & Information -->
+        <div class="w-full md:w-5/12 p-6 md:p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col bg-slate-50 h-full overflow-y-auto">
+            <h1 class="text-2xl font-bold text-slate-900 mb-2">Projectile Motion</h1>
+            <p class="text-slate-600 mb-6 text-sm">
+                A projectile is fired with an initial velocity <span class="math-block italic">v₀ = 100 m/s</span>. 
+                Assuming no air resistance and <span class="math-block italic">g = 9.81 m/s²</span>.
+            </p>
+
+            <!-- Real-time Stats -->
+            <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-semibold text-slate-700">Flight Statistics</h2>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                        <div class="text-[10px] text-blue-500 uppercase tracking-wider font-bold">Max Height (H)</div>
+                        <div class="text-lg font-bold text-blue-700"><span id="stat-h">0.00</span> m</div>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                        <div class="text-[10px] text-blue-500 uppercase tracking-wider font-bold">Range (R)</div>
+                        <div class="text-lg font-bold text-blue-700"><span id="stat-r">0.00</span> m</div>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 relative overflow-hidden">
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <div class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Total Time of Flight (T)</div>
+                            <div class="text-xl font-bold text-slate-800"><span id="stat-t">0.00</span> s</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Sliders -->
+            <div class="space-y-5 mb-8 bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                <div>
+                    <label for="angle-slider" class="flex justify-between text-sm font-medium text-slate-700 mb-2">
+                        <span>Launch Angle (<span class="math-block italic">θ</span>)</span>
+                        <span class="text-blue-600 font-bold"><span id="val-angle">37</span>°</span>
+                    </label>
+                    <input type="range" id="angle-slider" min="0" max="90" step="1" value="37">
+                </div>
+
+                <div>
+                    <label for="time-slider" class="flex justify-between text-sm font-medium text-slate-700 mb-2">
+                        <span>Scrub Time (<span class="math-block italic">t</span>)</span>
+                        <span class="text-amber-600 font-bold"><span id="val-time">0.00</span> s</span>
+                    </label>
+                    <input type="range" id="time-slider" min="0" max="100" step="0.01" value="0">
+                </div>
+            </div>
+
+            <!-- Physics Solution -->
+            <details class="group bg-white rounded-xl border border-slate-200 shadow-sm" open>
+                <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50">
+                    Mathematical Derivation
+                    <svg class="w-5 h-5 text-slate-400 group-open:-rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </summary>
+                <div class="p-4 pt-0 text-sm text-slate-600 space-y-4 math-block border-t border-slate-100 pt-4 overflow-x-auto">
+                    
+                    <div>
+                        <p class="font-bold text-slate-800">1. Differential Equations of Motion</p>
+                        <p class="mt-1 text-xs text-slate-500 font-sans mb-1">Applying Newton's Second Law (<span class="italic">F = ma</span>) in horizontal (x) and vertical (y) directions:</p>
+                        <p class="pl-3 border-l-2 border-slate-200">
+                            <span class="italic">a<sub>x</sub> = d²x / dt² = 0</span><br>
+                            <span class="italic">a<sub>y</sub> = d²y / dt² = -g</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">Integrating with respect to time (<span class="italic">t</span>):</p>
+                        <p class="pl-3 border-l-2 border-slate-200">
+                            <span class="italic">v<sub>x</sub>(t) = v₀·cos(θ)</span><br>
+                            <span class="italic">v<sub>y</sub>(t) = v₀·sin(θ) - gt</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">Integrating again for position:</p>
+                        <p class="pl-3 border-l-2 border-slate-200">
+                            <span class="italic">x(t) = (v₀·cos(θ))t</span><br>
+                            <span class="italic">y(t) = (v₀·sin(θ))t - ½gt²</span>
+                        </p>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-3">
+                        <p class="font-bold text-slate-800">2. Time of Flight (T)</p>
+                        <p class="mt-1 text-xs text-slate-500 font-sans mb-1">The projectile hits the ground when y = 0:</p>
+                        <p class="pl-3 border-l-2 border-slate-200">
+                            <span class="italic">(v₀·sin(θ))T - ½gT² = 0</span><br>
+                            <span class="italic">T = 2·v₀·sin(θ) / g</span><br>
+                            <span class="text-blue-600 font-bold">T = <span id="math-t-calc">12.27</span> s</span>
+                        </p>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-3">
+                        <p class="font-bold text-slate-800">3. Maximum Height (H)</p>
+                        <p class="mt-1 text-xs text-slate-500 font-sans mb-1">Occurs when vertical velocity v<sub>y</sub> = 0:</p>
+                        <p class="pl-3 border-l-2 border-slate-200">
+                            <span class="italic">t<sub>peak</sub> = v₀·sin(θ) / g</span><br>
+                            <span class="italic">H = y(t<sub>peak</sub>) = (v₀·sin(θ))² / 2g</span><br>
+                            <span class="text-blue-600 font-bold">H = <span id="math-h-calc">184.62</span> m</span>
+                        </p>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-3">
+                        <p class="font-bold text-slate-800">4. Range (R)</p>
+                        <p class="mt-1 text-xs text-slate-500 font-sans mb-1">Horizontal distance at t = T:</p>
+                        <p class="pl-3 border-l-2 border-slate-200">
+                            <span class="italic">R = x(T) = v₀·cos(θ) · (2·v₀·sin(θ) / g)</span><br>
+                            <span class="italic">R = v₀²·sin(2θ) / g</span><br>
+                            <span class="text-blue-600 font-bold">R = <span id="math-r-calc">979.84</span> m</span>
+                        </p>
+                    </div>
+                </div>
+            </details>
+
+        </div>
+
+        <!-- Right Panel: Canvas Visualization -->
+        <div class="w-full md:w-7/12 p-4 md:p-6 flex flex-col relative bg-white" id="canvas-container">
+            <div class="flex justify-between items-center mb-4 z-10 px-2">
+                <h3 class="text-lg font-semibold text-slate-700">Trajectory Visualization</h3>
+                <div class="flex gap-3 text-xs font-medium bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+                    <span class="flex items-center gap-1"><div class="w-3 h-3 rounded-full bg-blue-500"></div> v<sub>x</sub></span>
+                    <span class="flex items-center gap-1"><div class="w-3 h-3 rounded-full bg-red-500"></div> v<sub>y</sub></span>
+                </div>
+            </div>
+            
+            <div class="flex-grow w-full flex items-center justify-center bg-slate-50 rounded-xl border border-slate-200 overflow-hidden relative">
+                <canvas id="graphCanvas" class="w-full h-full"></canvas>
+            </div>
+
+            <!-- Live Position Overlay -->
+            <div class="mt-4 grid grid-cols-2 gap-4">
+                <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex items-center justify-between">
+                    <span class="text-sm text-slate-500 font-medium">Distance (x)</span>
+                    <span class="font-mono font-bold text-slate-800" id="live-x">0.0 m</span>
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex items-center justify-between">
+                    <span class="text-sm text-slate-500 font-medium">Height (y)</span>
+                    <span class="font-mono font-bold text-slate-800" id="live-y">0.0 m</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('graphCanvas');
+            const ctx = canvas.getContext('2d');
+            const container = canvas.parentElement;
+            
+            // Sliders
+            const angleSlider = document.getElementById('angle-slider');
+            const timeSlider = document.getElementById('time-slider');
+            
+            // UI Elements
+            const valAngle = document.getElementById('val-angle');
+            const valTime = document.getElementById('val-time');
+            const statH = document.getElementById('stat-h');
+            const statR = document.getElementById('stat-r');
+            const statT = document.getElementById('stat-t');
+            const liveX = document.getElementById('live-x');
+            const liveY = document.getElementById('live-y');
+
+            // Math Math block elements
+            const mathTCalc = document.getElementById('math-t-calc');
+            const mathHCalc = document.getElementById('math-h-calc');
+            const mathRCalc = document.getElementById('math-r-calc');
+
+            // Physics Constants
+            const V0 = 100.0; // Initial velocity (m/s)
+            const G = 9.81;   // Gravity (m/s^2)
+            
+            // Canvas configuration
+            let width, height;
+            const padding = { top: 40, right: 40, bottom: 40, left: 50 };
+
+            // For mapping logic, we need to know the absolute maximums for V0=100
+            // Max possible Range is at 45 degrees
+            const ABS_MAX_RANGE = (V0 * V0) / G; // ~1019 m
+            // Max possible Height is at 90 degrees
+            const ABS_MAX_HEIGHT = (V0 * V0) / (2 * G); // ~509 m
+
+            // Current Physics State
+            let currentAngleDeg = 37;
+            let currentAngleRad = currentAngleDeg * (Math.PI / 180);
+            let timeOfFlight = 0;
+            let maxHeight = 0;
+            let range = 0;
+
+            function resizeCanvas() {
+                const rect = container.getBoundingClientRect();
+                width = rect.width;
+                height = rect.height;
+                
+                canvas.width = width * window.devicePixelRatio;
+                canvas.height = height * window.devicePixelRatio;
+                ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                
+                draw();
+            }
+
+            function updatePhysics() {
+                currentAngleDeg = parseFloat(angleSlider.value);
+                currentAngleRad = currentAngleDeg * (Math.PI / 180);
+                
+                // Recalculate physical limits
+                timeOfFlight = (2 * V0 * Math.sin(currentAngleRad)) / G;
+                maxHeight = Math.pow(V0 * Math.sin(currentAngleRad), 2) / (2 * G);
+                range = (Math.pow(V0, 2) * Math.sin(2 * currentAngleRad)) / G;
+
+                // Update UI Stats
+                valAngle.textContent = currentAngleDeg;
+                statH.textContent = maxHeight.toFixed(1);
+                statR.textContent = range.toFixed(1);
+                statT.textContent = timeOfFlight.toFixed(2);
+                
+                // Update Math details dynamically
+                mathTCalc.textContent = timeOfFlight.toFixed(2);
+                mathHCalc.textContent = maxHeight.toFixed(2);
+                mathRCalc.textContent = range.toFixed(2);
+
+                // Configure Time Slider bounds
+                timeSlider.max = timeOfFlight;
+                // If angle drops making current time invalid, cap it
+                if (parseFloat(timeSlider.value) > timeOfFlight) {
+                    timeSlider.value = timeOfFlight;
+                }
+            }
+
+            // Coordinate mapping functions
+            function mapX(x) {
+                // Add a little buffer to max range (1.1x)
+                return padding.left + (x / (ABS_MAX_RANGE * 1.05)) * (width - padding.left - padding.right);
+            }
+
+            function mapY(y) {
+                // Add a little buffer to max height (1.2x)
+                return height - padding.bottom - (y / (ABS_MAX_HEIGHT * 1.1)) * (height - padding.top - padding.bottom);
+            }
+
+            function drawArrow(context, fromx, fromy, tox, toy, color) {
+                const headlen = 8; // length of head in pixels
+                const dx = tox - fromx;
+                const dy = toy - fromy;
+                const angle = Math.atan2(dy, dx);
+                
+                context.beginPath();
+                context.strokeStyle = color;
+                context.lineWidth = 2;
+                context.moveTo(fromx, fromy);
+                context.lineTo(tox, toy);
+                context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+                context.moveTo(tox, toy);
+                context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+                context.stroke();
+            }
+
+            function drawAxes() {
+                ctx.beginPath();
+                ctx.strokeStyle = '#94a3b8'; // slate-400
+                ctx.lineWidth = 2;
+
+                // X-axis (Ground)
+                ctx.moveTo(mapX(0), mapY(0));
+                ctx.lineTo(mapX(ABS_MAX_RANGE * 1.05), mapY(0));
+                
+                // Y-axis
+                ctx.moveTo(mapX(0), mapY(0));
+                ctx.lineTo(mapX(0), mapY(ABS_MAX_HEIGHT * 1.1));
+                ctx.stroke();
+
+                // Draw Ticks & Labels
+                ctx.fillStyle = '#64748b';
+                ctx.font = '11px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+
+                // X-axis ticks (every 200m)
+                for (let i = 200; i <= ABS_MAX_RANGE; i += 200) {
+                    const xPos = mapX(i);
+                    const yPos = mapY(0);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(xPos, yPos);
+                    ctx.lineTo(xPos, yPos + 5);
+                    ctx.stroke();
+                    ctx.fillText(i, xPos, yPos + 8);
+                }
+
+                // Y-axis ticks (every 100m)
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                for (let i = 100; i <= ABS_MAX_HEIGHT; i += 100) {
+                    const xPos = mapX(0);
+                    const yPos = mapY(i);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(xPos - 5, yPos);
+                    ctx.lineTo(xPos, yPos);
+                    ctx.stroke();
+                    ctx.fillText(i, xPos - 8, yPos);
+                }
+
+                // Axis Labels
+                ctx.fillStyle = '#334155';
+                ctx.font = 'italic 12px Times New Roman';
+                ctx.fillText('x (m)', mapX(ABS_MAX_RANGE * 1.05) + 5, mapY(0) - 15);
+                ctx.textAlign = 'center';
+                ctx.fillText('y (m)', mapX(0), mapY(ABS_MAX_HEIGHT * 1.1) - 15);
+            }
+
+            function drawTrajectory() {
+                ctx.beginPath();
+                ctx.strokeStyle = '#94a3b8'; // Light dashed line for full path
+                ctx.setLineDash([5, 5]);
+                ctx.lineWidth = 2;
+                
+                const steps = 100;
+                for (let i = 0; i <= steps; i++) {
+                    const t = (i / steps) * timeOfFlight;
+                    const x = V0 * Math.cos(currentAngleRad) * t;
+                    const y = V0 * Math.sin(currentAngleRad) * t - 0.5 * G * t * t;
+                    
+                    if (i === 0) ctx.moveTo(mapX(x), mapY(y));
+                    else ctx.lineTo(mapX(x), mapY(y));
+                }
+                ctx.stroke();
+                ctx.setLineDash([]); // Reset dash
+            }
+
+            function drawProjectile(t) {
+                // Calculate current position
+                const x = V0 * Math.cos(currentAngleRad) * t;
+                const y = Math.max(0, V0 * Math.sin(currentAngleRad) * t - 0.5 * G * t * t); // Prevent negative Y
+                
+                // Calculate velocities
+                const vx = V0 * Math.cos(currentAngleRad);
+                const vy = V0 * Math.sin(currentAngleRad) - G * t;
+
+                const px = mapX(x);
+                const py = mapY(y);
+
+                // Update Live UI
+                valTime.textContent = t.toFixed(2);
+                liveX.textContent = x.toFixed(1) + ' m';
+                liveY.textContent = y.toFixed(1) + ' m';
+
+                // Draw path up to current time (solid line)
+                ctx.beginPath();
+                ctx.strokeStyle = '#3b82f6'; // Blue-500
+                ctx.lineWidth = 3;
+                const steps = Math.max(10, Math.floor((t / timeOfFlight) * 100));
+                for (let i = 0; i <= steps; i++) {
+                    const ct = (i / steps) * t;
+                    const cx = V0 * Math.cos(currentAngleRad) * ct;
+                    const cy = V0 * Math.sin(currentAngleRad) * ct - 0.5 * G * ct * ct;
+                    
+                    if (i === 0) ctx.moveTo(mapX(cx), mapY(cy));
+                    else ctx.lineTo(mapX(cx), mapY(cy));
+                }
+                ctx.stroke();
+
+                // Draw Velocity Vectors
+                // Scale factor for velocity arrows to look good on screen
+                const vScale = 0.5; 
+                
+                // vx arrow (blue)
+                if (vx > 0.1) {
+                    drawArrow(ctx, px, py, px + (vx * vScale), py, '#3b82f6'); 
+                }
+                
+                // vy arrow (red)
+                if (Math.abs(vy) > 0.1) {
+                    drawArrow(ctx, px, py, px, py - (vy * vScale), '#ef4444'); // minus because Y axis is inverted on canvas
+                }
+
+                // Resultant v arrow (slate)
+                // drawArrow(ctx, px, py, px + (vx * vScale), py - (vy * vScale), '#64748b');
+
+                // Draw Ball
+                ctx.beginPath();
+                ctx.arc(px, py, 6, 0, Math.PI * 2);
+                ctx.fillStyle = '#1e293b'; // Slate-800
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            function draw() {
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+                
+                // Ensure physics variables are up to date
+                updatePhysics();
+
+                // Get current scrub time
+                let t = parseFloat(timeSlider.value);
+                
+                // Draw all components
+                drawAxes();
+                drawTrajectory();
+                drawProjectile(t);
+            }
+
+            // Event Listeners
+            window.addEventListener('resize', resizeCanvas);
+            
+            angleSlider.addEventListener('input', () => {
+                // When angle changes, we might need to adjust current time to stay proportional
+                // Example: Keep the ball at the same % of flight time
+                const prevMax = parseFloat(timeSlider.max);
+                const prevVal = parseFloat(timeSlider.value);
+                const ratio = prevMax > 0 ? prevVal / prevMax : 0;
+                
+                updatePhysics();
+                timeSlider.value = timeOfFlight * ratio;
+                draw();
+            });
+
+            timeSlider.addEventListener('input', draw);
+
+            // Initial setup
+            updatePhysics();
+            timeSlider.value = timeOfFlight / 2; // Start the ball at the peak
+            
+            // Allow container to render before sizing canvas
+            setTimeout(resizeCanvas, 10);
+        });
+    </script>
+</body>
+</html>
