@@ -1414,25 +1414,33 @@
 
 <h2 id="10-kinematics">10. Kinematics</h2>
 <p><span class="arithmatex">\(\vec{r}(t) = (a \cos(\omega t), b \sin(\omega t), bt)\)</span></p>
-<p><strong>Step-by-step solution:</strong>
-1. <strong>Equation of trajectory (a):</strong>
-   The coordinates are <span class="arithmatex">\(x = a \cos(\omega t), y = b \sin(\omega t), z = bt\)</span>.
-   Notice that <span class="arithmatex">\(\frac{x^2}{a^2} + \frac{y^2}{b^2} = \cos^2(\omega t) + \sin^2(\omega t) = 1\)</span>.
-   The projection onto the <span class="arithmatex">\(xy\)</span>-plane is an ellipse. Since <span class="arithmatex">\(z = bt\)</span>, <span class="arithmatex">\(z\)</span> grows linearly with time. The trajectory is an <strong>elliptical helix</strong> winding around the <span class="arithmatex">\(z\)</span>-axis.
-2. <strong>Path length (b):</strong>
-   First, find the velocity vector <span class="arithmatex">\(\vec{v}(t) = \frac{d\vec{r}}{dt}\)</span>.
-   <span class="arithmatex">\(\vec{v}(t) = \left( -a\omega \sin(\omega t), b\omega \cos(\omega t), b \right)\)</span>
-   Find its magnitude <span class="arithmatex">\(|\vec{v}(t)|\)</span>:
-   <span class="arithmatex">\(|\vec{v}(t)| = \sqrt{(-a\omega \sin(\omega t))^2 + (b\omega \cos(\omega t))^2 + b^2} = \sqrt{a^2\omega^2 \sin^2(\omega t) + b^2\omega^2 \cos^2(\omega t) + b^2}\)</span>
-   The path length <span class="arithmatex">\(L\)</span> from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t_0\)</span> is the integral of the speed:
-   <span class="arithmatex">\(L = \int_{0}^{t_0} \sqrt{a^2\omega^2 \sin^2(\omega t) + b^2\omega^2 \cos^2(\omega t) + b^2} dt\)</span>
-   If <span class="arithmatex">\(a \neq b\)</span>, this is an incomplete elliptic integral of the second kind.
-3. <strong>Special cases (c):</strong>
-   If <span class="arithmatex">\(a = b\)</span> (the ellipse becomes a circle), the speed simplifies significantly:
-   <span class="arithmatex">\(|\vec{v}(t)| = \sqrt{a^2\omega^2(\sin^2(\omega t) + \cos^2(\omega t)) + b^2} = \sqrt{a^2\omega^2 + b^2}\)</span>
-   Thus, speed is constant. The path length becomes:
-   <span class="arithmatex">\(L = \int_{0}^{t_0} \sqrt{a^2\omega^2 + b^2} dt = t_0 \sqrt{a^2\omega^2 + b^2}\)</span>
-   The trajectory in this case is a standard circular helix.</p>
+<p><strong>Step-by-step solution:</strong></p>
+<ol>
+<li><strong>Equation of trajectory (a):</strong></li>
+</ol>
+<p>The coordinates are <span class="arithmatex">\(x = a \cos(\omega t), y = b \sin(\omega t), z = bt\)</span>.</p>
+<p>Notice that <span class="arithmatex">\(\frac{x^2}{a^2} + \frac{y^2}{b^2} = \cos^2(\omega t) + \sin^2(\omega t) = 1\)</span>.</p>
+<p>The projection onto the <span class="arithmatex">\(xy\)</span>-plane is an ellipse. Since <span class="arithmatex">\(z = bt\)</span>, <span class="arithmatex">\(z\)</span> grows linearly with time. The 
+   trajectory is an <strong>elliptical helix</strong> winding around the <span class="arithmatex">\(z\)</span>-axis.</p>
+<ol>
+<li><strong>Path length (b):</strong></li>
+</ol>
+<p>First, find the velocity vector <span class="arithmatex">\(\vec{v}(t) = \frac{d\vec{r}}{dt}\)</span>.
+   <span class="arithmatex">\(\vec{v}(t) = \left( -a\omega \sin(\omega t), b\omega \cos(\omega t), b \right)\)</span></p>
+<p>Find its magnitude <span class="arithmatex">\(|\vec{v}(t)|\)</span>:
+   <span class="arithmatex">\(|\vec{v}(t)| = \sqrt{(-a\omega \sin(\omega t))^2 + (b\omega \cos(\omega t))^2 + b^2} = \sqrt{a^2\omega^2 \sin^2(\omega t) + b^2\omega^2 \cos^2(\omega t) + b^2}\)</span></p>
+<p>The path length <span class="arithmatex">\(L\)</span> from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t_0\)</span> is the integral of the speed:</p>
+<p><span class="arithmatex">\(L = \int_{0}^{t_0} \sqrt{a^2\omega^2 \sin^2(\omega t) + b^2\omega^2 \cos^2(\omega t) + b^2} dt\)</span></p>
+<p>If <span class="arithmatex">\(a \neq b\)</span>, this is an incomplete elliptic integral of the second kind.</p>
+<ol>
+<li><strong>Special cases (c):</strong></li>
+</ol>
+<p>If <span class="arithmatex">\(a = b\)</span> (the ellipse becomes a circle), the speed simplifies significantly:</p>
+<p><span class="arithmatex">\(|\vec{v}(t)| = \sqrt{a^2\omega^2(\sin^2(\omega t) + \cos^2(\omega t)) + b^2} = \sqrt{a^2\omega^2 + b^2}\)</span></p>
+<p>Thus, speed is constant. The path length becomes:</p>
+<p><span class="arithmatex">\(L = \int_{0}^{t_0} \sqrt{a^2\omega^2 + b^2} dt = t_0 \sqrt{a^2\omega^2 + b^2}\)</span></p>
+<p>The trajectory in this case is a standard circular helix.</p>
+<p><a href="../animations/01_10_anim.html">Open the demo</a></p>
 
 
 

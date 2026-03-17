@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Kinematics: Elliptical Helix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js and OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        canvas {
+            display: block;
+            outline: none;
+            touch-action: none;
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #8b5cf6;
+            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+        }
+        
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        
+        .math-block {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.05rem;
+            letter-spacing: 0.2px;
+        }
+
+        /* Scrollbar for left panel */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen p-4 md:p-6 flex flex-col items-center">
+
+    <div class="max-w-7xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row h-[90vh]">
+        
+        <!-- Left Panel: Controls & Information -->
+        <div class="w-full md:w-5/12 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col bg-slate-50 h-full overflow-y-auto custom-scrollbar">
+            <h1 class="text-2xl font-bold text-slate-900 mb-2">3D Kinematics</h1>
+            <p class="text-slate-600 mb-4 text-sm">
+                Point M moves according to the parametric equations: <br>
+                <span class="math-block font-bold text-violet-700">r(t) = (a·cos(ωt), b·sin(ωt), bt)</span>
+            </p>
+
+            <!-- Real-time Stats -->
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 mb-6">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Live Telemetry</h2>
+                    <span id="time-badge" class="font-mono text-sm font-bold text-violet-600">t = 0.00 s</span>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-2 mb-3">
+                    <div class="bg-slate-50 p-2 rounded border border-slate-100 text-center">
+                        <div class="text-[10px] text-slate-400 font-bold">X</div>
+                        <div class="text-sm font-mono font-bold text-slate-700" id="live-x">0.00</div>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded border border-slate-100 text-center">
+                        <div class="text-[10px] text-slate-400 font-bold">Y</div>
+                        <div class="text-sm font-mono font-bold text-slate-700" id="live-y">0.00</div>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded border border-slate-100 text-center">
+                        <div class="text-[10px] text-slate-400 font-bold">Z</div>
+                        <div class="text-sm font-mono font-bold text-slate-700" id="live-z">0.00</div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center p-2 bg-violet-50 rounded border border-violet-100">
+                    <span class="text-xs font-bold text-violet-800">Total Path Length (S)</span>
+                    <span class="font-mono font-bold text-violet-700" id="live-s">0.00</span>
+                </div>
+            </div>
+
+            <!-- Parameters -->
+            <div class="space-y-4 mb-6 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Parameters</h2>
+                
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-700 mb-1">
+                        <span>X Amplitude (<span class="math-block italic">a</span>)</span>
+                        <span class="text-violet-600 font-bold" id="val-a">3.0</span>
+                    </label>
+                    <input type="range" id="slider-a" min="0" max="5" step="0.1" value="3.0">
+                </div>
+
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-700 mb-1">
+                        <span>Y Amplitude / Z Velocity (<span class="math-block italic">b</span>)</span>
+                        <span class="text-violet-600 font-bold" id="val-b">2.0</span>
+                    </label>
+                    <input type="range" id="slider-b" min="0" max="5" step="0.1" value="2.0">
+                </div>
+
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-700 mb-1">
+                        <span>Angular Freq (<span class="math-block italic">ω</span>)</span>
+                        <span class="text-violet-600 font-bold" id="val-w">2.0</span>
+                    </label>
+                    <input type="range" id="slider-w" min="0" max="10" step="0.1" value="2.0">
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex gap-2">
+                    <button id="btn-play" class="flex-1 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium py-2 rounded transition-colors">
+                        Pause
+                    </button>
+                    <button id="btn-reset" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-medium py-2 rounded transition-colors">
+                        Reset t=0
+                    </button>
+                </div>
+                
+                <div class="flex items-center pt-2">
+                    <input type="checkbox" id="toggle-cylinder" checked class="w-4 h-4 text-violet-600 bg-gray-100 border-gray-300 rounded focus:ring-violet-500 cursor-pointer">
+                    <label for="toggle-cylinder" class="ml-2 text-sm font-medium text-slate-700 cursor-pointer">Show Bounding Cylinder</label>
+                </div>
+            </div>
+
+            <!-- Special Cases -->
+            <div class="mb-6">
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Special Cases</h2>
+                <div class="flex flex-col gap-2">
+                    <button class="preset-btn p-2 text-left text-sm rounded border border-slate-200 hover:border-violet-400 hover:bg-violet-50 transition-colors" data-a="3" data-b="3" data-w="2">
+                        <span class="font-bold text-slate-800 block">Circular Helix (a = b)</span>
+                        <span class="text-xs text-slate-500">The cylinder becomes circular. Speed is constant.</span>
+                    </button>
+                    <button class="preset-btn p-2 text-left text-sm rounded border border-slate-200 hover:border-violet-400 hover:bg-violet-50 transition-colors" data-a="3" data-b="2" data-w="0">
+                        <span class="font-bold text-slate-800 block">Straight Line (ω = 0)</span>
+                        <span class="text-xs text-slate-500">No rotation. Point moves linearly up the Z-axis at (a, 0, bt).</span>
+                    </button>
+                    <button class="preset-btn p-2 text-left text-sm rounded border border-slate-200 hover:border-violet-400 hover:bg-violet-50 transition-colors" data-a="4" data-b="0" data-w="3">
+                        <span class="font-bold text-slate-800 block">Linear Oscillation (b = 0)</span>
+                        <span class="text-xs text-slate-500">Z remains 0. Point oscillates back and forth on the X-axis.</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Math Solution -->
+            <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50">
+                    Analytical Solutions
+                    <svg class="w-5 h-5 text-slate-400 group-open:-rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </summary>
+                <div class="p-4 pt-0 text-sm text-slate-600 space-y-4 math-block border-t border-slate-100 pt-4">
+                    
+                    <div>
+                        <p class="font-bold text-slate-800 font-sans">a) Equation of the Trajectory</p>
+                        <p class="mt-1 text-xs text-slate-500 font-sans mb-1">To find the geometric shape, eliminate time <span class="italic">t</span> from x and y:</p>
+                        <p class="pl-3 border-l-2 border-slate-200 text-[15px]">
+                            <span class="italic">x = a·cos(ωt) &nbsp; ⇒ &nbsp; x/a = cos(ωt)</span><br>
+                            <span class="italic">y = b·sin(ωt) &nbsp; ⇒ &nbsp; y/b = sin(ωt)</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">Squaring and adding them together yields:</p>
+                        <p class="pl-3 border-l-2 border-slate-200 font-bold text-violet-700 text-[15px]">
+                            <span class="italic">(x/a)² + (y/b)² = 1</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">This means the trajectory lies entirely on the surface of an <strong>elliptical cylinder</strong> extending along the Z-axis. Since <span class="italic">z = bt</span>, the point moves upwards at a constant rate while tracing the ellipse, forming an <strong>elliptical helix</strong>.</p>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-3">
+                        <p class="font-bold text-slate-800 font-sans">b) Path Length</p>
+                        <p class="mt-1 text-xs text-slate-500 font-sans mb-1">The path length <span class="italic">S</span> is the integral of the speed <span class="italic">v(t)</span>:</p>
+                        <p class="pl-3 border-l-2 border-slate-200">
+                            <span class="italic">v<sub>x</sub> = -aω·sin(ωt)</span><br>
+                            <span class="italic">v<sub>y</sub> = bω·cos(ωt)</span><br>
+                            <span class="italic">v<sub>z</sub> = b</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">Speed <span class="italic">v = √(v<sub>x</sub>² + v<sub>y</sub>² + v<sub>z</sub>²)</span> :</p>
+                        <p class="pl-3 border-l-2 border-slate-200 overflow-x-auto whitespace-nowrap">
+                            <span class="italic">S = ∫ √(a²ω²sin²(ωt) + b²ω²cos²(ωt) + b²) dt</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">Generally, this is an <strong>elliptic integral of the second kind</strong>. However, in the special case where <strong>a = b</strong> (circular helix):</p>
+                        <p class="pl-3 border-l-2 border-violet-200 bg-violet-50 p-2 rounded">
+                            <span class="italic">S = ∫ √(a²ω²(sin²(ωt) + cos²(ωt)) + a²) dt</span><br>
+                            <span class="italic">S = ∫ a√(ω² + 1) dt</span><br>
+                            <span class="font-bold text-violet-700">S = at₀√(ω² + 1)</span>
+                        </p>
+                    </div>
+                </div>
+            </details>
+
+        </div>
+
+        <!-- Right Panel: Canvas Visualization -->
+        <div class="w-full md:w-7/12 relative bg-slate-900" id="canvas-container">
+            <!-- 3D Canvas will be injected here -->
+            
+            <!-- Controls Overlay -->
+            <div class="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md border border-white/20 p-3 rounded-xl text-white text-xs select-none pointer-events-none">
+                <div class="flex items-center gap-2 mb-1"><div class="w-3 h-0.5 bg-red-500"></div> X-Axis (red)</div>
+                <div class="flex items-center gap-2 mb-1"><div class="w-3 h-0.5 bg-green-500"></div> Y-Axis (green)</div>
+                <div class="flex items-center gap-2"><div class="w-3 h-0.5 bg-blue-500"></div> Z-Axis (blue)</div>
+                <div class="mt-2 pt-2 border-t border-white/20 text-[10px] text-slate-300">
+                    Left Click: Rotate <br> Right Click: Pan <br> Scroll: Zoom
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // -- UI Elements --
+            const container = document.getElementById('canvas-container');
+            const sliderA = document.getElementById('slider-a');
+            const sliderB = document.getElementById('slider-b');
+            const sliderW = document.getElementById('slider-w');
+            
+            const valA = document.getElementById('val-a');
+            const valB = document.getElementById('val-b');
+            const valW = document.getElementById('val-w');
+            
+            const liveX = document.getElementById('live-x');
+            const liveY = document.getElementById('live-y');
+            const liveZ = document.getElementById('live-z');
+            const liveS = document.getElementById('live-s');
+            const timeBadge = document.getElementById('time-badge');
+            
+            const btnPlay = document.getElementById('btn-play');
+            const btnReset = document.getElementById('btn-reset');
+            const toggleCylinder = document.getElementById('toggle-cylinder');
+            const presetBtns = document.querySelectorAll('.preset-btn');
+
+            // -- Physics State --
+            let a = parseFloat(sliderA.value);
+            let b = parseFloat(sliderB.value);
+            let w = parseFloat(sliderW.value);
+            let time = 0;
+            let isPlaying = true;
+            let lastTime = performance.now();
+            let pathLength = 0;
+            let lastPos = new THREE.Vector3(a, 0, 0);
+
+            // -- Three.js Setup --
+            const scene = new THREE.Scene();
+            // Match the slate-900 background
+            scene.background = new THREE.Color('#0f172a'); 
+
+            // Camera
+            const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(8, 8, 8);
+            camera.lookAt(0, 0, 0);
+
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Controls
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+
+            // -- Scene Objects --
+            
+            // Axes (Math XYZ mapped to Three XYZ directly for intuitive viewing)
+            // Three.js convention: Y is up. We will map Math Z to Three Y.
+            // Math X -> Three X
+            // Math Y -> Three Z (negated to maintain right hand rule, or just kept positive. Let's map Math Y -> Three Z)
+            // Math Z -> Three Y
+            const axesHelper = new THREE.AxesHelper(10);
+            scene.add(axesHelper);
+
+            // Grid Helpers for reference planes
+            const gridHelper = new THREE.GridHelper(20, 20, 0x334155, 0x1e293b);
+            scene.add(gridHelper);
+
+            // Particle
+            const particleGeo = new THREE.SphereGeometry(0.2, 32, 32);
+            const particleMat = new THREE.MeshBasicMaterial({ color: 0x8b5cf6 }); // Violet 500
+            const particle = new THREE.Mesh(particleGeo, particleMat);
+            scene.add(particle);
+
+            // Trajectory Line
+            const MAX_POINTS = 5000;
+            const lineGeo = new THREE.BufferGeometry();
+            const positions = new Float32Array(MAX_POINTS * 3);
+            lineGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            lineGeo.setDrawRange(0, 0);
+            const lineMat = new THREE.LineBasicMaterial({ 
+                color: 0x60a5fa, // Blue 400
+                linewidth: 2 
+            });
+            const trajectoryLine = new THREE.Line(lineGeo, lineMat);
+            scene.add(trajectoryLine);
+
+            // Bounding Cylinder
+            const cylGeo = new THREE.CylinderGeometry(1, 1, 1, 64);
+            const cylMat = new THREE.MeshBasicMaterial({ 
+                color: 0x334155, 
+                transparent: true, 
+                opacity: 0.15,
+                side: THREE.DoubleSide,
+                depthWrite: false
+            });
+            const cylinder = new THREE.Mesh(cylGeo, cylMat);
+            scene.add(cylinder);
+
+            // -- Functions --
+
+            // Math to Three.js coordinate mapping
+            // Math: r(t) = (a*cos(wt), b*sin(wt), bt)
+            // Three: x = a*cos(wt), y = bt, z = b*sin(wt)
+            function getPositionAtTime(t) {
+                return new THREE.Vector3(
+                    a * Math.cos(w * t),
+                    b * t,
+                    b * Math.sin(w * t)
+                );
+            }
+
+            function updateParameters() {
+                a = parseFloat(sliderA.value);
+                b = parseFloat(sliderB.value);
+                w = parseFloat(sliderW.value);
+                
+                valA.textContent = a.toFixed(1);
+                valB.textContent = b.toFixed(1);
+                valW.textContent = w.toFixed(1);
+
+                rebuildCylinder();
+                resetSimulation();
+            }
+
+            function rebuildCylinder() {
+                // To keep the cylinder height bounded to view, let's make it 20 units high
+                const cylHeight = 20; 
+                cylinder.scale.set(Math.max(0.01, a), cylHeight, Math.max(0.01, b));
+                // Center it starting from origin going up
+                cylinder.position.y = cylHeight / 2;
+                cylinder.visible = toggleCylinder.checked && (a > 0 || b > 0);
+            }
+
+            function resetSimulation() {
+                time = 0;
+                pathLength = 0;
+                lastPos = getPositionAtTime(0);
+                lineGeo.setDrawRange(0, 0);
+                lastTime = performance.now();
+                updateUI();
+            }
+
+            function updateUI() {
+                const pos = getPositionAtTime(time);
+                // Map back to Math coordinates for display
+                // Math X = Three X
+                // Math Y = Three Z
+                // Math Z = Three Y
+                liveX.textContent = pos.x.toFixed(2);
+                liveY.textContent = pos.z.toFixed(2);
+                liveZ.textContent = pos.y.toFixed(2);
+                
+                liveS.textContent = pathLength.toFixed(2);
+                timeBadge.textContent = `t = ${time.toFixed(2)} s`;
+            }
+
+            // -- Animation Loop --
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const currentTime = performance.now();
+                const deltaTime = (currentTime - lastTime) / 1000; // seconds
+                lastTime = currentTime;
+
+                if (isPlaying) {
+                    // Advance time (cap max time to keep line in view or loop)
+                    const timeScale = 0.5; // slow it down slightly for better viewing
+                    time += deltaTime * timeScale;
+                    
+                    // Reset if it goes too high (Z limit)
+                    if (b * time > 20) { 
+                        resetSimulation();
+                    }
+
+                    const newPos = getPositionAtTime(time);
+                    
+                    // Calculate discrete path length (numerical integration)
+                    pathLength += lastPos.distanceTo(newPos);
+                    lastPos.copy(newPos);
+
+                    // Update Particle
+                    particle.position.copy(newPos);
+
+                    // Update Trajectory Line
+                    const pointsCount = Math.floor(time * 60); // approx 60 points per second
+                    if (pointsCount < MAX_POINTS) {
+                        const positionsArray = lineGeo.attributes.position.array;
+                        // Fill array up to current time to create the smooth curve
+                        for(let i=0; i<=pointsCount; i++){
+                            const t_i = (i / pointsCount) * time;
+                            const p_i = getPositionAtTime(t_i);
+                            positionsArray[i*3] = p_i.x;
+                            positionsArray[i*3+1] = p_i.y;
+                            positionsArray[i*3+2] = p_i.z;
+                        }
+                        lineGeo.setDrawRange(0, pointsCount + 1);
+                        lineGeo.attributes.position.needsUpdate = true;
+                    }
+
+                    updateUI();
+                }
+
+                controls.update();
+                renderer.render(scene, camera);
+            }
+
+            // -- Event Listeners --
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            sliderA.addEventListener('input', updateParameters);
+            sliderB.addEventListener('input', updateParameters);
+            sliderW.addEventListener('input', updateParameters);
+
+            btnPlay.addEventListener('click', () => {
+                isPlaying = !isPlaying;
+                btnPlay.textContent = isPlaying ? "Pause" : "Play";
+                btnPlay.className = isPlaying 
+                    ? "flex-1 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium py-2 rounded transition-colors"
+                    : "flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium py-2 rounded transition-colors";
+                lastTime = performance.now();
+            });
+
+            btnReset.addEventListener('click', resetSimulation);
+            
+            toggleCylinder.addEventListener('change', rebuildCylinder);
+
+            presetBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const btnEl = e.currentTarget;
+                    sliderA.value = btnEl.dataset.a;
+                    sliderB.value = btnEl.dataset.b;
+                    sliderW.value = btnEl.dataset.w;
+                    updateParameters();
+                });
+            });
+
+            // Initial Kickoff
+            updateParameters();
+            animate();
+        });
+    </script>
+</body>
+</html>
