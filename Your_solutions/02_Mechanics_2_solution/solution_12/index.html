@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 12 - Physics basics</title>
+        <title>12. Work and energy with a constant force - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#12-work-and-energy-with-a-constant-force" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 12
+              12. Work and energy with a constant force
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,60 @@
 
 
 
-  <h1>Solution 12</h1>
-
-
+<h1 id="12-work-and-energy-with-a-constant-force">12. Work and energy with a constant force</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>A constant force acts on a body of mass <span class="arithmatex">\(m = 2\ \mathrm{kg}\)</span>:
+$$ \vec F = [6, 2]\ \mathrm{N} $$
+The body starts with an initial velocity <span class="arithmatex">\(\vec v(0) = (1, -1)\ \mathrm{\frac{m}{s}}\)</span> from the point <span class="arithmatex">\(\vec r(0)=(0,0)\ \mathrm{m}\)</span>. </p>
+<ul>
+<li>Determine <span class="arithmatex">\(\vec a(t)\)</span>.</li>
+<li>Determine <span class="arithmatex">\(\vec v(t)\)</span>.</li>
+<li>Determine <span class="arithmatex">\(\vec r(t)\)</span>.</li>
+<li>Draw the trajectory of the motion.</li>
+<li>Calculate the work done by the force at time <span class="arithmatex">\(t=3\ \mathrm{s}\)</span>.</li>
+<li>Check the consistency with the work-energy theorem.</li>
+</ul>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p><strong>1. Determine <span class="arithmatex">\(\vec a(t)\)</span>:</strong></p>
+<ul>
+<li>Since force is constant, acceleration is constant: <span class="arithmatex">\(\vec{a}(t) = \frac{\vec{F}}{m}\)</span>.
+  $$ \vec{a}(t) = \left[ \frac{6}{2}, \frac{2}{2} \right] = [3, 1] \, \text{m/s}^2 $$</li>
+</ul>
+<p><strong>2. Determine <span class="arithmatex">\(\vec v(t)\)</span>:</strong></p>
+<ul>
+<li>Velocity is the integral of acceleration: <span class="arithmatex">\(\vec{v}(t) = \vec{a}t + \vec{v}_0\)</span>.
+  $$ \vec{v}(t) = [3t, t] + [1, -1] = [3t + 1, \, t - 1] \, \text{m/s} $$</li>
+</ul>
+<p><strong>3. Determine <span class="arithmatex">\(\vec r(t)\)</span>:</strong></p>
+<ul>
+<li>Position is the integral of velocity: <span class="arithmatex">\(\vec{r}(t) = \int \vec{v}(t) \, dt + \vec{r}_0\)</span>.
+  $$ \vec{r}(t) = \left[ \frac{3}{2}t^2 + t, \, \frac{1}{2}t^2 - t \right] + [0, 0] = \left[ 1.5t^2 + t, \, 0.5t^2 - t \right] \, \text{m} $$</li>
+</ul>
+<p><strong>4. Draw the trajectory of the motion:</strong></p>
+<ul>
+<li>The trajectory represents the path in the <span class="arithmatex">\(xy\)</span>-plane. We can plot <span class="arithmatex">\(y\)</span> versus <span class="arithmatex">\(x\)</span> for times <span class="arithmatex">\(t \geq 0\)</span>. This function is a parabola describing the constant acceleration path typical of projectile-like motion without gravity. To draw it mathematically or computationally, one would solve <span class="arithmatex">\(x(t)\)</span> for <span class="arithmatex">\(t\)</span> and plug it into <span class="arithmatex">\(y(t)\)</span>, yielding a quadratic trajectory <span class="arithmatex">\(y(x)\)</span>.</li>
+</ul>
+<p><strong>5. Calculate the work done at time <span class="arithmatex">\(t=3\ \mathrm{s}\)</span>:</strong></p>
+<ul>
+<li>The work done <span class="arithmatex">\(W\)</span> by a constant force is the dot product of force and displacement: <span class="arithmatex">\(W = \vec{F} \cdot \Delta\vec{r}\)</span>.</li>
+<li>Evaluate <span class="arithmatex">\(\vec{r}\)</span> at <span class="arithmatex">\(t=3\)</span>:
+  $$ \vec{r}(3) = [1.5(3)^2 + 3, \, 0.5(3)^2 - 3] = [1.5(9) + 3, \, 0.5(9) - 3] = [13.5 + 3, \, 4.5 - 3] = [16.5, 1.5] \, \text{m} $$</li>
+<li>Calculate work:
+  $$ W = \vec{F} \cdot \vec{r}(3) = (6)(16.5) + (2)(1.5) = 99 + 3 = 102 \, \text{J} $$</li>
+</ul>
+<p><strong>6. Check consistency with the work-energy theorem:</strong></p>
+<ul>
+<li>Work-energy theorem states <span class="arithmatex">\(W = \Delta K = K_f - K_i\)</span>.</li>
+<li>Calculate initial kinetic energy:
+  $$ K_i = \frac{1}{2} m |\vec{v}_0|^2 = \frac{1}{2} (2) \left( 1^2 + (-1)^2 \right) = 1 \times 2 = 2 \, \text{J} $$</li>
+<li>Calculate final velocity at <span class="arithmatex">\(t=3\)</span>:
+  $$ \vec{v}(3) = [3(3) + 1, \, 3 - 1] = [10, 2] \, \text{m/s} $$</li>
+<li>Calculate final kinetic energy:
+  $$ K_f = \frac{1}{2} m |\vec{v}(3)|^2 = \frac{1}{2} (2) \left( 10^2 + 2^2 \right) = 100 + 4 = 104 \, \text{J} $$</li>
+<li>Calculate the change in kinetic energy:
+  $$ \Delta K = 104 - 2 = 102 \, \text{J} $$</li>
+<li>The work done (<span class="arithmatex">\(102 \, \text{J}\)</span>) perfectly matches the change in kinetic energy (<span class="arithmatex">\(102 \, \text{J}\)</span>), verifying the theorem.</li>
+</ul>
 
 
 

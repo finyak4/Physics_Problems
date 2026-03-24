@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Throw with Linear Drag</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        canvas {
+            display: block;
+            outline: none;
+            touch-action: none;
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+        }
+        
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        
+        .math-block {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.05rem;
+            letter-spacing: 0.2px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen p-4 md:p-6 flex flex-col items-center">
+
+    <div class="max-w-7xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row h-[90vh]">
+        
+        <!-- Left Panel: Controls & Information -->
+        <div class="w-full md:w-5/12 p-6 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col bg-slate-50 h-full overflow-y-auto custom-scrollbar">
+            <h1 class="text-2xl font-bold text-slate-900 mb-2">Vertical Throw w/ Drag</h1>
+            <p class="text-slate-600 mb-4 text-sm">
+                Equation of motion: <span class="math-block italic">m(dv/dt) = -mg - kv</span>
+            </p>
+
+            <!-- Real-time Stats -->
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 mb-6">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Simulation Data</h2>
+                    <span id="time-badge" class="font-mono text-sm font-bold text-blue-600">t = 0.00 s</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-3 mb-2">
+                    <!-- Drag Stats -->
+                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
+                        <div class="text-[10px] text-blue-500 uppercase tracking-wider font-bold mb-1">With Drag (Blue)</div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-500">Height (y):</span>
+                            <span class="font-mono font-bold text-slate-800" id="live-y-drag">10.00 m</span>
+                        </div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-500">Velocity (v):</span>
+                            <span class="font-mono font-bold text-slate-800" id="live-v-drag">20.00 m/s</span>
+                        </div>
+                        <div class="mt-2 pt-2 border-t border-blue-200/50 flex justify-between text-xs">
+                            <span class="text-slate-500">Max Ht:</span>
+                            <span class="font-bold text-blue-700" id="stat-max-h-drag">-- m</span>
+                        </div>
+                    </div>
+                    
+                    <!-- No Drag Stats -->
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-2 h-full bg-slate-400"></div>
+                        <div class="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-1">No Drag (Gray)</div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-500">Height (y):</span>
+                            <span class="font-mono font-bold text-slate-800" id="live-y-nodrag">10.00 m</span>
+                        </div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-slate-500">Velocity (v):</span>
+                            <span class="font-mono font-bold text-slate-800" id="live-v-nodrag">20.00 m/s</span>
+                        </div>
+                        <div class="mt-2 pt-2 border-t border-slate-200 flex justify-between text-xs">
+                            <span class="text-slate-500">Max Ht:</span>
+                            <span class="font-bold text-slate-700" id="stat-max-h-nodrag">-- m</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parameters -->
+            <div class="space-y-4 mb-6 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Initial Conditions & Parameters</h2>
+                
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-700 mb-1">
+                        <span>Initial Velocity (<span class="math-block italic">v₀</span>)</span>
+                        <span class="text-blue-600 font-bold"><span id="val-v0">20</span> m/s</span>
+                    </label>
+                    <input type="range" id="slider-v0" min="5" max="40" step="1" value="20">
+                </div>
+
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-700 mb-1">
+                        <span>Initial Height (<span class="math-block italic">x₀</span> or <span class="math-block italic">y₀</span>)</span>
+                        <span class="text-blue-600 font-bold"><span id="val-y0">10</span> m</span>
+                    </label>
+                    <input type="range" id="slider-y0" min="0" max="50" step="1" value="10">
+                </div>
+
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-700 mb-1">
+                        <span>Mass (<span class="math-block italic">m</span>)</span>
+                        <span class="text-blue-600 font-bold"><span id="val-m">1.0</span> kg</span>
+                    </label>
+                    <input type="range" id="slider-m" min="0.1" max="5.0" step="0.1" value="1.0">
+                </div>
+
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-700 mb-1">
+                        <span>Drag Coefficient (<span class="math-block italic">k</span>)</span>
+                        <span class="text-blue-600 font-bold"><span id="val-k">0.20</span> kg/s</span>
+                    </label>
+                    <input type="range" id="slider-k" min="0.00" max="1.0" step="0.01" value="0.2">
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex gap-2">
+                    <button id="btn-play" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded transition-colors">
+                        Simulate
+                    </button>
+                    <button id="btn-reset" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-medium py-2 rounded transition-colors">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Math Solution -->
+            <details class="group bg-white rounded-xl border border-slate-200 shadow-sm">
+                <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50">
+                    Analytical Solutions
+                    <svg class="w-5 h-5 text-slate-400 group-open:-rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </summary>
+                <div class="p-4 pt-0 text-sm text-slate-600 space-y-4 math-block border-t border-slate-100 pt-4">
+                    
+                    <div>
+                        <p class="font-bold text-slate-800 font-sans">1. Solving the Equation</p>
+                        <p class="mt-1 text-xs text-slate-500 font-sans mb-1">We rewrite <span class="italic">m(dv/dt) = -mg - kv</span> by separating variables:</p>
+                        <p class="pl-3 border-l-2 border-slate-200">
+                            <span class="italic">dv / (v + mg/k) = -(k/m) dt</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">Integrating from 0 to <span class="italic">t</span> (with <span class="italic">v(0) = v₀</span>):</p>
+                        <p class="pl-3 border-l-2 border-slate-200 text-blue-700 font-bold">
+                            <span class="italic">v(t) = (v₀ + mg/k)e<sup>-(k/m)t</sup> - mg/k</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">Integrating velocity to find position <span class="italic">y(t)</span> with <span class="italic">y(0) = y₀</span>:</p>
+                        <p class="pl-3 border-l-2 border-slate-200 text-blue-700 font-bold">
+                            <span class="italic">y(t) = y₀ + (m/k)(v₀ + mg/k)(1 - e<sup>-(k/m)t</sup>) - (mg/k)t</span>
+                        </p>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-3">
+                        <p class="font-bold text-slate-800 font-sans">2. Maximum Height</p>
+                        <p class="mt-1 text-xs text-slate-500 font-sans mb-1">Occurs when <span class="italic">v(t<sub>peak</sub>) = 0</span>. Setting velocity to 0 and solving for <span class="italic">t</span>:</p>
+                        <p class="pl-3 border-l-2 border-slate-200">
+                            <span class="italic">t<sub>peak</sub> = (m/k) ln(1 + kv₀/mg)</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">Substituting <span class="italic">t<sub>peak</sub></span> into <span class="italic">y(t)</span>:</p>
+                        <p class="pl-3 border-l-2 border-slate-200 text-blue-700 font-bold text-[15px]">
+                            <span class="italic">y<sub>max</sub> = y₀ + (m/k)v₀ - (m²g/k²) ln(1 + kv₀/mg)</span>
+                        </p>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-3">
+                        <p class="font-bold text-slate-800 font-sans">3. Comparison (No Drag)</p>
+                        <p class="mt-1 text-xs text-slate-500 font-sans mb-1">As <span class="italic">k → 0</span>, using Taylor series expansions, the formulas revert to standard kinematics:</p>
+                        <p class="pl-3 border-l-2 border-slate-200 text-slate-500 font-bold">
+                            <span class="italic">y<sub>nd</sub>(t) = y₀ + v₀t - ½gt²</span><br>
+                            <span class="italic">y<sub>max,nd</sub> = y₀ + v₀² / 2g</span>
+                        </p>
+                        <p class="mt-2 text-xs text-slate-500 font-sans mb-1">Notice how the drag term explicitly reduces both the peak time and the maximum altitude.</p>
+                    </div>
+                </div>
+            </details>
+
+        </div>
+
+        <!-- Right Panel: Canvas Visualization -->
+        <div class="w-full md:w-7/12 p-4 flex flex-col relative bg-white" id="canvas-container">
+            <div class="flex justify-between items-center mb-2 z-10 px-2">
+                <h3 class="text-lg font-semibold text-slate-700">Numerical Simulation vs Analytical</h3>
+                <div class="flex gap-3 text-xs font-medium">
+                    <span class="flex items-center gap-1"><div class="w-3 h-3 rounded-full bg-blue-500"></div> Drag (Num)</span>
+                    <span class="flex items-center gap-1"><div class="w-3 h-3 rounded-full bg-blue-200"></div> Drag (Exact)</span>
+                    <span class="flex items-center gap-1"><div class="w-3 h-3 rounded-full border-2 border-slate-400 border-dashed"></div> No Drag</span>
+                </div>
+            </div>
+            
+            <div class="flex-grow w-full bg-slate-50 rounded-xl border border-slate-200 overflow-hidden relative">
+                <canvas id="graphCanvas" class="w-full h-full"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('graphCanvas');
+            const ctx = canvas.getContext('2d');
+            const container = canvas.parentElement;
+            
+            // Sliders
+            const sliderV0 = document.getElementById('slider-v0');
+            const sliderY0 = document.getElementById('slider-y0');
+            const sliderM = document.getElementById('slider-m');
+            const sliderK = document.getElementById('slider-k');
+            
+            // UI Elements
+            const valV0 = document.getElementById('val-v0');
+            const valY0 = document.getElementById('val-y0');
+            const valM = document.getElementById('val-m');
+            const valK = document.getElementById('val-k');
+            
+            const liveYDrag = document.getElementById('live-y-drag');
+            const liveVDrag = document.getElementById('live-v-drag');
+            const liveYNodrag = document.getElementById('live-y-nodrag');
+            const liveVNodrag = document.getElementById('live-v-nodrag');
+            const timeBadge = document.getElementById('time-badge');
+            
+            const statMaxHDrag = document.getElementById('stat-max-h-drag');
+            const statMaxHNodrag = document.getElementById('stat-max-h-nodrag');
+            
+            const btnPlay = document.getElementById('btn-play');
+            const btnReset = document.getElementById('btn-reset');
+
+            // Physics Constants & Variables
+            const g = 9.81;
+            let v0, y0, m, k;
+            
+            let isPlaying = false;
+            let animationFrameId = null;
+
+            // Simulation state
+            let sim_t = 0;
+            let sim_y_drag = 0, sim_v_drag = 0;
+            let sim_y_nodrag = 0, sim_v_nodrag = 0;
+            let trace_drag = [];
+            let trace_nodrag = [];
+
+            // Graph limits
+            let t_max_graph = 10;
+            let y_max_graph = 100;
+            const X_SPLIT = 120; // Width of the 1D animation panel on the left
+
+            function readParams() {
+                v0 = parseFloat(sliderV0.value);
+                y0 = parseFloat(sliderY0.value);
+                m = parseFloat(sliderM.value);
+                k = parseFloat(sliderK.value);
+
+                valV0.textContent = v0;
+                valY0.textContent = y0;
+                valM.textContent = m.toFixed(1);
+                valK.textContent = k.toFixed(2);
+            }
+
+            function calcTheoreticalStats() {
+                // No drag max height
+                const h_max_nd = y0 + (v0 * v0) / (2 * g);
+                
+                // Drag max height
+                let h_max_d = y0;
+                if (k > 0.001) {
+                    h_max_d = y0 + (m/k)*v0 - ((m*m*g)/(k*k)) * Math.log(1 + (k*v0)/(m*g));
+                } else {
+                    h_max_d = h_max_nd; // fallback to no drag if k is very close to 0
+                }
+
+                statMaxHNodrag.textContent = h_max_nd.toFixed(2) + ' m';
+                statMaxHDrag.textContent = h_max_d.toFixed(2) + ' m';
+
+                // Calculate time bounds for graph based on no-drag total flight time
+                // 0 = y0 + v0*t - 0.5*g*t^2 => 0.5gt^2 - v0t - y0 = 0
+                const a_quad = 0.5 * g;
+                const b_quad = -v0;
+                const c_quad = -y0;
+                const t_flight_nd = (-b_quad + Math.sqrt(b_quad*b_quad - 4*a_quad*c_quad)) / (2*a_quad);
+                
+                t_max_graph = t_flight_nd * 1.1; // Add 10% padding
+                y_max_graph = h_max_nd * 1.2; // Add 20% padding
+            }
+
+            function resetSimulation() {
+                readParams();
+                calcTheoreticalStats();
+                
+                sim_t = 0;
+                sim_y_drag = y0;
+                sim_v_drag = v0;
+                sim_y_nodrag = y0;
+                sim_v_nodrag = v0;
+                
+                trace_drag = [{t: 0, y: y0}];
+                trace_nodrag = [{t: 0, y: y0}];
+                
+                updateTelemetryUI();
+                draw();
+                
+                if (isPlaying) {
+                    cancelAnimationFrame(animationFrameId);
+                    lastTime = performance.now();
+                    animationFrameId = requestAnimationFrame(animateLoop);
+                }
+            }
+
+            function updateTelemetryUI() {
+                timeBadge.textContent = `t = ${sim_t.toFixed(2)} s`;
+                liveYDrag.textContent = Math.max(0, sim_y_drag).toFixed(2) + ' m';
+                liveVDrag.textContent = sim_v_drag.toFixed(2) + ' m/s';
+                liveYNodrag.textContent = Math.max(0, sim_y_nodrag).toFixed(2) + ' m';
+                liveVNodrag.textContent = sim_v_nodrag.toFixed(2) + ' m/s';
+            }
+
+            // Analytical functions for background rendering
+            function exactYDrag(t) {
+                if (k < 0.001) return exactYNodrag(t);
+                return y0 + (m/k)*(v0 + (m*g)/k)*(1 - Math.exp(-(k/m)*t)) - ((m*g)/k)*t;
+            }
+
+            function exactYNodrag(t) {
+                return y0 + v0*t - 0.5*g*t*t;
+            }
+
+            // --- Canvas Drawing Logic ---
+            let width, height;
+            const padding = { top: 30, right: 30, bottom: 40, left: 40 };
+
+            function resizeCanvas() {
+                const rect = container.getBoundingClientRect();
+                width = rect.width;
+                height = rect.height;
+                
+                canvas.width = width * window.devicePixelRatio;
+                canvas.height = height * window.devicePixelRatio;
+                ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                
+                draw();
+            }
+
+            // Graph mappers (Right panel)
+            function mapGraphX(t) {
+                const graphWidth = width - X_SPLIT - padding.right - padding.left;
+                return X_SPLIT + padding.left + (t / t_max_graph) * graphWidth;
+            }
+
+            function mapY(y) {
+                // Shared Y mapper for both 1D and Graph
+                const h = height - padding.bottom - padding.top;
+                return height - padding.bottom - (y / y_max_graph) * h;
+            }
+
+            function drawAxes() {
+                ctx.beginPath();
+                ctx.strokeStyle = '#94a3b8'; // slate-400
+                ctx.lineWidth = 1;
+
+                // Ground line across entire canvas
+                ctx.moveTo(0, mapY(0));
+                ctx.lineTo(width, mapY(0));
+                ctx.stroke();
+
+                // Separator line
+                ctx.beginPath();
+                ctx.strokeStyle = '#e2e8f0'; // slate-200
+                ctx.moveTo(X_SPLIT, 0);
+                ctx.lineTo(X_SPLIT, height);
+                ctx.stroke();
+
+                // Graph X & Y axes
+                ctx.beginPath();
+                ctx.strokeStyle = '#94a3b8';
+                ctx.moveTo(mapGraphX(0), mapY(0));
+                ctx.lineTo(mapGraphX(t_max_graph), mapY(0)); // X axis
+                ctx.moveTo(mapGraphX(0), mapY(y_max_graph));
+                ctx.lineTo(mapGraphX(0), mapY(0)); // Y axis
+                ctx.stroke();
+
+                // Ticks & Labels
+                ctx.fillStyle = '#64748b';
+                ctx.font = '10px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+
+                // T-axis ticks (Graph)
+                const tStep = Math.max(1, Math.ceil(t_max_graph / 10));
+                for (let t = tStep; t <= t_max_graph; t += tStep) {
+                    const gx = mapGraphX(t);
+                    ctx.beginPath(); ctx.moveTo(gx, mapY(0)); ctx.lineTo(gx, mapY(0) + 5); ctx.stroke();
+                    ctx.fillText(t + 's', gx, mapY(0) + 8);
+                }
+
+                // Y-axis ticks (Graph)
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                const yStep = Math.max(10, Math.ceil(y_max_graph / 10 / 10) * 10);
+                for (let y = yStep; y <= y_max_graph; y += yStep) {
+                    const gy = mapY(y);
+                    
+                    // Tick on graph axis
+                    ctx.beginPath(); ctx.moveTo(mapGraphX(0) - 5, gy); ctx.lineTo(mapGraphX(0), gy); ctx.stroke();
+                    ctx.fillText(y, mapGraphX(0) - 8, gy);
+
+                    // Tick on 1D axis
+                    ctx.beginPath(); ctx.moveTo(X_SPLIT/2 - 5, gy); ctx.lineTo(X_SPLIT/2, gy); ctx.stroke();
+                    ctx.fillText(y, X_SPLIT/2 - 8, gy);
+                }
+
+                // Axis Labels
+                ctx.fillStyle = '#334155';
+                ctx.font = 'italic 12px Times New Roman';
+                ctx.fillText('t (s)', mapGraphX(t_max_graph) + 15, mapY(0) + 5);
+                ctx.textAlign = 'center';
+                ctx.fillText('y (m)', mapGraphX(0), mapY(y_max_graph) - 15);
+                ctx.fillText('1D View', X_SPLIT/2, padding.top - 15);
+            }
+
+            function drawTheoreticalCurves() {
+                // Exact Drag Curve (Light Blue)
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(59, 130, 246, 0.3)'; // blue-500 light
+                ctx.lineWidth = 4;
+                for (let t = 0; t <= t_max_graph; t += 0.05) {
+                    const y = exactYDrag(t);
+                    if (y < 0) { ctx.lineTo(mapGraphX(t), mapY(0)); break; }
+                    if (t === 0) ctx.moveTo(mapGraphX(t), mapY(y));
+                    else ctx.lineTo(mapGraphX(t), mapY(y));
+                }
+                ctx.stroke();
+
+                // Exact No-Drag Curve (Gray Dashed)
+                ctx.beginPath();
+                ctx.strokeStyle = '#94a3b8'; // slate-400
+                ctx.setLineDash([5, 5]);
+                ctx.lineWidth = 2;
+                for (let t = 0; t <= t_max_graph; t += 0.05) {
+                    const y = exactYNodrag(t);
+                    if (y < 0) { ctx.lineTo(mapGraphX(t), mapY(0)); break; }
+                    if (t === 0) ctx.moveTo(mapGraphX(t), mapY(y));
+                    else ctx.lineTo(mapGraphX(t), mapY(y));
+                }
+                ctx.stroke();
+                ctx.setLineDash([]); // reset
+            }
+
+            function drawNumericalTraces() {
+                // Drag trace (Solid Blue)
+                if (trace_drag.length > 0) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#2563eb'; // blue-600
+                    ctx.lineWidth = 2;
+                    ctx.moveTo(mapGraphX(trace_drag[0].t), mapY(trace_drag[0].y));
+                    for (let i = 1; i < trace_drag.length; i++) {
+                        ctx.lineTo(mapGraphX(trace_drag[i].t), mapY(trace_drag[i].y));
+                    }
+                    ctx.stroke();
+                }
+
+                /* // No Drag trace (we rely on theoretical for no-drag to keep it clean, 
+                   // but drawing it verifies numerical accuracy)
+                if (trace_nodrag.length > 0) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#475569'; // slate-600
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(mapGraphX(trace_nodrag[0].t), mapY(trace_nodrag[0].y));
+                    for (let i = 1; i < trace_nodrag.length; i++) {
+                        ctx.lineTo(mapGraphX(trace_nodrag[i].t), mapY(trace_nodrag[i].y));
+                    }
+                    ctx.stroke();
+                } */
+            }
+
+            function drawObjects() {
+                // Draw 1D Balls
+                const xCenter1D_nd = X_SPLIT * 0.35;
+                const xCenter1D_d = X_SPLIT * 0.65;
+                
+                // No drag ball
+                if (sim_y_nodrag >= 0) {
+                    ctx.beginPath();
+                    ctx.arc(xCenter1D_nd, mapY(sim_y_nodrag), 8, 0, Math.PI * 2);
+                    ctx.fillStyle = '#94a3b8'; // slate-400
+                    ctx.fill();
+                    ctx.strokeStyle = '#475569';
+                    ctx.stroke();
+                }
+
+                // Drag ball
+                if (sim_y_drag >= 0) {
+                    ctx.beginPath();
+                    ctx.arc(xCenter1D_d, mapY(sim_y_drag), 8, 0, Math.PI * 2);
+                    ctx.fillStyle = '#3b82f6'; // blue-500
+                    ctx.fill();
+                    ctx.strokeStyle = '#1d4ed8';
+                    ctx.stroke();
+                }
+
+                // Draw Graph Plot Points
+                if (sim_y_nodrag >= 0) {
+                    ctx.beginPath();
+                    ctx.arc(mapGraphX(sim_t), mapY(sim_y_nodrag), 5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#94a3b8';
+                    ctx.fill();
+                }
+
+                if (sim_y_drag >= 0) {
+                    ctx.beginPath();
+                    ctx.arc(mapGraphX(sim_t), mapY(sim_y_drag), 5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#2563eb';
+                    ctx.fill();
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                drawTheoreticalCurves();
+                drawNumericalTraces();
+                drawAxes();
+                drawObjects();
+            }
+
+            // --- Numerical Integration Loop ---
+            let lastTime = 0;
+            const FIXED_DT = 1 / 60; // Internal physics step
+
+            function animateLoop(timestamp) {
+                if (!isPlaying) return;
+
+                // Time elapsed in real-time seconds since last frame
+                let dtReal = (timestamp - lastTime) / 1000;
+                lastTime = timestamp;
+                
+                // Cap dtReal to prevent huge jumps if tab was inactive
+                if (dtReal > 0.1) dtReal = 0.1; 
+
+                // We want to simulate real time. 
+                // We divide into small Euler steps for accuracy.
+                const subSteps = 10;
+                const dt = dtReal / subSteps;
+                
+                let simulationActive = false;
+
+                for (let i = 0; i < subSteps; i++) {
+                    // Update Drag (Euler method)
+                    if (sim_y_drag >= 0) {
+                        simulationActive = true;
+                        // dv/dt = -g - (k/m)*v
+                        const a_drag = -g - (k / m) * sim_v_drag;
+                        sim_v_drag += a_drag * dt;
+                        sim_y_drag += sim_v_drag * dt;
+                    } else {
+                        sim_y_drag = 0;
+                        sim_v_drag = 0;
+                    }
+
+                    // Update No-Drag (Euler method)
+                    if (sim_y_nodrag >= 0) {
+                        simulationActive = true;
+                        const a_nodrag = -g;
+                        sim_v_nodrag += a_nodrag * dt;
+                        sim_y_nodrag += sim_v_nodrag * dt;
+                    } else {
+                        sim_y_nodrag = 0;
+                        sim_v_nodrag = 0;
+                    }
+                    
+                    sim_t += dt;
+                }
+                
+                // Record trace for drawing
+                if (sim_t <= t_max_graph) {
+                    if(sim_y_drag > 0) trace_drag.push({t: sim_t, y: sim_y_drag});
+                    if(sim_y_nodrag > 0) trace_nodrag.push({t: sim_t, y: sim_y_nodrag});
+                }
+
+                updateTelemetryUI();
+                draw();
+
+                if (simulationActive) {
+                    animationFrameId = requestAnimationFrame(animateLoop);
+                } else {
+                    isPlaying = false;
+                    btnPlay.textContent = "Simulate";
+                    btnPlay.classList.replace('bg-amber-600', 'bg-blue-600');
+                    btnPlay.classList.replace('hover:bg-amber-700', 'hover:bg-blue-700');
+                }
+            }
+
+            // --- Event Listeners ---
+            window.addEventListener('resize', resizeCanvas);
+            
+            [sliderV0, sliderY0, sliderM, sliderK].forEach(slider => {
+                slider.addEventListener('input', () => {
+                    // Only update parameters and redraw theoretical, reset simulation
+                    resetSimulation();
+                    if(isPlaying) {
+                        isPlaying = false;
+                        cancelAnimationFrame(animationFrameId);
+                        btnPlay.textContent = "Simulate";
+                        btnPlay.classList.replace('bg-amber-600', 'bg-blue-600');
+                        btnPlay.classList.replace('hover:bg-amber-700', 'hover:bg-blue-700');
+                    }
+                });
+            });
+
+            btnPlay.addEventListener('click', () => {
+                if (isPlaying) {
+                    isPlaying = false;
+                    cancelAnimationFrame(animationFrameId);
+                    btnPlay.textContent = "Resume";
+                    btnPlay.classList.replace('bg-amber-600', 'bg-blue-600');
+                    btnPlay.classList.replace('hover:bg-amber-700', 'hover:bg-blue-700');
+                } else {
+                    // If both hit ground, restart
+                    if (sim_y_drag <= 0 && sim_y_nodrag <= 0) {
+                        resetSimulation();
+                    }
+                    
+                    isPlaying = true;
+                    btnPlay.textContent = "Pause";
+                    btnPlay.classList.replace('bg-blue-600', 'bg-amber-600');
+                    btnPlay.classList.replace('hover:bg-blue-700', 'hover:bg-amber-700');
+                    lastTime = performance.now();
+                    animationFrameId = requestAnimationFrame(animateLoop);
+                }
+            });
+
+            btnReset.addEventListener('click', () => {
+                isPlaying = false;
+                cancelAnimationFrame(animationFrameId);
+                btnPlay.textContent = "Simulate";
+                btnPlay.classList.replace('bg-amber-600', 'bg-blue-600');
+                btnPlay.classList.replace('hover:bg-amber-700', 'hover:bg-blue-700');
+                resetSimulation();
+            });
+
+            // Initial setup
+            setTimeout(() => {
+                resizeCanvas();
+                resetSimulation();
+            }, 50);
+        });
+    </script>
+</body>
+</html>

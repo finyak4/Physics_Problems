@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 07 - Physics basics</title>
+        <title>7. Dynamics with Friction - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#7-dynamics-with-friction" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 07
+              7. Dynamics with Friction
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,66 @@
 
 
 
-  <h1>Solution 07</h1>
-
-
+<h1 id="7-dynamics-with-friction">7. Dynamics with Friction</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>A 5 kg block is placed on a 10 kg block. A horizontal force of 45 N is applied to the 10 kg block, and the 5 kg block is tied to the wall. The coefficient of kinetic friction between all moving surfaces is 0.2. Find the acceleration of the 10 kg block.</p>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<ol>
+<li>
+<p><strong>Identify the forces on the 10 kg block (<span class="arithmatex">\(m_2 = 10 \text{ kg}\)</span>):</strong></p>
+</li>
+<li>
+<p>The applied horizontal force <span class="arithmatex">\(F = 45 \text{ N}\)</span> acts to the right.</p>
+</li>
+<li>The friction force from the floor <span class="arithmatex">\(f_{k2}\)</span> acts to the left.</li>
+<li>
+<p>The friction force from the 5 kg block (<span class="arithmatex">\(m_1 = 5 \text{ kg}\)</span>) above it <span class="arithmatex">\(f_{k1}\)</span> acts to the left.</p>
+</li>
+<li>
+<p><strong>Calculate the normal forces:</strong></p>
+</li>
+<li>
+<p>For the 5 kg block, the normal force <span class="arithmatex">\(N_1\)</span> between the two blocks is just the weight of the top block:
+     $$ N_1 = m_1 g = 5 \times 9.81 = 49.05 \text{ N} $$</p>
+</li>
+<li>
+<p>For the 10 kg block, the normal force <span class="arithmatex">\(N_2\)</span> between the bottom block and the floor must support both blocks:
+     $$ N_2 = (m_1 + m_2) g = (5 + 10) \times 9.81 = 15 \times 9.81 = 147.15 \text{ N} $$</p>
+</li>
+<li>
+<p><strong>Calculate the friction forces:</strong></p>
+</li>
+<li>
+<p>Friction between the 5 kg block and the 10 kg block (<span class="arithmatex">\(f_{k1}\)</span>):
+     $$ f_{k1} = \mu_k N_1 = 0.2 \times 49.05 = 9.81 \text{ N} $$</p>
+</li>
+<li>
+<p>Friction between the 10 kg block and the floor (<span class="arithmatex">\(f_{k2}\)</span>):
+     $$ f_{k2} = \mu_k N_2 = 0.2 \times 147.15 = 29.43 \text{ N} $$</p>
+</li>
+<li>
+<p><strong>Apply Newton's Second Law to the 10 kg block:</strong></p>
+</li>
+<li>
+<p>The net force on the 10 kg block is <span class="arithmatex">\(F_{\text{net}} = F - f_{k1} - f_{k2}\)</span>.</p>
+</li>
+<li>According to Newton's Second Law:
+     $$ F_{\text{net}} = m_2 a_2 $$</li>
+<li>
+<p>Substituting the forces:
+     $$ F - f_{k1} - f_{k2} = m_2 a_2 $$</p>
+</li>
+<li>
+<p><strong>Solve for the acceleration <span class="arithmatex">\(a_2\)</span>:</strong></p>
+</li>
+</ol>
+<p>$$ 45 - 9.81 - 29.43 = 10 \times a_2 $$
+   $$ 45 - 39.24 = 10 a_2 $$
+   $$ 5.76 = 10 a_2 \implies a_2 = 0.576 \text{ m/s}^2 $$</p>
+<ol>
+<li><strong>Conclusion:</strong>
+   The acceleration of the 10 kg block is <strong><span class="arithmatex">\(0.576 \text{ m/s}^2\)</span></strong>.</li>
+</ol>
 
 
 

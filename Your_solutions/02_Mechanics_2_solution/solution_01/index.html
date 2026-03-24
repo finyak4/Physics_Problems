@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 01 - Physics basics</title>
+        <title>1. Gravitational Dependence - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#1-gravitational-dependence" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 01
+              1. Gravitational Dependence
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,48 @@
 
 
 
-  <h1>Solution 01</h1>
-
-
+<h1 id="1-gravitational-dependence">1. Gravitational Dependence</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>A simple pendulum has a period of 4 seconds on Earth. What would its period be on the Moon, where the gravitational acceleration is about 1/6th of Earth's?</p>
+<p>What is the required length of a simple pendulum to have a period of exactly 1 second on Earth?</p>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p><strong>Part 1: Period on the Moon</strong></p>
+<ol>
+<li>
+<p>The period of a simple pendulum is given by the formula:
+   $$ T = 2\pi \sqrt{\frac{L}{g}} $$
+   where <span class="arithmatex">\(L\)</span> is the length and <span class="arithmatex">\(g\)</span> is the acceleration due to gravity.</p>
+</li>
+<li>
+<p>We are given the period on Earth <span class="arithmatex">\(T_E = 4\text{ s}\)</span>. Therefore:
+   $$ T_E = 2\pi \sqrt{\frac{L}{g_E}} = 4\text{ s} $$</p>
+</li>
+<li>
+<p>For the Moon, the gravitational acceleration is <span class="arithmatex">\(g_M = \frac{g_E}{6}\)</span>. The period on the Moon <span class="arithmatex">\(T_M\)</span> will be:
+   $$ T_M = 2\pi \sqrt{\frac{L}{g_M}} = 2\pi \sqrt{\frac{L}{g_E/6}} = \sqrt{6} \left( 2\pi \sqrt{\frac{L}{g_E}} \right) $$</p>
+</li>
+<li>
+<p>Substitute <span class="arithmatex">\(T_E\)</span> into the equation:
+   $$ T_M = \sqrt{6} \, T_E = \sqrt{6} \times 4\text{ s} \approx 2.449 \times 4 \approx 9.796\text{ s} $$</p>
+</li>
+</ol>
+<p><strong>Part 2: Required length for a 1-second period on Earth</strong></p>
+<ol>
+<li>
+<p>Using the same formula <span class="arithmatex">\(T = 2\pi \sqrt{\frac{L}{g}}\)</span>, set <span class="arithmatex">\(T = 1\text{ s}\)</span> and solve for <span class="arithmatex">\(L\)</span>.</p>
+</li>
+<li>
+<p>Note that <span class="arithmatex">\(g\)</span> on Earth is approximately <span class="arithmatex">\(9.81\text{ m/s}^2\)</span>.</p>
+</li>
+<li>
+<p>Rearranging the formula for <span class="arithmatex">\(L\)</span>:
+   $$ L = \frac{T^2 \cdot g}{4\pi^2} $$</p>
+</li>
+<li>
+<p>Substitute the values:
+   $$ L = \frac{(1\text{ s})^2 \cdot 9.81\text{ m/s}^2}{4\pi^2} \approx \frac{9.81}{39.478} \approx 0.248\text{ m} \text{ or } 24.8\text{ cm} $$</p>
+</li>
+</ol>
 
 
 

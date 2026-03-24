@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 08 - Physics basics</title>
+        <title>8. Work of a variable force - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#8-work-of-a-variable-force" class="md-skip">
+          Przejdź do treści
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 08
+              8. Work of a variable force
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Spis treści
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,54 @@
 
 
 
-  <h1>Solution 08</h1>
-
-
+<h1 id="8-work-of-a-variable-force">8. Work of a variable force</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>Given a one-dimensional force:
+$$ F(x)=-kx $$</p>
+<ul>
+<li>Write down the equation of motion and solve it.</li>
+<li>Calculate the work done during the displacement from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(x_0\)</span>.</li>
+<li>Interpret the result as potential energy.</li>
+<li>Verify the relationship <span class="arithmatex">\(F = -\frac{dU}{dx}\)</span>.</li>
+<li>Draw the graph of <span class="arithmatex">\(F(x)\)</span> and <span class="arithmatex">\(U(x)\)</span>.</li>
+</ul>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p><strong>1. Equation of motion and its solution:</strong></p>
+<ul>
+<li>According to Newton's Second Law, <span class="arithmatex">\(F = ma = m\frac{d^2x}{dt^2}\)</span>.</li>
+<li>Therefore, the equation of motion is:
+  $$ m\frac{d^2x}{dt^2} = -kx \implies \frac{d^2x}{dt^2} + \frac{k}{m}x = 0 $$</li>
+<li>Let <span class="arithmatex">\(\omega^2 = \frac{k}{m}\)</span>. The equation becomes a standard harmonic oscillator equation:
+  $$ \frac{d^2x}{dt^2} + \omega^2 x = 0 $$</li>
+<li>The general solution is:
+  $$ x(t) = A \cos(\omega t + \phi) $$</li>
+</ul>
+<p><strong>2. Work done during displacement from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(x_0\)</span>:</strong></p>
+<ul>
+<li>The work <span class="arithmatex">\(W\)</span> done by the force is given by the integral of <span class="arithmatex">\(F(x)\)</span>:
+  $$ W = \int_0^{x_0} F(x) \, dx = \int_0^{x_0} -kx \, dx $$</li>
+<li>Evaluating the integral:
+  $$ W = -k \left[ \frac{x^2}{2} \right]_0^{x_0} = -\frac{1}{2} k x_0^2 $$</li>
+</ul>
+<p><strong>3. Interpret the result as potential energy:</strong></p>
+<ul>
+<li>The work done by a conservative force equals the negative change in potential energy (<span class="arithmatex">\(\Delta U = -W\)</span>).</li>
+<li>Assuming <span class="arithmatex">\(U(0) = 0\)</span>, we have:
+  $$ U(x_0) - U(0) = -W \implies U(x_0) = -\left(-\frac{1}{2} k x_0^2\right) = \frac{1}{2} k x_0^2 $$</li>
+<li>The potential energy stored in the system (e.g., a spring) at position <span class="arithmatex">\(x\)</span> is <span class="arithmatex">\(U(x) = \frac{1}{2} k x^2\)</span>.</li>
+</ul>
+<p><strong>4. Verify the relationship <span class="arithmatex">\(F = -\frac{dU}{dx}\)</span>:</strong></p>
+<ul>
+<li>We have the potential energy function <span class="arithmatex">\(U(x) = \frac{1}{2} k x^2\)</span>.</li>
+<li>Take the negative derivative with respect to <span class="arithmatex">\(x\)</span>:
+  $$ -\frac{dU}{dx} = -\frac{d}{dx} \left( \frac{1}{2} k x^2 \right) = -\frac{1}{2} k (2x) = -kx $$</li>
+<li>This matches the original force <span class="arithmatex">\(F(x) = -kx\)</span>, verifying the relationship.</li>
+</ul>
+<p><strong>5. Graphs of <span class="arithmatex">\(F(x)\)</span> and <span class="arithmatex">\(U(x)\)</span>:</strong></p>
+<ul>
+<li><strong><span class="arithmatex">\(F(x) = -kx\)</span>:</strong> This is a straight line passing through the origin with a negative slope <span class="arithmatex">\(-k\)</span>.</li>
+<li><strong><span class="arithmatex">\(U(x) = \frac{1}{2}kx^2\)</span>:</strong> This is an upward-opening parabola with its vertex at the origin completely above or on the x-axis.</li>
+</ul>
 
 
 

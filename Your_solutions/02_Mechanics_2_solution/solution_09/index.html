@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 09 - Physics basics</title>
+        <title>9. Vertical throw with drag - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#9-vertical-throw-with-drag" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 09
+              9. Vertical throw with drag
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,50 @@
 
 
 
-  <h1>Solution 09</h1>
-
-
+<h1 id="9-vertical-throw-with-drag">9. Vertical throw with drag</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>We have the equation of motion:
+$$ m\frac{dv}{dt} = -mg - kv $$
+with initial conditions <span class="arithmatex">\(v(0)=v_0\)</span>, <span class="arithmatex">\(x(0)=10\)</span>.</p>
+<ul>
+<li>Solve the equation by analytical methods.</li>
+<li>Determine the maximum height.</li>
+<li>Compare with the case without drag.</li>
+<li>Perform a numerical simulation using HTML or Python.</li>
+</ul>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p><strong>1. Solve the equation analytically:</strong></p>
+<ul>
+<li>The equation of motion is:
+  $$ m \frac{dv}{dt} = -mg - kv \implies \frac{dv}{dt} = -g - \frac{k}{m}v $$</li>
+<li>Rearrange to separate variables:
+  $$ \frac{dv}{g + \frac{k}{m}v} = -dt $$</li>
+<li>Integrate both sides, from <span class="arithmatex">\(t=0\)</span> to <span class="arithmatex">\(t\)</span>, and <span class="arithmatex">\(v(0)=v_0\)</span> to <span class="arithmatex">\(v(t)\)</span>:
+  $$ \int_{v_0}^v \frac{dv}{g + \frac{k}{m}v} = \int_0^t -dt $$
+  $$ \frac{m}{k} \ln \left| \frac{g + \frac{k}{m}v}{g + \frac{k}{m}v_0} \right| = -t $$</li>
+<li>Solve for <span class="arithmatex">\(v(t)\)</span>:
+  $$ g + \frac{k}{m}v = \left( g + \frac{k}{m}v_0 \right) e^{-\frac{kt}{m}} $$
+  $$ v(t) = \left( \frac{mg}{k} + v_0 \right) e^{-\frac{kt}{m}} - \frac{mg}{k} $$</li>
+<li>To find <span class="arithmatex">\(x(t)\)</span>, integrate <span class="arithmatex">\(v(t)\)</span> with respect to time using <span class="arithmatex">\(x(0) = 10\)</span>:
+  $$ x(t) = 10 + \int_0^t v(\tau) \, d\tau $$
+  $$ x(t) = 10 + \left( \frac{mg}{k} + v_0 \right) \left[ -\frac{m}{k} e^{-\frac{k\tau}{m}} \right]_0^t - \frac{mg}{k}t $$
+  $$ x(t) = 10 + \frac{m}{k} \left( v_0 + \frac{mg}{k} \right) \left( 1 - e^{-\frac{kt}{m}} \right) - \frac{mg}{k}t $$</li>
+</ul>
+<p><strong>2. Determine the maximum height:</strong></p>
+<ul>
+<li>Maximum height is reached when velocity becomes <span class="arithmatex">\(0\)</span> (<span class="arithmatex">\(v(t_{\text{top}}) = 0\)</span>).</li>
+<li>Using the velocity formula:
+  $$ 0 = \left( \frac{mg}{k} + v_0 \right) e^{-\frac{kt_{\text{top}}}{m}} - \frac{mg}{k} $$
+  $$ e^{\frac{kt_{\text{top}}}{m}} = \frac{v_0 k}{mg} + 1 \implies t_{\text{top}} = \frac{m}{k} \ln\left( 1 + \frac{kv_0}{mg} \right) $$</li>
+<li>Substitute <span class="arithmatex">\(t_{\text{top}}\)</span> into <span class="arithmatex">\(x(t)\)</span> to find <span class="arithmatex">\(H_{\text{max}}\)</span>. After simplifying:
+  $$ H_{\text{max}} = 10 + \frac{m v_0}{k} - \frac{m^2 g}{k^2} \ln\left( 1 + \frac{k v_0}{m g} \right) $$</li>
+</ul>
+<p><strong>3. Compare with the case without drag:</strong></p>
+<ul>
+<li>Without drag (<span class="arithmatex">\(k=0\)</span>), <span class="arithmatex">\(t_{\text{top}} = \frac{v_0}{g}\)</span> and <span class="arithmatex">\(H_{\text{max}} = 10 + \frac{v_0^2}{2g}\)</span>.</li>
+<li>The presence of the drag force means that the maximum height achieved with drag will be strictly less than without drag, because kinetic energy is continuously dissipated by the drag force.</li>
+</ul>
+<p><a href="../animations/02_09_anim.html">Open the demo</a></p>
 
 
 

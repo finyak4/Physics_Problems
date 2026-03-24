@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 02 - Physics basics</title>
+        <title>2. Harmonic Motion - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#2-harmonic-motion" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 02
+              2. Harmonic Motion
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,40 @@
 
 
 
-  <h1>Solution 02</h1>
-
-
+<h1 id="2-harmonic-motion">2. Harmonic Motion</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>A 10 kg mass is attached to a spring and oscillates according to the equation <span class="arithmatex">\(x(t) = 0.2 \cos(10\pi t)\)</span> (in meters). What is the spring constant <span class="arithmatex">\(k\)</span>? What is the total mechanical energy of the system?</p>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p><strong>Part 1: Spring Constant <span class="arithmatex">\(k\)</span></strong></p>
+<ol>
+<li>
+<p>The equation of motion is given by:
+   $$ x(t) = 0.2 \cos(10\pi t) $$
+   This is in the standard form <span class="arithmatex">\(x(t) = A \cos(\omega t + \phi)\)</span>.</p>
+</li>
+<li>
+<p>By comparing the equations, we identify the angular frequency <span class="arithmatex">\(\omega = 10\pi \text{ rad/s}\)</span> and the amplitude <span class="arithmatex">\(A = 0.2 \text{ m}\)</span>.</p>
+</li>
+<li>
+<p>The relationship between angular frequency, mass, and spring constant is:
+   $$ \omega = \sqrt{\frac{k}{m}} \implies k = m\omega^2 $$</p>
+</li>
+<li>
+<p>Substitute <span class="arithmatex">\(m = 10 \text{ kg}\)</span> and <span class="arithmatex">\(\omega = 10\pi\)</span>:
+   $$ k = 10 \times (10\pi)^2 = 10 \times 100\pi^2 = 1000\pi^2 \, \text{N/m} \approx 9869.6 \, \text{N/m} $$</p>
+</li>
+</ol>
+<p><strong>Part 2: Total Mechanical Energy</strong></p>
+<ol>
+<li>
+<p>The total mechanical energy <span class="arithmatex">\(E\)</span> of a simple harmonic oscillator is given by the maximum potential energy (or maximum kinetic energy):
+   $$ E = \frac{1}{2} k A^2 $$</p>
+</li>
+<li>
+<p>Substitute the values of <span class="arithmatex">\(k\)</span> and <span class="arithmatex">\(A\)</span>:
+   $$ E = \frac{1}{2} (1000\pi^2) (0.2)^2 = 500\pi^2 \times 0.04 = 20\pi^2 \, \text{J} \approx 197.4 \, \text{J} $$</p>
+</li>
+</ol>
 
 
 
