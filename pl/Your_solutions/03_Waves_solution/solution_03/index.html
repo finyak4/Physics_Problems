@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 03 - Physics basics</title>
+        <title>Solution 3: Superposition Principle - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#solution-3-superposition-principle" class="md-skip">
+          Przejdź do treści
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 03
+              Solution 3: Superposition Principle
             
           </span>
         </div>
@@ -1370,6 +1375,49 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Spis treści
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-write-the-sum-of-the-two-waves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Write the sum of the two waves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-use-the-sum-to-product-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Use the sum-to-product identity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-identify-the-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Identify the nodes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1434,30 @@
 
 
 
-  <h1>Solution 03</h1>
-
-
+<h1 id="solution-3-superposition-principle">Solution 3: Superposition Principle</h1>
+<p><strong>Problem:</strong>
+Two waves are described by the equations <span class="arithmatex">\(y_1(x, t) = A \sin(kx - \omega t)\)</span> and <span class="arithmatex">\(y_2(x, t) = A \sin(kx + \omega t)\)</span>. What is the equation of the resulting standing wave? Identify the positions of the nodes.</p>
+<hr />
+<h2 id="step-1-write-the-sum-of-the-two-waves">Step 1: Write the sum of the two waves</h2>
+<div class="arithmatex">\[
+y(x, t) = y_1 + y_2 = A \sin(kx - \omega t) + A \sin(kx + \omega t)
+\]</div>
+<h2 id="step-2-use-the-sum-to-product-identity">Step 2: Use the sum-to-product identity</h2>
+<div class="arithmatex">\[
+\sin \alpha + \sin \beta = 2 \sin\left(\frac{\alpha + \beta}{2}\right) \cos\left(\frac{\alpha - \beta}{2}\right)
+\]</div>
+<p>Let <span class="arithmatex">\(\alpha = kx - \omega t\)</span>, <span class="arithmatex">\(\beta = kx + \omega t\)</span>:</p>
+<div class="arithmatex">\[
+y(x, t) = 2A \sin(kx) \cos(\omega t)
+\]</div>
+<h2 id="step-3-identify-the-nodes">Step 3: Identify the nodes</h2>
+<p>Nodes occur where <span class="arithmatex">\(\sin(kx) = 0\)</span>:</p>
+<div class="arithmatex">\[
+kx = n\pi \implies x = \frac{n\pi}{k},\ n = 0, \pm1, \pm2, ...
+\]</div>
+<p><strong>Final Answer:</strong>
+- Standing wave: <span class="arithmatex">\(y(x, t) = 2A \sin(kx) \cos(\omega t)\)</span>
+- Nodes at <span class="arithmatex">\(x = \frac{n\pi}{k}\)</span></p>
 
 
 

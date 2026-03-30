@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 09 - Physics basics</title>
+        <title>Solution 9: Damped Oscillator (Animation) - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#solution-9-damped-oscillator-animation" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 09
+              Solution 9: Damped Oscillator (Animation)
             
           </span>
         </div>
@@ -1370,6 +1375,27 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#solution-and-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solution and Animation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1412,25 @@
 
 
 
-  <h1>Solution 09</h1>
-
-
+<h1 id="solution-9-damped-oscillator-animation">Solution 9: Damped Oscillator (Animation)</h1>
+<p><strong>Problem:</strong>
+For the given equation describing a damped harmonic oscillator:</p>
+<div class="arithmatex">\[
+m \frac{d^2 x}{dt^2} + b \frac{dx}{dt} + k x = 0
+\]</div>
+<p>Make interactive HTML animation with a slider for the parameter <span class="arithmatex">\(b\)</span> to show the behavior of the system in the underdamped, critically damped, and overdamped cases. Include graphs of <span class="arithmatex">\(x(t)\)</span> and the phase portrait for each case.</p>
+<hr />
+<h2 id="solution-and-animation">Solution and Animation</h2>
+<p>See the interactive animation in the <code>animations/</code> folder: <a href="../animations/damped_oscillator.html">damped_oscillator.html</a></p>
+<p><strong>How to use:</strong>
+- Use the slider to change the damping parameter <span class="arithmatex">\(b\)</span>.
+- Observe the time evolution <span class="arithmatex">\(x(t)\)</span> and the phase portrait (<span class="arithmatex">\(x\)</span> vs <span class="arithmatex">\(\dot{x}\)</span>) for different damping regimes.</p>
+<p><strong>Theory:</strong>
+- Underdamped: <span class="arithmatex">\(b^2 &lt; 4mk\)</span>
+- Critically damped: <span class="arithmatex">\(b^2 = 4mk\)</span>
+- Overdamped: <span class="arithmatex">\(b^2 &gt; 4mk\)</span></p>
+<hr />
+<p><strong>Note:</strong> If the animation file does not exist yet, please request its creation.</p>
 
 
 

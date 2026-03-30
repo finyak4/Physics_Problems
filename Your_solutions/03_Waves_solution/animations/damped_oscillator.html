@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Damped Harmonic Oscillator Animation</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    #controls { margin-bottom: 1em; }
+    canvas { border: 1px solid #ccc; margin: 1em 0; }
+    .plot-title { font-weight: bold; margin-top: 1em; }
+  </style>
+</head>
+<body>
+  <h2>Damped Harmonic Oscillator</h2>
+  <div id="controls">
+    <label for="bRange">Damping (b): <span id="bValue">0.5</span></label>
+    <input type="range" id="bRange" min="0" max="4" step="0.01" value="0.5">
+  </div>
+  <div class="plot-title">x(t)</div>
+  <canvas id="xtPlot" width="500" height="200"></canvas>
+  <div class="plot-title">Phase Portrait (x vs v)</div>
+  <canvas id="phasePlot" width="500" height="200"></canvas>
+  <script>
+    // Parameters
+    const m = 1;
+    const k = 1;
+    let b = 0.5;
+    const x0 = 1;
+    const v0 = 0;
+    const tMax = 10;
+    const dt = 0.01;
+
+    // Elements
+    const bRange = document.getElementById('bRange');
+    const bValue = document.getElementById('bValue');
+    const xtPlot = document.getElementById('xtPlot');
+    const phasePlot = document.getElementById('phasePlot');
+    const ctxXt = xtPlot.getContext('2d');
+    const ctxPhase = phasePlot.getContext('2d');
+
+    function solveDampedOscillator(b) {
+      let t = 0;
+      let x = x0;
+      let v = v0;
+      const xs = [], vs = [], ts = [];
+      while (t <= tMax) {
+        xs.push(x);
+        vs.push(v);
+        ts.push(t);
+        // Euler method
+        const a = -(b/m)*v - (k/m)*x;
+        v += a * dt;
+        x += v * dt;
+        t += dt;
+      }
+      return { xs, vs, ts };
+    }
+
+    function plotXt(ts, xs) {
+      ctxXt.clearRect(0, 0, xtPlot.width, xtPlot.height);
+      ctxXt.beginPath();
+      for (let i = 0; i < ts.length; i++) {
+        const px = (ts[i]/tMax) * xtPlot.width;
+        const py = xtPlot.height/2 - xs[i]*80;
+        if (i === 0) ctxXt.moveTo(px, py);
+        else ctxXt.lineTo(px, py);
+      }
+      ctxXt.strokeStyle = '#0074D9';
+      ctxXt.lineWidth = 2;
+      ctxXt.stroke();
+      // Axes
+      ctxXt.beginPath();
+      ctxXt.moveTo(0, xtPlot.height/2);
+      ctxXt.lineTo(xtPlot.width, xtPlot.height/2);
+      ctxXt.strokeStyle = '#aaa';
+      ctxXt.lineWidth = 1;
+      ctxXt.stroke();
+    }
+
+    function plotPhase(xs, vs) {
+      ctxPhase.clearRect(0, 0, phasePlot.width, phasePlot.height);
+      ctxPhase.beginPath();
+      for (let i = 0; i < xs.length; i++) {
+        const px = phasePlot.width/2 + xs[i]*120;
+        const py = phasePlot.height/2 - vs[i]*60;
+        if (i === 0) ctxPhase.moveTo(px, py);
+        else ctxPhase.lineTo(px, py);
+      }
+      ctxPhase.strokeStyle = '#FF4136';
+      ctxPhase.lineWidth = 2;
+      ctxPhase.stroke();
+      // Axes
+      ctxPhase.beginPath();
+      ctxPhase.moveTo(phasePlot.width/2, 0);
+      ctxPhase.lineTo(phasePlot.width/2, phasePlot.height);
+      ctxPhase.moveTo(0, phasePlot.height/2);
+      ctxPhase.lineTo(phasePlot.width, phasePlot.height/2);
+      ctxPhase.strokeStyle = '#aaa';
+      ctxPhase.lineWidth = 1;
+      ctxPhase.stroke();
+    }
+
+    function updatePlots() {
+      bValue.textContent = b.toFixed(2);
+      const { xs, vs, ts } = solveDampedOscillator(b);
+      plotXt(ts, xs);
+      plotPhase(xs, vs);
+    }
+
+    bRange.addEventListener('input', (e) => {
+      b = parseFloat(e.target.value);
+      updatePlots();
+    });
+
+    updatePlots();
+  </script>
+</body>
+</html>
