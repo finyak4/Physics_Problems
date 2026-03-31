@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 3: Superposition Principle - Physics basics</title>
+        <title>3. Superposition Principle - Physics basics</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#solution-3-superposition-principle" class="md-skip">
+        <a href="#3-superposition-principle" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 3: Superposition Principle
+              3. Superposition Principle
             
           </span>
         </div>
@@ -1385,10 +1385,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#step-1-write-the-sum-of-the-two-waves" class="md-nav__link">
+  <a href="#problem-statement" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Write the sum of the two waves
+        Problem Statement
       
     </span>
   </a>
@@ -1396,21 +1396,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-use-the-sum-to-product-identity" class="md-nav__link">
+  <a href="#step-by-step-solution" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Use the sum-to-product identity
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-identify-the-nodes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Identify the nodes
+        Step-by-Step Solution
       
     </span>
   </a>
@@ -1434,30 +1423,64 @@
 
 
 
-<h1 id="solution-3-superposition-principle">Solution 3: Superposition Principle</h1>
-<p><strong>Problem:</strong>
-Two waves are described by the equations <span class="arithmatex">\(y_1(x, t) = A \sin(kx - \omega t)\)</span> and <span class="arithmatex">\(y_2(x, t) = A \sin(kx + \omega t)\)</span>. What is the equation of the resulting standing wave? Identify the positions of the nodes.</p>
+<h1 id="3-superposition-principle">3. Superposition Principle</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>Two waves are described by the equations <span class="arithmatex">\(y_1(x, t) = A \sin(kx - \omega t)\)</span> and <span class="arithmatex">\(y_2(x, t) = A \sin(kx + \omega t)\)</span>. What is the equation of the resulting standing wave? Identify the positions of the nodes.</p>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p><strong>Part 1: Equation of the Standing Wave</strong></p>
+<ol>
+<li>
+<p>By the superposition principle, the resulting wave (<span class="arithmatex">\(y\)</span>) is the sum of the two individual waves:
+   $$ y(x,t) = y_1(x,t) + y_2(x,t) $$
+   $$ y(x,t) = A \sin(kx - \omega t) + A \sin(kx + \omega t) $$</p>
+</li>
+<li>
+<p>Use the trigonometric identity for the sum of sines:
+   $$ \sin(\alpha) + \sin(\beta) = 2 \sin\left(\frac{\alpha + \beta}{2}\right) \cos\left(\frac{\alpha - \beta}{2}\right) $$
+   Here, let <span class="arithmatex">\(\alpha = kx + \omega t\)</span> and <span class="arithmatex">\(\beta = kx - \omega t\)</span> (since <span class="arithmatex">\(\sin\)</span> is odd, <span class="arithmatex">\(\sin(kx - \omega t) + \sin(kx + \omega t)\)</span> is the same).</p>
+</li>
+<li>
+<p>Set up <span class="arithmatex">\(\alpha\)</span> and <span class="arithmatex">\(\beta\)</span>:</p>
+</li>
+<li><span class="arithmatex">\(\alpha = kx - \omega t\)</span></li>
+<li><span class="arithmatex">\(\beta = kx + \omega t\)</span></li>
+</ol>
+<p>$$ y(x,t) = A \left[ 2 \sin\left(\frac{(kx - \omega t) + (kx + \omega t)}{2}\right) \cos\left(\frac{(kx - \omega t) - (kx + \omega t)}{2}\right) \right] $$</p>
+<ol>
+<li>Simplify the terms:
+   $$ \frac{\alpha + \beta}{2} = \frac{2kx}{2} = kx $$
+   $$ \frac{\alpha - \beta}{2} = \frac{-2\omega t}{2} = -\omega t $$</li>
+</ol>
+<p>This gives:
+   $$ y(x,t) = 2A \sin(kx) \cos(-\omega t) $$</p>
+<ol>
+<li>Since cosine is an even function (<span class="arithmatex">\(\cos(-\theta) = \cos(\theta)\)</span>):
+   $$ y(x,t) = 2A \sin(kx) \cos(\omega t) $$
+   This is the standard equation of a standing wave.</li>
+</ol>
 <hr />
-<h2 id="step-1-write-the-sum-of-the-two-waves">Step 1: Write the sum of the two waves</h2>
-<div class="arithmatex">\[
-y(x, t) = y_1 + y_2 = A \sin(kx - \omega t) + A \sin(kx + \omega t)
-\]</div>
-<h2 id="step-2-use-the-sum-to-product-identity">Step 2: Use the sum-to-product identity</h2>
-<div class="arithmatex">\[
-\sin \alpha + \sin \beta = 2 \sin\left(\frac{\alpha + \beta}{2}\right) \cos\left(\frac{\alpha - \beta}{2}\right)
-\]</div>
-<p>Let <span class="arithmatex">\(\alpha = kx - \omega t\)</span>, <span class="arithmatex">\(\beta = kx + \omega t\)</span>:</p>
-<div class="arithmatex">\[
-y(x, t) = 2A \sin(kx) \cos(\omega t)
-\]</div>
-<h2 id="step-3-identify-the-nodes">Step 3: Identify the nodes</h2>
-<p>Nodes occur where <span class="arithmatex">\(\sin(kx) = 0\)</span>:</p>
-<div class="arithmatex">\[
-kx = n\pi \implies x = \frac{n\pi}{k},\ n = 0, \pm1, \pm2, ...
-\]</div>
-<p><strong>Final Answer:</strong>
-- Standing wave: <span class="arithmatex">\(y(x, t) = 2A \sin(kx) \cos(\omega t)\)</span>
-- Nodes at <span class="arithmatex">\(x = \frac{n\pi}{k}\)</span></p>
+<p><strong>Part 2: Position of the Nodes</strong></p>
+<ol>
+<li>Nodes are points that are always at rest. At roughly any time <span class="arithmatex">\(t\)</span>, their displacement is exactly zero (<span class="arithmatex">\(y = 0\)</span>).</li>
+<li>
+<p>Based on the equation <span class="arithmatex">\(y(x,t) = [2A \sin(kx)] \cos(\omega t)\)</span>, the displacement is persistently zero when the amplitude term disappears:
+   $$ \sin(kx) = 0 $$</p>
+</li>
+<li>
+<p>The function <span class="arithmatex">\(\sin(\theta)\)</span> is zero whenever its argument is an integer multiple of <span class="arithmatex">\(\pi\)</span>:
+   $$ kx = n\pi \quad (\text{where } n = 0, \pm 1, \pm 2, \dots) $$</p>
+</li>
+<li>
+<p>The wave number <span class="arithmatex">\(k\)</span> is defined in terms of the wavelength <span class="arithmatex">\(\lambda\)</span> as <span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span>. Substitute this for <span class="arithmatex">\(k\)</span>:
+   $$ \frac{2\pi}{\lambda} x = n\pi $$</p>
+</li>
+<li>
+<p>Solve for <span class="arithmatex">\(x\)</span>:
+   $$ x = \frac{n\pi \lambda}{2\pi} = \frac{nd\lambda}{2} $$
+   So the nodes occur at positions:
+   $$ x = 0, \frac{\lambda}{2}, \lambda, \frac{3\lambda}{2}, \dots $$</p>
+</li>
+</ol>
 
 
 
