@@ -7,6 +7,8 @@ where $\vec{r_0}$ is the position of the dot, and $\alpha$ is a parameter that c
 
 ## Interactive Solution
 
+[Open the demo](animations/03_10_anim.html)
+
 Click anywhere inside the black canvas to place a wave source. Adjust the decay parameter ($\alpha$) to see how it affects the wave amplitude over distance.
 
 <div id="wave-sources" style="margin-bottom: 2rem;">

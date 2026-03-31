@@ -14,17 +14,21 @@ A sound wave in air has a frequency of 440 Hz. If the speed of sound in air is 3
    $$ \lambda = \frac{v}{f} $$
 
 3. Given:
+
    - Speed of sound in air ($v_{\text{air}}$) = $343\text{ m/s}$
    - Frequency ($f$) = $440\text{ Hz}$
 
 4. Substitute the values into the formula:
+
    $$ \lambda_{\text{air}} = \frac{343\text{ m/s}}{440\text{ Hz}} \approx 0.780\text{ m} $$
 
 **Part 2: Wavelength in water**
 
 1. Given:
+
    - Speed of sound in water ($v_{\text{water}}$) = $1482\text{ m/s}$
    - Frequency ($f$) = $440\text{ Hz}$ (Note: frequency remains constant when a wave passes from one medium to another).
 
 2. Substitute the values into the formula:
+
    $$ \lambda_{\text{water}} = \frac{1482\text{ m/s}}{440\text{ Hz}} \approx 3.368\text{ m} $$
