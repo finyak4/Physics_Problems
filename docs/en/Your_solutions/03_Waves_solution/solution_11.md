@@ -7,6 +7,8 @@ $$ u(\vec{r},t) = \frac{A}{|\vec{r}-\vec{r_1}|} \sin(k |\vec{r} - \vec{r_1}| - \
 
 where $\vec{r_1}$ and $\vec{r_2}$ are the position vectors of the slits. The user should be able to change the distance between the slits $d = |\vec{r_1} - \vec{r_2}|$ and the wavelength $\lambda$. The animation should visualize the resulting interference pattern in real time.
 
+Open [animation](animations/03_11_anim.html).
+
 ## Interactive Solution
 
 Adjust the slit distance $d$ and the wavelength $\lambda$. The corresponding interference pattern develops on the right. Dark banded regions define points of entirely destructive interference (standing nodes), whereas bright oscillating regions represent positive constructive interference (antinodes).
