@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Young's Double-Slit Interference</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            overflow: hidden;
+        }
+        
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #webgl-canvas { z-index: 1; }
+        #ui-canvas { z-index: 2; pointer-events: none; }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #0ea5e9; /* Sky 500 */
+            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: transform 0.1s;
+        }
+        
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #334155;
+            border-radius: 2px;
+        }
+        
+        .math-block {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.2px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+    </style>
+</head>
+<body class="text-slate-200 antialiased h-screen flex flex-col md:flex-row">
+
+    <!-- Left Panel: Controls & Information -->
+    <div class="w-full md:w-96 flex-shrink-0 bg-slate-900 shadow-2xl z-10 flex flex-col h-full border-r border-slate-700/50">
+        <div class="p-6 overflow-y-auto custom-scrollbar flex-grow">
+            <h1 class="text-2xl font-bold text-white mb-2 tracking-tight">Two-Slit Interference</h1>
+            <p class="text-slate-400 mb-6 text-sm">
+                Young's experiment demonstrates the wave nature of light. Two slits act as coherent point sources, creating an interference pattern.
+            </p>
+
+            <!-- Parameters -->
+            <div class="space-y-5 mb-6 bg-slate-800/50 p-5 rounded-xl border border-slate-700 shadow-inner">
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Wave Parameters</h2>
+                
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-300 mb-2">
+                        <span>Slit Separation (<span class="math-block italic">d</span>)</span>
+                        <span class="text-sky-400 font-bold"><span id="val-d">0.15</span> m</span>
+                    </label>
+                    <input type="range" id="slider-d" min="0.05" max="0.4" step="0.01" value="0.15">
+                </div>
+
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-300 mb-2">
+                        <span>Wavelength (<span class="math-block italic">λ</span>)</span>
+                        <span class="text-sky-400 font-bold"><span id="val-lambda">0.05</span> m</span>
+                    </label>
+                    <input type="range" id="slider-lambda" min="0.015" max="0.15" step="0.005" value="0.05">
+                </div>
+
+                <div>
+                    <label class="flex justify-between text-sm font-medium text-slate-300 mb-2">
+                        <span>Wave Speed (<span class="math-block italic">v</span>)</span>
+                        <span class="text-sky-400 font-bold"><span id="val-v">0.2</span> m/s</span>
+                    </label>
+                    <input type="range" id="slider-v" min="0.0" max="0.5" step="0.02" value="0.2">
+                </div>
+
+                <div class="flex items-center pt-3 border-t border-slate-700/50 mt-2">
+                    <input type="checkbox" id="toggle-intensity" checked class="w-4 h-4 text-sky-500 bg-slate-800 border-slate-600 rounded focus:ring-sky-500 focus:ring-offset-slate-900 cursor-pointer">
+                    <label for="toggle-intensity" class="ml-2 text-sm font-medium text-slate-300 cursor-pointer">Show Intensity Graph on Screen</label>
+                </div>
+            </div>
+
+            <!-- Math Solution -->
+            <details class="group bg-slate-800/50 rounded-xl border border-slate-700 shadow-inner" open>
+                <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-slate-200 hover:bg-slate-800 transition-colors">
+                    Wave Equations
+                    <svg class="w-5 h-5 text-slate-500 group-open:-rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </summary>
+                <div class="p-4 pt-0 text-sm text-slate-400 space-y-4 math-block border-t border-slate-700/50 pt-4 overflow-x-auto">
+                    
+                    <div>
+                        <p class="font-bold text-slate-200 font-sans text-xs uppercase mb-2">1. Superposition</p>
+                        <p class="text-xs font-sans mb-1 text-slate-500">The total displacement is the sum of spherical waves from sources <span class="italic text-slate-300">r₁</span> and <span class="italic text-slate-300">r₂</span>:</p>
+                        <p class="pl-2 border-l-2 border-sky-500 text-sky-400 whitespace-nowrap text-[0.95rem] py-1 bg-sky-950/20">
+                            <span class="italic">u(r,t) = </span>
+                            <span class="italic">A / |r - r₁| · sin(k|r - r₁| - ωt) + </span><br>
+                            <span class="italic pl-[3.5rem]">A / |r - r₂| · sin(k|r - r₂| - ωt)</span>
+                        </p>
+                    </div>
+
+                    <div class="border-t border-slate-700/50 pt-3">
+                        <p class="font-bold text-slate-200 font-sans text-xs uppercase mb-2">2. Conditions for Maxima</p>
+                        <p class="text-xs font-sans mb-1 text-slate-500">Constructive interference (bright fringes) occurs when the path difference <span class="italic text-slate-300">Δr</span> is an integer multiple of the wavelength:</p>
+                        <p class="pl-3 border-l-2 border-slate-600 font-bold text-slate-300">
+                            <span class="italic">Δr = |r - r₁| - |r - r₂| ≈ d·sin(θ)</span><br>
+                            <span class="italic">d·sin(θ) = nλ</span> &nbsp;&nbsp;<span class="text-[10px] font-normal font-sans">(n = 0, ±1, ±2...)</span>
+                        </p>
+                    </div>
+
+                    <div class="border-t border-slate-700/50 pt-3">
+                        <p class="font-bold text-slate-200 font-sans text-xs uppercase mb-2">3. Time-Averaged Intensity</p>
+                        <p class="text-xs font-sans mb-1 text-slate-500">The intensity plotted on the right screen is proportional to the square of the amplitude:</p>
+                        <p class="pl-3 border-l-2 border-orange-500/50 text-orange-400/80">
+                            <span class="italic">I ∝ u<sub>max</sub>² = I₁ + I₂ + 2√(I₁I₂)·cos(kΔr)</span>
+                        </p>
+                    </div>
+                </div>
+            </details>
+            
+            <div class="mt-6 p-4 bg-slate-950 rounded-xl text-xs text-slate-400 border border-slate-800">
+                <div class="flex items-center gap-2 mb-2"><div class="w-3 h-3 rounded bg-sky-400"></div> Positive Wave Peak</div>
+                <div class="flex items-center gap-2 mb-2"><div class="w-3 h-3 rounded bg-[#0f172a] border border-slate-600"></div> Zero / Node (Destructive)</div>
+                <div class="flex items-center gap-2"><div class="w-3 h-3 rounded bg-pink-500"></div> Negative Wave Peak</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Right Panel: Visualization -->
+    <div class="flex-grow relative bg-[#0f172a] overflow-hidden" id="canvas-container">
+        <!-- WebGL Canvas renders the wave field -->
+        <canvas id="webgl-canvas"></canvas>
+        <!-- Standard 2D Canvas renders the barrier and graph -->
+        <canvas id="ui-canvas"></canvas>
+    </div>
+
+    <!-- WebGL Shaders -->
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec2 a_position;
+        void main() {
+            gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision highp float;
+
+        uniform vec2 u_resolution;
+        uniform float u_time;
+        
+        uniform float u_d;
+        uniform float u_k;
+        uniform float u_omega;
+        uniform float u_A;
+
+        void main() {
+            // Mapping physical coordinates.
+            // Let height = 1.0 physical unit. Y goes from -0.5 to 0.5.
+            vec2 uv = gl_FragCoord.xy / u_resolution.y;
+            
+            // Offset origin so x=0 is slightly inwards from the left edge
+            float x_offset = 0.15; 
+            uv.x -= x_offset;
+            uv.y -= 0.5;
+
+            // Slit positions
+            vec2 r1 = vec2(0.0, u_d / 2.0);
+            vec2 r2 = vec2(0.0, -u_d / 2.0);
+
+            vec3 color = vec3(0.03, 0.06, 0.11); // Base dark background
+
+            // Only calculate waves to the right of the barrier
+            if (uv.x >= 0.0) {
+                float d1 = distance(uv, r1);
+                float d2 = distance(uv, r2);
+                
+                // Formula: u = A/r * sin(k*r - w*t)
+                // Add tiny epsilon to avoid div by zero exactly at slit
+                float u1 = (u_A / max(d1, 0.01)) * sin(u_k * d1 - u_omega * u_time);
+                float u2 = (u_A / max(d2, 0.01)) * sin(u_k * d2 - u_omega * u_time);
+                
+                float u_total = u1 + u2;
+
+                // Color mapping
+                // Scale value down visually since 1/r can get very large near slits
+                float val = u_total * 0.05; 
+                float clamped_val = clamp(val, -1.0, 1.0);
+                
+                vec3 colPos  = vec3(0.22, 0.73, 0.96); // Sky
+                vec3 colNeg  = vec3(0.92, 0.28, 0.55); // Pink
+                
+                if (clamped_val > 0.0) {
+                    color = mix(color, colPos, clamped_val);
+                } else {
+                    color = mix(color, colNeg, -clamped_val);
+                }
+            } 
+            // Optional: Show plane wave incoming from the left
+            else {
+                float d_plane = abs(uv.x);
+                // Simple plane wave A*sin(kx - wt). We make it hit the barrier.
+                // It's traveling right, so the phase should match at x=0
+                float u_plane = (u_A * 5.0) * sin(u_k * d_plane + u_omega * u_time); 
+                
+                // Add some attenuation for visual style
+                float val = u_plane * 0.05; 
+                float clamped_val = clamp(val, -1.0, 1.0);
+                
+                vec3 colPos  = vec3(0.22, 0.73, 0.96);
+                vec3 colNeg  = vec3(0.92, 0.28, 0.55);
+                
+                // Fade out far left
+                float fade = smoothstep(-0.5, 0.0, uv.x);
+                
+                if (clamped_val > 0.0) {
+                    color = mix(color, colPos, clamped_val * fade);
+                } else {
+                    color = mix(color, colNeg, -clamped_val * fade);
+                }
+            }
+
+            gl_FragColor = vec4(color, 1.0);
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const container = document.getElementById('canvas-container');
+            const glCanvas = document.getElementById('webgl-canvas');
+            const uiCanvas = document.getElementById('ui-canvas');
+            
+            const sliderD = document.getElementById('slider-d');
+            const sliderLambda = document.getElementById('slider-lambda');
+            const sliderV = document.getElementById('slider-v');
+            const toggleIntensity = document.getElementById('toggle-intensity');
+            
+            const valD = document.getElementById('val-d');
+            const valLambda = document.getElementById('val-lambda');
+            const valV = document.getElementById('val-v');
+
+            // Physics State
+            let d = parseFloat(sliderD.value);
+            let lambda = parseFloat(sliderLambda.value);
+            let v = parseFloat(sliderV.value);
+            let A = 0.5; // Base amplitude factor
+            
+            let k = (2 * Math.PI) / lambda;
+            let omega = k * v;
+            
+            let time = 0;
+            let lastTime = performance.now();
+            let width, height;
+
+            // UI Canvas Context
+            const ctx = uiCanvas.getContext('2d');
+
+            // WebGL Setup
+            const gl = glCanvas.getContext('webgl');
+            if (!gl) { alert("WebGL not supported"); return; }
+
+            function compileShader(type, sourceId) {
+                const source = document.getElementById(sourceId).text;
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                    console.error('Shader error:', gl.getShaderInfoLog(shader));
+                    gl.deleteShader(shader);
+                    return null;
+                }
+                return shader;
+            }
+
+            const vertexShader = compileShader(gl.VERTEX_SHADER, 'vertex-shader');
+            const fragmentShader = compileShader(gl.FRAGMENT_SHADER, 'fragment-shader');
+
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            gl.useProgram(program);
+
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                -1.0, -1.0,  1.0, -1.0,  -1.0,  1.0,  1.0,  1.0,
+            ]), gl.STATIC_DRAW);
+
+            const positionLocation = gl.getAttribLocation(program, "a_position");
+            gl.enableVertexAttribArray(positionLocation);
+            gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+            // Uniforms
+            const locResolution = gl.getUniformLocation(program, "u_resolution");
+            const locTime = gl.getUniformLocation(program, "u_time");
+            const locD = gl.getUniformLocation(program, "u_d");
+            const locK = gl.getUniformLocation(program, "u_k");
+            const locOmega = gl.getUniformLocation(program, "u_omega");
+            const locA = gl.getUniformLocation(program, "u_A");
+
+            // Mapping physical space to screen space
+            // WebGL screen uses: uv.x = gl_FragCoord.x / height. uv.y = gl_FragCoord.y / height.
+            const X_OFFSET_PHYSICAL = 0.15; // Maps to x=0 in physical space
+
+            function resize() {
+                const rect = container.getBoundingClientRect();
+                width = rect.width;
+                height = rect.height;
+
+                // High-DPI support
+                const pixelRatio = Math.min(window.devicePixelRatio, 2);
+
+                glCanvas.width = width * pixelRatio;
+                glCanvas.height = height * pixelRatio;
+                uiCanvas.width = width * pixelRatio;
+                uiCanvas.height = height * pixelRatio;
+
+                gl.viewport(0, 0, glCanvas.width, glCanvas.height);
+                gl.uniform2f(locResolution, glCanvas.width, glCanvas.height);
+
+                ctx.scale(pixelRatio, pixelRatio);
+            }
+
+            function updateParams() {
+                d = parseFloat(sliderD.value);
+                lambda = parseFloat(sliderLambda.value);
+                v = parseFloat(sliderV.value);
+                
+                k = (2 * Math.PI) / lambda;
+                omega = k * v;
+                
+                valD.textContent = d.toFixed(2);
+                valLambda.textContent = lambda.toFixed(3);
+                valV.textContent = v.toFixed(2);
+            }
+
+            function drawUIOverlay() {
+                ctx.clearRect(0, 0, width, height);
+
+                // 1. Draw the Barrier
+                const barrierX = X_OFFSET_PHYSICAL * height;
+                const slitH = 0.015 * height; // Slit aperture visual size
+                
+                const s1Y = height/2 - (d/2) * height;
+                const s2Y = height/2 + (d/2) * height;
+
+                ctx.fillStyle = '#475569'; // Slate 600
+                
+                // Top block
+                ctx.fillRect(barrierX - 4, 0, 8, s1Y - slitH/2);
+                // Middle block
+                ctx.fillRect(barrierX - 4, s1Y + slitH/2, 8, (s2Y - slitH/2) - (s1Y + slitH/2));
+                // Bottom block
+                ctx.fillRect(barrierX - 4, s2Y + slitH/2, 8, height - (s2Y + slitH/2));
+
+                // Slit labels
+                ctx.fillStyle = '#cbd5e1';
+                ctx.font = 'italic 12px Times New Roman';
+                ctx.textAlign = 'right';
+                ctx.fillText('r₁', barrierX - 10, s1Y + 4);
+                ctx.fillText('r₂', barrierX - 10, s2Y + 4);
+
+                // 2. Draw Intensity Graph (Right Screen)
+                if (toggleIntensity.checked) {
+                    const screenX = width - 80; // Distance of screen from right edge
+                    
+                    // Draw screen line
+                    ctx.beginPath();
+                    ctx.moveTo(screenX, 0);
+                    ctx.lineTo(screenX, height);
+                    ctx.strokeStyle = '#334155';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    // Calculate analytical intensity curve along the screen
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#f97316'; // Orange 500
+                    ctx.lineWidth = 2;
+                    
+                    const physicalScreenX = (screenX / height) - X_OFFSET_PHYSICAL;
+                    
+                    // Fill path definition
+                    ctx.fillStyle = 'rgba(249, 115, 22, 0.15)'; // Orange transparent
+                    
+                    let first = true;
+                    const pathData = [];
+
+                    // Step through Y pixels
+                    for (let y = 0; y <= height; y += 2) {
+                        const py = (height/2 - y) / height; // physical Y from -0.5 to 0.5
+                        
+                        // Distances to slits
+                        const d1 = Math.sqrt(Math.pow(physicalScreenX, 2) + Math.pow(py - d/2, 2));
+                        const d2 = Math.sqrt(Math.pow(physicalScreenX, 2) + Math.pow(py + d/2, 2));
+                        
+                        // Path difference
+                        const deltaR = Math.abs(d1 - d2);
+                        
+                        // Intensity formula: I = I1 + I2 + 2*sqrt(I1*I2)*cos(k*deltaR)
+                        // Because I ~ A^2 / r^2
+                        const I1 = Math.pow(A / d1, 2);
+                        const I2 = Math.pow(A / d2, 2);
+                        const I = I1 + I2 + 2 * Math.sqrt(I1 * I2) * Math.cos(k * deltaR);
+                        
+                        // Scale I for visual graph
+                        const maxExpectedI = 4 * Math.pow(A / physicalScreenX, 2); 
+                        const graphWidth = 70; // max px width of graph
+                        const plotX = screenX + (I / maxExpectedI) * graphWidth;
+                        
+                        pathData.push({x: plotX, y: y});
+                    }
+
+                    // Draw filled area
+                    ctx.beginPath();
+                    ctx.moveTo(screenX, 0);
+                    for (let i = 0; i < pathData.length; i++) {
+                        ctx.lineTo(pathData[i].x, pathData[i].y);
+                    }
+                    ctx.lineTo(screenX, height);
+                    ctx.fill();
+
+                    // Draw line stroke
+                    ctx.beginPath();
+                    for (let i = 0; i < pathData.length; i++) {
+                        if (i === 0) ctx.moveTo(pathData[i].x, pathData[i].y);
+                        else ctx.lineTo(pathData[i].x, pathData[i].y);
+                    }
+                    ctx.stroke();
+                    
+                    // Intensity Label
+                    ctx.fillStyle = '#f97316';
+                    ctx.font = '11px Inter, sans-serif';
+                    ctx.textAlign = 'left';
+                    ctx.fillText('Intensity (I)', screenX + 10, 20);
+                }
+            }
+
+            function render(timestamp) {
+                const dt = (timestamp - lastTime) / 1000.0;
+                lastTime = timestamp;
+                
+                // Cap dt
+                time += Math.min(dt, 0.1);
+
+                // 1. Update WebGL
+                gl.uniform1f(locTime, time);
+                gl.uniform1f(locD, d);
+                gl.uniform1f(locK, k);
+                gl.uniform1f(locOmega, omega);
+                gl.uniform1f(locA, A);
+
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+                // 2. Update Overlay
+                drawUIOverlay();
+
+                requestAnimationFrame(render);
+            }
+
+            // Event Listeners
+            window.addEventListener('resize', resize);
+            sliderD.addEventListener('input', updateParams);
+            sliderLambda.addEventListener('input', updateParams);
+            sliderV.addEventListener('input', updateParams);
+            toggleIntensity.addEventListener('change', drawUIOverlay);
+
+            // Init
+            updateParams();
+            resize();
+            requestAnimationFrame(render);
+        });
+    </script>
+</body>
+</html>
