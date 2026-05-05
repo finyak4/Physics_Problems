@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 09 - Physics basics</title>
+        <title>9. Vector Lorentz Force - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#9-vector-lorentz-force" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 09
+              9. Vector Lorentz Force
             
           </span>
         </div>
@@ -1370,6 +1375,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -1386,9 +1393,36 @@
 
 
 
-  <h1>Solution 09</h1>
-
-
+<h1 id="9-vector-lorentz-force">9. Vector Lorentz Force</h1>
+<p><strong>Problem:</strong>
+A proton moves with a velocity <span class="arithmatex">\(\vec{v} = (2\hat{i} - 4\hat{j} + \hat{k}) \text{ m/s}\)</span> in a region where the magnetic field is <span class="arithmatex">\(\vec{B} = (\hat{i} + 2\hat{j} - \hat{k}) \text{ T}\)</span>. What is the magnitude of the magnetic force this charge experiences?</p>
+<p><strong>Solution:</strong>
+We are given:</p>
+<ul>
+<li>Proton charge: <span class="arithmatex">\(q \approx 1.6 \times 10^{-19}\text{ C}\)</span></li>
+<li>Velocity vector: <span class="arithmatex">\(\vec{v} = 2\hat{i} - 4\hat{j} + \hat{k}\)</span></li>
+<li>Magnetic field vector: <span class="arithmatex">\(\vec{B} = \hat{i} + 2\hat{j} - \hat{k}\)</span></li>
+</ul>
+<p>The magnetic Lorentz force vector is given by the cross product of velocity and magnetic field vectors:
+$$ \vec{F} = q(\vec{v} \times \vec{B}) $$</p>
+<p><strong>1. Calculate the cross product <span class="arithmatex">\(\vec{v} \times \vec{B}\)</span></strong>
+We can use the determinant of a <span class="arithmatex">\(3 \times 3\)</span> matrix to find the cross product:</p>
+<div class="arithmatex">\[ \vec{v} \times \vec{B} = \begin{vmatrix} \hat{i} &amp; \hat{j} &amp; \hat{k} \\ v_x &amp; v_y &amp; v_z \\ B_x &amp; B_y &amp; B_z \end{vmatrix} = \begin{vmatrix} \hat{i} &amp; \hat{j} &amp; \hat{k} \\ 2 &amp; -4 &amp; 1 \\ 1 &amp; 2 &amp; -1 \end{vmatrix} \]</div>
+<p>Expand the determinant:</p>
+<div class="arithmatex">\[ \vec{v} \times \vec{B} = \hat{i} \begin{vmatrix} -4 &amp; 1 \\ 2 &amp; -1 \end{vmatrix} - \hat{j} \begin{vmatrix} 2 &amp; 1 \\ 1 &amp; -1 \end{vmatrix} + \hat{k} \begin{vmatrix} 2 &amp; -4 \\ 1 &amp; 2 \end{vmatrix} \]</div>
+<div class="arithmatex">\[ \vec{v} \times \vec{B} = \hat{i} ((-4)(-1) - (1)(2)) - \hat{j} ((2)(-1) - (1)(1)) + \hat{k} ((2)(2) - (-4)(1)) \]</div>
+<div class="arithmatex">\[ \vec{v} \times \vec{B} = \hat{i} (4 - 2) - \hat{j} (-2 - 1) + \hat{k} (4 + 4) \]</div>
+<div class="arithmatex">\[ \vec{v} \times \vec{B} = 2\hat{i} + 3\hat{j} + 8\hat{k} \]</div>
+<p><strong>2. Calculate the magnitude of the cross product</strong>
+$$ |\vec{v} \times \vec{B}| = \sqrt{2^2 + 3^2 + 8^2} $$</p>
+<div class="arithmatex">\[ |\vec{v} \times \vec{B}| = \sqrt{4 + 9 + 64} = \sqrt{77} \approx 8.775\text{ m}\cdot\text{T/s} \]</div>
+<p><strong>3. Calculate the magnitude of the force</strong>
+The magnitude of the force is <span class="arithmatex">\(F = q |\vec{v} \times \vec{B}|\)</span>:
+$$ F = (1.6 \times 10^{-19}\text{ C}) \times \sqrt{77}\text{ m}\cdot\text{T/s} $$</p>
+<div class="arithmatex">\[ F \approx (1.6 \times 10^{-19}) \times 8.775 \]</div>
+<div class="arithmatex">\[ F \approx 14.04 \times 10^{-19}\text{ N} = 1.404 \times 10^{-18}\text{ N} \]</div>
+<p><strong>Answer:</strong>
+The magnitude of the magnetic force the proton experiences is approximately <strong><span class="arithmatex">\(1.4 \times 10^{-18}\text{ N}\)</span></strong>.</p>
 
 
 

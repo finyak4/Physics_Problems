@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 06 - Physics basics</title>
+        <title>6. Field at a point from a system of charges - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#6-field-at-a-point-from-a-system-of-charges" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 06
+              6. Field at a point from a system of charges
             
           </span>
         </div>
@@ -1370,6 +1375,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -1386,9 +1393,72 @@
 
 
 
-  <h1>Solution 06</h1>
-
-
+<h1 id="6-field-at-a-point-from-a-system-of-charges">6. Field at a point from a system of charges</h1>
+<p><strong>Problem:</strong>
+Two point charges are given:
+* <span class="arithmatex">\(+q\  \text{at point}\  (-a, 0)\)</span>
+* <span class="arithmatex">\(+2q\  \text{at point}\  (a, 0)\)</span></p>
+<ol>
+<li>Determine the field vector <span class="arithmatex">\(\vec E(0, y)\)</span>, <span class="arithmatex">\(\vec E(x, 0)\)</span> and generally <span class="arithmatex">\(\vec E(x, y)\)</span>.</li>
+<li>Determine the condition for which the components <span class="arithmatex">\(E_x = 0\)</span>, <span class="arithmatex">\(E_y = 0\)</span> and the zero field <span class="arithmatex">\(\vec E = 0\)</span>.</li>
+<li>Calculate the field for: <span class="arithmatex">\(a = 0.2\text{ m}\)</span>, <span class="arithmatex">\(y = 0.3\text{ m}\)</span>, <span class="arithmatex">\(q = 2\mu\text{C}\)</span>.</li>
+<li>Investigate the limit <span class="arithmatex">\(y \gg a\)</span>.</li>
+</ol>
+<p><strong>Solution:</strong></p>
+<p>Let the position vectors of the charges be <span class="arithmatex">\(\vec{r}_1 = -a\hat{i} + 0\hat{j}\)</span> and <span class="arithmatex">\(\vec{r}_2 = a\hat{i} + 0\hat{j}\)</span>.
+The electric field at a position <span class="arithmatex">\(\vec{r} = x\hat{i} + y\hat{j}\)</span> is:
+$$ \vec{E}(\vec{r}) = \vec{E}_1(\vec{r}) + \vec{E}_2(\vec{r}) = \frac{k(q)}{|\vec{r} - \vec{r}_1|^3}(\vec{r} - \vec{r}_1) + \frac{k(2q)}{|\vec{r} - \vec{r}_2|^3}(\vec{r} - \vec{r}_2) $$</p>
+<p><strong>1. Determine the field vectors</strong></p>
+<p><strong>Generally <span class="arithmatex">\(\vec{E}(x,y)\)</span>:</strong>
+$$ \vec{r} - \vec{r}_1 = (x+a)\hat{i} + y\hat{j} $$
+$$ |\vec{r} - \vec{r}_1| = \sqrt{(x+a)^2 + y^2} $$
+$$ \vec{r} - \vec{r}_2 = (x-a)\hat{i} + y\hat{j} $$
+$$ |\vec{r} - \vec{r}_2| = \sqrt{(x-a)^2 + y^2} $$</p>
+<div class="arithmatex">\[ \vec{E}(x,y) = kq \left[ \frac{(x+a)\hat{i} + y\hat{j}}{((x+a)^2 + y^2)^{3/2}} + \frac{2((x-a)\hat{i} + y\hat{j})}{((x-a)^2 + y^2)^{3/2}} \right] \]</div>
+<p>Thus:</p>
+<div class="arithmatex">\[ E_x(x,y) = kq \left[ \frac{x+a}{((x+a)^2 + y^2)^{3/2}} + \frac{2(x-a)}{((x-a)^2 + y^2)^{3/2}} \right] \]</div>
+<div class="arithmatex">\[ E_y(x,y) = kq y \left[ \frac{1}{((x+a)^2 + y^2)^{3/2}} + \frac{2}{((x-a)^2 + y^2)^{3/2}} \right] \]</div>
+<p><strong>For <span class="arithmatex">\(\vec{E}(0,y)\)</span>:</strong>
+Substitute <span class="arithmatex">\(x = 0\)</span>:
+$$ E_x(0,y) = kq \left[ \frac{a}{(a^2 + y^2)^{3/2}} - \frac{2a}{(a^2 + y^2)^{3/2}} \right] = -\frac{kq a}{(a^2 + y^2)^{3/2}} $$
+$$ E_y(0,y) = kq y \left[ \frac{1}{(a^2 + y^2)^{3/2}} + \frac{2}{(a^2 + y^2)^{3/2}} \right] = \frac{3kq y}{(a^2 + y^2)^{3/2}} $$
+$$ \vec{E}(0,y) = \frac{kq}{(a^2 + y^2)^{3/2}} (-a\hat{i} + 3y\hat{j}) $$</p>
+<p><strong>For <span class="arithmatex">\(\vec{E}(x,0)\)</span>:</strong>
+Substitute <span class="arithmatex">\(y = 0\)</span>:
+$$ E_y(x,0) = 0 $$
+$$ E_x(x,0) = kq \left[ \frac{x+a}{|x+a|^3} + \frac{2(x-a)}{|x-a|^3} \right] = kq \left[ \frac{\text{sgn}(x+a)}{(x+a)^2} + \frac{2\text{sgn}(x-a)}{(x-a)^2} \right] $$
+$$ \vec{E}(x,0) = kq \left[ \frac{\text{sgn}(x+a)}{(x+a)^2} + \frac{2\text{sgn}(x-a)}{(x-a)^2} \right] \hat{i} $$</p>
+<p><strong>2. Condition for zero components</strong>
+* <strong><span class="arithmatex">\(E_y = 0\)</span> condition:</strong>
+<span class="arithmatex">\(E_y(x,y) = 0\)</span> requires <span class="arithmatex">\(y \left[ \frac{1}{((x+a)^2 + y^2)^{3/2}} + \frac{2}{((x-a)^2 + y^2)^{3/2}} \right] = 0\)</span>. Since the bracket is strictly positive, the only condition is <span class="arithmatex">\(y = 0\)</span>.
+* <strong><span class="arithmatex">\(E_x = 0\)</span> condition:</strong>
+Requires <span class="arithmatex">\(\frac{x+a}{((x+a)^2 + y^2)^{3/2}} + \frac{2(x-a)}{((x-a)^2 + y^2)^{3/2}} = 0\)</span>.
+* <strong>Zero field <span class="arithmatex">\(\vec{E}=0\)</span> condition:</strong>
+Must have both <span class="arithmatex">\(E_y = 0\)</span> and <span class="arithmatex">\(E_x = 0\)</span>. Note that <span class="arithmatex">\(E_y = 0\)</span> implies <span class="arithmatex">\(y = 0\)</span>. Thus the condition for zero field occurs on the x-axis (<span class="arithmatex">\(y=0\)</span>):</p>
+<div class="arithmatex">\[ \frac{\text{sgn}(x+a)}{(x+a)^2} + \frac{2\text{sgn}(x-a)}{(x-a)^2} = 0 \]</div>
+<p>For this to hold, the terms must have opposite signs. This means <span class="arithmatex">\(\text{sgn}(x+a) = 1\)</span> and <span class="arithmatex">\(\text{sgn}(x-a) = -1\)</span>, meaning the point must lie strictly between the two charges: <span class="arithmatex">\(-a &lt; x &lt; a\)</span>.
+Then:</p>
+<div class="arithmatex">\[ \frac{1}{(x+a)^2} - \frac{2}{(x-a)^2} = 0 \Rightarrow (x-a)^2 = 2(x+a)^2 \]</div>
+<p>Taking the square root (noting <span class="arithmatex">\(x-a\)</span> is negative and <span class="arithmatex">\(x+a\)</span> is positive):</p>
+<div class="arithmatex">\[ -(x-a) = \sqrt{2}(x+a) \Rightarrow a - x = \sqrt{2}x + a\sqrt{2} \Rightarrow x(1+\sqrt{2}) = a(1-\sqrt{2}) \]</div>
+<div class="arithmatex">\[ x = a \frac{1-\sqrt{2}}{1+\sqrt{2}} = a \frac{(1-\sqrt{2})^2}{1-2} = -a(3 - 2\sqrt{2}) \approx -0.17a \]</div>
+<p>Therefore, <span class="arithmatex">\(\vec{E}=0\)</span> at the point <span class="arithmatex">\((-a(3-2\sqrt{2}), 0)\)</span>.</p>
+<p><strong>3. Calculate field for <span class="arithmatex">\(a=0.2\text{ m}\)</span>, <span class="arithmatex">\(y=0.3\text{ m}\)</span>, <span class="arithmatex">\(q=2\mu\text{C}\)</span></strong>
+We evaluate at <span class="arithmatex">\((0, y) = (0, 0.3)\)</span>:
+$$ a = 0.2, \quad y = 0.3, \quad q = 2\times 10^{-6}\text{ C}, \quad k \approx 8.99\times 10^9 $$
+<span class="arithmatex">\(a^2 + y^2 = 0.2^2 + 0.3^2 = 0.04 + 0.09 = 0.13\)</span>
+$ (a^2+y^2)^{3/2} = 0.13^{3/2} \approx 0.04687 $
+Using the <span class="arithmatex">\(\vec{E}(0,y)\)</span> formula:
+$$ \vec{E}(0, 0.3) = \frac{(8.99\times 10^9)(2\times 10^{-6})}{0.04687} (-0.2\hat{i} + 3(0.3)\hat{j}) $$
+$$ = \frac{17.98\times 10^3}{0.04687} (-0.2\hat{i} + 0.9\hat{j}) \approx 383614 (-0.2\hat{i} + 0.9\hat{j})\text{ V/m} $$
+$$ \vec{E}(0, 0.3) \approx (-7.67\times 10^4 \hat{i} + 3.45\times 10^5 \hat{j})\text{ V/m} $$</p>
+<p><strong>4. Investigate the limit <span class="arithmatex">\(y \gg a\)</span></strong>
+If we look at <span class="arithmatex">\(\vec{E}(0,y)\)</span> as <span class="arithmatex">\(y \to \infty\)</span>:
+$$ (a^2+y^2)^{3/2} = y^3 \left(1 + \frac{a^2}{y^2}\right)^{3/2} \approx y^3 $$
+$$ \vec{E}(0,y) \approx \frac{kq}{y^3} (-a\hat{i} + 3y\hat{j}) = -\frac{kqa}{y^3}\hat{i} + \frac{3kq}{y^2}\hat{j} $$
+Since <span class="arithmatex">\(1/y^2\)</span> dominates <span class="arithmatex">\(1/y^3\)</span> for large <span class="arithmatex">\(y\)</span>, the field points predominantly in the <span class="arithmatex">\(+\hat{j}\)</span> direction and behaves as:
+$$ \vec{E}(0,y) \approx \frac{k(3q)}{y^2} \hat{j} $$
+This is consistent with the field of a single point charge of magnitude <span class="arithmatex">\(Q_{net} = q + 2q = 3q\)</span> placed at the origin, meaning from far away, the charge distribution looks roughly like a single combined point charge of <span class="arithmatex">\(+3q\)</span>.</p>
 
 
 

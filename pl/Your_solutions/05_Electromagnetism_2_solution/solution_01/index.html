@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 01 - Physics basics</title>
+        <title>Solution 1: Gauss's Law - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#solution-1-gausss-law" class="md-skip">
+          Przejdź do treści
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 01
+              Solution 1: Gauss's Law
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Spis treści
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,27 @@
 
 
 
-  <h1>Solution 01</h1>
-
-
+<h1 id="solution-1-gausss-law">Solution 1: Gauss's Law</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>A point charge of <span class="arithmatex">\(+2 \text{ C}\)</span> is located at the origin. Calculate the electric flux through a spherical surface of radius <span class="arithmatex">\(1 \text{ m}\)</span> centered at the origin.</p>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p>The standard definition of flux is the surface integral:
+$$ \Phi_E = \oint \vec{E} \cdot d\vec{A} $$</p>
+<p>Gauss proved that the total flux depends entirely on the charge enclosed inside the volume, regardless of the size or shape of the boundary. The 1-meter radius given in the prompt is actually irrelevant.</p>
+<p><strong>1. Recall Gauss's Law:</strong>
+Gauss's Law states that the net electric flux <span class="arithmatex">\(\Phi_E\)</span> through any closed surface is equal to the net charge <span class="arithmatex">\(Q_{\text{enc}}\)</span> enclosed by that surface divided by the vacuum permittivity <span class="arithmatex">\(\epsilon_0\)</span>:
+$$ \Phi_E = \frac{Q_{\text{enc}}}{\epsilon_0} $$</p>
+<p><strong>2. Identify the given values:</strong></p>
+<ul>
+<li>Enclosed charge <span class="arithmatex">\(Q_{\text{enc}} = +2 \text{ C}\)</span></li>
+<li>Vacuum permittivity <span class="arithmatex">\(\epsilon_0 \approx 8.854 \times 10^{-12} \text{ C}^2 / (\text{N} \cdot \text{m}^2)\)</span></li>
+</ul>
+<p><strong>3. Calculate the electric flux:</strong></p>
+<p>Substitute the values into the Gauss's Law equation:</p>
+<div class="arithmatex">\[ \Phi_E = \frac{2}{8.854 \times 10^{-12}} \]</div>
+<div class="arithmatex">\[ \Phi_E \approx 2.259 \times 10^{11} \text{ N} \cdot \text{m}^2 / \text{C} \]</div>
+<p><strong>Final Answer:</strong></p>
+<p>The total electric flux through the spherical surface is approximately <strong><span class="arithmatex">\(2.26 \times 10^{11} \text{ N} \cdot \text{m}^2 / \text{C}\)</span></strong>.</p>
 
 
 

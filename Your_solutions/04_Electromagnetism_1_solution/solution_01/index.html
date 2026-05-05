@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 01 - Physics basics</title>
+        <title>1. Coulomb's Law - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#1-coulombs-law" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 01
+              1. Coulomb's Law
             
           </span>
         </div>
@@ -1370,6 +1375,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -1386,9 +1393,25 @@
 
 
 
-  <h1>Solution 01</h1>
-
-
+<h1 id="1-coulombs-law">1. Coulomb's Law</h1>
+<p><strong>Problem:</strong>
+Four point charges of +1.0 C each are placed at the corners of a square with sides of 1.0 m. Calculate the magnitude and direction of the electric force on a charge of -2.0 C placed at the center of the square.</p>
+<p><strong>Solution:</strong>
+Let the four corners of the square be <span class="arithmatex">\(A, B, C, D\)</span> and the center be <span class="arithmatex">\(O\)</span>. 
+The charges at the corners are <span class="arithmatex">\(q_A = q_B = q_C = q_D = +1.0\text{ C}\)</span>.
+The charge at the center is <span class="arithmatex">\(q_O = -2.0\text{ C}\)</span>.</p>
+<p>According to Coulomb's Law, the electric force between two point charges is given by:
+$$ \vec{F} = k \frac{q_1 q_2}{r^2} \hat{r} $$</p>
+<p>The total force on the central charge <span class="arithmatex">\(q_O\)</span> is the vector sum of the forces exerted by each of the four corner charges:
+$$ \vec{F}<em>{net} = \vec{F}</em>{AO} + \vec{F}<em>{BO} + \vec{F}</em>{CO} + \vec{F}_{DO} $$</p>
+<p>Because the square is highly symmetric:
+1. The distance <span class="arithmatex">\(r\)</span> from any corner to the center is the same for all four charges: <span class="arithmatex">\(r = \frac{1.0\text{ m}}{\sqrt{2}} \approx 0.707\text{ m}\)</span>.
+2. The magnitudes of the forces from the four identical corner charges on the central charge are all equal.
+3. The force from the charge at corner <span class="arithmatex">\(A\)</span> (<span class="arithmatex">\(\vec{F}_{AO}\)</span>) points directly opposite to the force from the charge at the diagonally opposite corner <span class="arithmatex">\(C\)</span> (<span class="arithmatex">\(\vec{F}_{CO}\)</span>). Since they have the same magnitude and opposite directions, they perfectly cancel out: <span class="arithmatex">\(\vec{F}_{AO} + \vec{F}_{CO} = 0\)</span>.
+4. Similarly, the force from the charge at corner <span class="arithmatex">\(B\)</span> (<span class="arithmatex">\(\vec{F}_{BO}\)</span>) perfectly cancels out the force from the charge at the diagonally opposite corner <span class="arithmatex">\(D\)</span> (<span class="arithmatex">\(\vec{F}_{DO}\)</span>): <span class="arithmatex">\(\vec{F}_{BO} + \vec{F}_{DO} = 0\)</span>.</p>
+<p>Therefore, the net electric force acting on the charge at the center is exactly zero.</p>
+<p><strong>Answer:</strong>
+The magnitude of the electric force is <strong><span class="arithmatex">\(0\text{ N}\)</span></strong>, and it has no direction.</p>
 
 
 

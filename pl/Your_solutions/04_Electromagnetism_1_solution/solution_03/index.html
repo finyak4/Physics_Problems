@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 03 - Physics basics</title>
+        <title>3. Electrostatic Equilibrium - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#3-electrostatic-equilibrium" class="md-skip">
+          Przejdź do treści
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 03
+              3. Electrostatic Equilibrium
             
           </span>
         </div>
@@ -1370,6 +1375,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -1386,9 +1393,29 @@
 
 
 
-  <h1>Solution 03</h1>
-
-
+<h1 id="3-electrostatic-equilibrium">3. Electrostatic Equilibrium</h1>
+<p><strong>Problem:</strong>
+Find the equilibrium position for a charge <span class="arithmatex">\(q_3 = +1\text{C}\)</span> placed on the line between a charge <span class="arithmatex">\(q_1 = +4\text{C}\)</span> and a charge <span class="arithmatex">\(q_2 = +9\text{C}\)</span>, which are separated by a distance of <span class="arithmatex">\(2\text{ m}\)</span>.</p>
+<p><strong>Solution:</strong>
+Let the distance between <span class="arithmatex">\(q_1\)</span> and <span class="arithmatex">\(q_2\)</span> be <span class="arithmatex">\(d = 2\text{ m}\)</span>.
+Let the position of <span class="arithmatex">\(q_3\)</span> be <span class="arithmatex">\(x\)</span> meters away from <span class="arithmatex">\(q_1\)</span>. Since it sits between the charges (for the repulsive forces from the two positive charges to roughly oppose each other, <span class="arithmatex">\(q_3\)</span> must lie within the segment), its distance to <span class="arithmatex">\(q_2\)</span> will be <span class="arithmatex">\((d - x) = (2 - x)\)</span> meters.</p>
+<p>For the charge <span class="arithmatex">\(q_3\)</span> to be in electrostatic equilibrium, the net force acting on it must be zero. This means the repulsive force exerted by <span class="arithmatex">\(q_1\)</span> on <span class="arithmatex">\(q_3\)</span> must be equal in magnitude and opposite in direction to the repulsive force exerted by <span class="arithmatex">\(q_2\)</span> on <span class="arithmatex">\(q_3\)</span>.</p>
+<div class="arithmatex">\[ |\vec{F}_{13}| = |\vec{F}_{23}| \]</div>
+<p>Using Coulomb's law:
+$$ k \frac{|q_1| |q_3|}{x^2} = k \frac{|q_2| |q_3|}{(2 - x)^2} $$</p>
+<p>Both <span class="arithmatex">\(k\)</span> and <span class="arithmatex">\(|q_3|\)</span> are on both sides of the equation and are non-zero, so we can cancel them out:
+$$ \frac{|q_1|}{x^2} = \frac{|q_2|}{(2 - x)^2} $$</p>
+<p>Substitute the values of the charges (<span class="arithmatex">\(|q_1| = 4\)</span>, <span class="arithmatex">\(|q_2| = 9\)</span>):
+$$ \frac{4}{x^2} = \frac{9}{(2 - x)^2} $$</p>
+<p>Take the square root of both sides (since <span class="arithmatex">\(x\)</span> represents distance between charges, <span class="arithmatex">\(0 &lt; x &lt; 2\)</span>):
+$$ \frac{2}{x} = \frac{3}{2 - x} $$</p>
+<p>Cross-multiply to solve for <span class="arithmatex">\(x\)</span>:
+$$ 2(2 - x) = 3x $$
+$$ 4 - 2x = 3x $$
+$$ 4 = 5x $$
+$$ x = \frac{4}{5} = 0.8\text{ m} $$</p>
+<p><strong>Answer:</strong>
+The equilibrium position for the charge <span class="arithmatex">\(q_3\)</span> is <strong><span class="arithmatex">\(0.8\text{ m}\)</span> away from the <span class="arithmatex">\(+4\text{C}\)</span> charge</strong> (and <span class="arithmatex">\(1.2\text{ m}\)</span> away from the <span class="arithmatex">\(+9\text{C}\)</span> charge).</p>
 
 
 

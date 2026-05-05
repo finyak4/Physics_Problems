@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 07 - Physics basics</title>
+        <title>7. Cyclotron Motion - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#7-cyclotron-motion" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 07
+              7. Cyclotron Motion
             
           </span>
         </div>
@@ -1370,6 +1375,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -1386,9 +1393,39 @@
 
 
 
-  <h1>Solution 07</h1>
-
-
+<h1 id="7-cyclotron-motion">7. Cyclotron Motion</h1>
+<p><strong>Problem:</strong>
+An electron is accelerated from rest through a potential difference of <span class="arithmatex">\(5000\text{ V}\)</span>. It then enters a region of uniform magnetic field B = <span class="arithmatex">\(0.1\text{ T}\)</span>, perpendicular to its velocity. What is the radius of the circular path it will follow?</p>
+<p><strong>Solution:</strong>
+We are given:
+* Potential difference: <span class="arithmatex">\(V = 5000\text{ V}\)</span>
+* Magnetic field: <span class="arithmatex">\(B = 0.1\text{ T}\)</span>
+* Charge of electron: <span class="arithmatex">\(q = 1.6 \times 10^{-19}\text{ C}\)</span>
+* Mass of electron: <span class="arithmatex">\(m = 9.1 \times 10^{-31}\text{ kg}\)</span></p>
+<p><strong>1. Determine the velocity of the electron</strong>
+The electron is accelerated by the electric field, so its potential energy is converted into kinetic energy:
+$$ K = qV $$
+$$ \frac{1}{2} m v^2 = qV $$
+$$ v = \sqrt{\frac{2qV}{m}} $$</p>
+<p>Substitute the given values:
+$$ v = \sqrt{\frac{2(1.6 \times 10^{-19}\text{ C})(5000\text{ V})}{9.1 \times 10^{-31}\text{ kg}}} $$
+$$ v = \sqrt{\frac{1.6 \times 10^{-15}}{9.1 \times 10^{-31}}} = \sqrt{1.758 \times 10^{15}} = \sqrt{17.58 \times 10^{14}} $$
+$$ v \approx 4.19 \times 10^7\text{ m/s} $$</p>
+<p><strong>2. Determine the radius of the circular path</strong>
+When the electron enters the magnetic field perpendicular to its velocity, the magnetic force provides the centripetal force required for circular motion:
+$$ F_B = F_c $$
+$$ qvB = \frac{mv^2}{r} $$</p>
+<p>Solving for the radius <span class="arithmatex">\(r\)</span>:
+$$ r = \frac{mv}{qB} $$</p>
+<p>We can either plug in the computed velocity <span class="arithmatex">\(v\)</span>, or substitute the expression for <span class="arithmatex">\(v\)</span> to compute it in one step:
+$$ r = \frac{m}{qB} \sqrt{\frac{2qV}{m}} = \frac{1}{B} \sqrt{\frac{2mV}{q}} $$</p>
+<p>Let's plug in the numbers using the full formula:
+$$ r = \frac{1}{0.1} \sqrt{\frac{2(9.1 \times 10^{-31})(5000)}{1.6 \times 10^{-19}}} $$
+$$ r = 10 \sqrt{\frac{9.1 \times 10^{-27}}{1.6 \times 10^{-19}}} = 10 \sqrt{5.6875 \times 10^{-8}} $$
+$$ r = 10(2.385 \times 10^{-4}) $$
+$$ r \approx 2.385 \times 10^{-3}\text{ m} = 2.385\text{ mm} $$</p>
+<p><strong>Answer:</strong>
+The radius of the circular path is approximately <strong><span class="arithmatex">\(2.39\text{ mm}\)</span></strong> (or <span class="arithmatex">\(2.385 \times 10^{-3}\text{ m}\)</span>).</p>
 
 
 

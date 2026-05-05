@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 06 - Physics basics</title>
+        <title>Solution 6: EM Wave Analysis - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#solution-6-em-wave-analysis" class="md-skip">
+          Przejdź do treści
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 06
+              Solution 6: EM Wave Analysis
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Spis treści
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,37 @@
 
 
 
-  <h1>Solution 06</h1>
-
-
+<h1 id="solution-6-em-wave-analysis">Solution 6: EM Wave Analysis</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>An electromagnetic wave has its electric field component described by <span class="arithmatex">\(E_y(x,t) = 100 \sin(10^7 x - \omega t) \text{ V/m}\)</span>. What is the direction of propagation? What is the wavelength <span class="arithmatex">\(\lambda\)</span>? What is the angular frequency <span class="arithmatex">\(\omega\)</span>? What is the equation for the magnetic field component?</p>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p><strong>1. General form of the EM wave equation:</strong>
+The given electric field is <span class="arithmatex">\(E_y(x,t) = E_0 \sin(kx - \omega t)\)</span>.
+By comparing this to the general form:
+* Amplitude of the electric field, <span class="arithmatex">\(E_0 = 100 \text{ V/m}\)</span>
+* Wave number, <span class="arithmatex">\(k = 10^7 \text{ m}^{-1}\)</span></p>
+<p><strong>2. Direction of propagation:</strong>
+The phase term is <span class="arithmatex">\((kx - \omega t)\)</span>. The negative sign between <span class="arithmatex">\(kx\)</span> and <span class="arithmatex">\(\omega t\)</span> indicates that the wave is propagating in the <strong>positive <span class="arithmatex">\(x\)</span>-direction</strong> (<span class="arithmatex">\(+x\)</span>).</p>
+<p><strong>3. Calculate the wavelength <span class="arithmatex">\(\lambda\)</span>:</strong>
+The wave number <span class="arithmatex">\(k\)</span> is related to wavelength by <span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span>.
+$$ \lambda = \frac{2\pi}{k} = \frac{2\pi}{10^7 \text{ m}^{-1}} = 2\pi \times 10^{-7} \text{ m} \approx 6.28 \times 10^{-7} \text{ m} = 628 \text{ nm} $$</p>
+<p><strong>4. Calculate the angular frequency <span class="arithmatex">\(\omega\)</span>:</strong>
+The angular frequency is related to the wave number and the speed of light <span class="arithmatex">\(c \approx 3 \times 10^8 \text{ m/s}\)</span> by the equation <span class="arithmatex">\(\omega = c k\)</span>.
+$$ \omega = (3 \times 10^8 \text{ m/s}) \times (10^7 \text{ m}^{-1}) = 3 \times 10^{15} \text{ rad/s} $$</p>
+<p><strong>5. Determine the magnetic field equation:</strong>
+* <strong>Amplitude:</strong> The amplitude of the magnetic field <span class="arithmatex">\(B_0\)</span> is related to the electric field amplitude by <span class="arithmatex">\(E_0 = c B_0\)</span>.
+$$ B_0 = \frac{E_0}{c} = \frac{100 \text{ V/m}}{3 \times 10^8 \text{ m/s}} = \frac{1}{3} \times 10^{-6} \text{ T} \approx 3.33 \times 10^{-7} \text{ T} $$
+* <strong>Direction:</strong> The direction of wave propagation is given by the cross product of the electric and magnetic fields: <span class="arithmatex">\(\mathbf{\hat{k}} = \mathbf{\hat{E}} \times \mathbf{\hat{B}}\)</span>.
+We know the wave propagates in the <span class="arithmatex">\(+\hat{i}\)</span> (<span class="arithmatex">\(x\)</span>) direction, and the electric field oscillates in the <span class="arithmatex">\(+\hat{j}\)</span> (<span class="arithmatex">\(y\)</span>) direction.
+So, <span class="arithmatex">\(\hat{i} = \hat{j} \times \mathbf{\hat{B}}\)</span>. Since <span class="arithmatex">\(\hat{j} \times \hat{k} = \hat{i}\)</span>, the magnetic field must oscillate in the <span class="arithmatex">\(+\hat{k}\)</span> (<span class="arithmatex">\(z\)</span>) direction.
+* <strong>Equation:</strong> The magnetic field is in phase with the electric field in a vacuum.
+$$ B_z(x,t) = B_0 \sin(kx - \omega t) $$
+$$ B_z(x,t) = \frac{1}{3} \times 10^{-6} \sin(10^7 x - 3 \times 10^{15} t) \text{ T} $$</p>
+<p><strong>Final Answers:</strong>
+* Direction of propagation: <strong><span class="arithmatex">\(+x\)</span>-direction</strong>
+* Wavelength: <strong><span class="arithmatex">\(\lambda = 628 \text{ nm}\)</span></strong>
+* Angular frequency: <strong><span class="arithmatex">\(\omega = 3 \times 10^{15} \text{ rad/s}\)</span></strong>
+* Magnetic field equation: <strong><span class="arithmatex">\(B_z(x,t) \approx 3.33 \times 10^{-7} \sin(10^7 x - 3 \times 10^{15} t) \text{ T}\)</span></strong></p>
 
 
 

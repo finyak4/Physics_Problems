@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 04 - Physics basics</title>
+        <title>Solution 4: Magnetic Torque - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#solution-4-magnetic-torque" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 04
+              Solution 4: Magnetic Torque
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,41 @@
 
 
 
-  <h1>Solution 04</h1>
-
-
+<h1 id="solution-4-magnetic-torque">Solution 4: Magnetic Torque</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>A rectangular loop of wire with dimensions <span class="arithmatex">\(10 \text{ cm}\)</span> by <span class="arithmatex">\(5 \text{ cm}\)</span> carries a current of <span class="arithmatex">\(2 \text{ A}\)</span>. A uniform magnetic field of <span class="arithmatex">\(B = 0.3 \text{ T}\)</span> is applied parallel to the plane of the loop. What is the magnitude of the magnetic torque on the loop?</p>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p><strong>1. Recall the formula for Magnetic Torque:</strong></p>
+<p>The magnitude of the magnetic torque <span class="arithmatex">\(\tau\)</span> on a current-carrying loop is given by:
+$$ \tau = m B \sin\theta $$
+where:</p>
+<ul>
+<li><span class="arithmatex">\(m = I A\)</span> is the magnetic dipole moment of the loop (<span class="arithmatex">\(I\)</span> is current, <span class="arithmatex">\(A\)</span> is area).</li>
+<li><span class="arithmatex">\(B\)</span> is the magnitude of the uniform magnetic field.</li>
+<li><span class="arithmatex">\(\theta\)</span> is the angle between the area vector <span class="arithmatex">\(\mathbf{A}\)</span> (which is perpendicular to the plane of the loop) and the magnetic field vector <span class="arithmatex">\(\mathbf{B}\)</span>.</li>
+</ul>
+<p><strong>2. Identify the given values:</strong></p>
+<ul>
+<li>Current, <span class="arithmatex">\(I = 2 \text{ A}\)</span></li>
+<li>Length, <span class="arithmatex">\(l = 10 \text{ cm} = 0.1 \text{ m}\)</span></li>
+<li>Width, <span class="arithmatex">\(w = 5 \text{ cm} = 0.05 \text{ m}\)</span></li>
+<li>Magnetic field, <span class="arithmatex">\(B = 0.3 \text{ T}\)</span></li>
+<li>Since the magnetic field is applied <em>parallel</em> to the plane of the loop, the angle between the magnetic field and the area vector (which is perpendicular to the plane) is <span class="arithmatex">\(\theta = 90^\circ\)</span>. Thus, <span class="arithmatex">\(\sin(90^\circ) = 1\)</span>.</li>
+</ul>
+<p><strong>3. Calculate the Area and Magnetic Moment:</strong></p>
+<ul>
+<li>Area of the rectangular loop, <span class="arithmatex">\(A = l \times w\)</span>:
+$$ A = 0.1 \text{ m} \times 0.05 \text{ m} = 0.005 \text{ m}^2 $$</li>
+<li>Magnetic dipole moment, <span class="arithmatex">\(m = I \times A\)</span>:
+$$ m = 2 \text{ A} \times 0.005 \text{ m}^2 = 0.01 \text{ A}\cdot\text{m}^2 $$</li>
+</ul>
+<p><strong>4. Calculate the Magnetic Torque:</strong>
+Substitute the values into the torque formula:</p>
+<div class="arithmatex">\[ \tau = (0.01 \text{ A}\cdot\text{m}^2) \times (0.3 \text{ T}) \times \sin(90^\circ) \]</div>
+<div class="arithmatex">\[ \tau = 0.01 \times 0.3 \times 1 \text{ N}\cdot\text{m} \]</div>
+<div class="arithmatex">\[ \tau = 0.003 \text{ N}\cdot\text{m} \]</div>
+<p><strong>Final Answer:</strong></p>
+<p>The magnitude of the magnetic torque on the loop is <strong><span class="arithmatex">\(0.003 \text{ N}\cdot\text{m}\)</span></strong> (or <span class="arithmatex">\(3 \times 10^{-3} \text{ N}\cdot\text{m}\)</span>).</p>
 
 
 

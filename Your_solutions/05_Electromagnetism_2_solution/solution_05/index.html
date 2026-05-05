@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 05 - Physics basics</title>
+        <title>Solution 5: Energy Stored by charge in a capacitor - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#solution-5-energy-stored-by-charge-in-a-capacitor" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 05
+              Solution 5: Energy Stored by charge in a capacitor
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,69 @@
 
 
 
-  <h1>Solution 05</h1>
-
-
+<h1 id="solution-5-energy-stored-by-charge-in-a-capacitor">Solution 5: Energy Stored by charge in a capacitor</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>We have a parallel-plate capacitor with the following parameters:</p>
+<ul>
+<li><span class="arithmatex">\(S = 0.02\,\mathrm{m^2}\)</span></li>
+<li><span class="arithmatex">\(d = 5\,\mathrm{mm}\)</span></li>
+<li><span class="arithmatex">\(U = 500\,\mathrm{V}\)</span></li>
+</ul>
+<p>We have to:</p>
+<ol>
+<li>Calculate the capacitance <span class="arithmatex">\(C\)</span> of the capacitor.</li>
+<li>Calculate the energy <span class="arithmatex">\(W\)</span> stored in the capacitor.</li>
+<li>Calculate the electric field intensity <span class="arithmatex">\(E\)</span> between the plates.</li>
+<li>Calculate the force of attraction <span class="arithmatex">\(F\)</span> between the plates.</li>
+</ol>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p>First, let's list the knowns in SI units:</p>
+<ul>
+<li>
+<p>Plate area, <span class="arithmatex">\(S = 0.02 \text{ m}^2\)</span></p>
+</li>
+<li>
+<p>Distance between plates, <span class="arithmatex">\(d = 5 \text{ mm} = 0.005 \text{ m}\)</span></p>
+</li>
+<li>
+<p>Voltage across the plates, <span class="arithmatex">\(U = 500 \text{ V}\)</span></p>
+</li>
+<li>
+<p>Vacuum permittivity, <span class="arithmatex">\(\epsilon_0 \approx 8.854 \times 10^{-12} \text{ F/m}\)</span> (assuming air/vacuum between the plates).</p>
+</li>
+</ul>
+<p><strong>1. Calculate the capacitance <span class="arithmatex">\(C\)</span></strong></p>
+<p>The capacitance of a parallel-plate capacitor is given by:</p>
+<p>$$ C = \frac{\epsilon_0 S}{d} $$
+Substitute the values:</p>
+<div class="arithmatex">\[ C = \frac{(8.854 \times 10^{-12} \text{ F/m}) \times (0.02 \text{ m}^2)}{0.005 \text{ m}} \]</div>
+<div class="arithmatex">\[ C = \frac{1.7708 \times 10^{-13}}{0.005} \text{ F} = 3.5416 \times 10^{-11} \text{ F} \approx 35.4 \text{ pF} \]</div>
+<p><strong>2. Calculate the stored energy <span class="arithmatex">\(W\)</span></strong></p>
+<p>The energy stored in a capacitor is:</p>
+<div class="arithmatex">\[ W = \frac{1}{2} C U^2 \]</div>
+<p>Substitute the values:</p>
+<div class="arithmatex">\[ W = \frac{1}{2} (3.5416 \times 10^{-11} \text{ F}) \times (500 \text{ V})^2 \]</div>
+<div class="arithmatex">\[ W = \frac{1}{2} (3.5416 \times 10^{-11}) \times 250,000 \text{ J} \]</div>
+<div class="arithmatex">\[ W = 4.427 \times 10^{-6} \text{ J} \approx 4.43 \text{ \mu J} \]</div>
+<p><strong>3. Calculate the electric field intensity <span class="arithmatex">\(E\)</span></strong></p>
+<p>The magnitude of the uniform electric field between the plates is:</p>
+<div class="arithmatex">\[ E = \frac{U}{d} \]</div>
+<p>Substitute the values:</p>
+<div class="arithmatex">\[ E = \frac{500 \text{ V}}{0.005 \text{ m}} = 100,000 \text{ V/m} = 10^5 \text{ V/m} \]</div>
+<p><strong>4. Calculate the force of attraction <span class="arithmatex">\(F\)</span></strong></p>
+<p>The attractive force between the parallel plates of a capacitor is given by:</p>
+<div class="arithmatex">\[ F = \frac{1}{2} \epsilon_0 E^2 S \]</div>
+<p>Substitute the values:</p>
+<div class="arithmatex">\[ F = \frac{1}{2} (8.854 \times 10^{-12} \text{ F/m}) \times (10^5 \text{ V/m})^2 \times (0.02 \text{ m}^2) \]</div>
+<div class="arithmatex">\[ F = \frac{1}{2} \times 8.854 \times 10^{-12} \times 10^{10} \times 0.02 \text{ N} \]</div>
+<div class="arithmatex">\[ F = 8.854 \times 10^{-2} \times 0.01 \text{ N} \]</div>
+<div class="arithmatex">\[ F = 8.854 \times 10^{-4} \text{ N} \]</div>
+<p>Alternatively, the force can also be found using <span class="arithmatex">\(F = \frac{C U^2}{2d}\)</span>.</p>
+<p><strong>Final Answers:</strong>
+1. Capacitance, <span class="arithmatex">\(C \approx 35.4 \text{ pF}\)</span>
+2. Stored energy, <span class="arithmatex">\(W \approx 4.43 \text{ \mu J}\)</span>
+3. Electric field intensity, <span class="arithmatex">\(E = 10^5 \text{ V/m}\)</span>
+4. Force of attraction, <span class="arithmatex">\(F \approx 8.85 \times 10^{-4} \text{ N}\)</span></p>
 
 
 

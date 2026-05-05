@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 02 - Physics basics</title>
+        <title>2. Electric Potential - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#2-electric-potential" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 02
+              2. Electric Potential
             
           </span>
         </div>
@@ -1370,6 +1375,8 @@
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -1386,9 +1393,32 @@
 
 
 
-  <h1>Solution 02</h1>
-
-
+<h1 id="2-electric-potential">2. Electric Potential</h1>
+<p><strong>Problem:</strong>
+Point charges of <span class="arithmatex">\(+1\text{C}\)</span>, <span class="arithmatex">\(-2\text{C}\)</span>, <span class="arithmatex">\(+3\text{C}\)</span>, and <span class="arithmatex">\(-4\text{C}\)</span> are placed at the corners of a square with sides of <span class="arithmatex">\(1.0\text{ m}\)</span> (in order). Calculate the electric potential at the center of the square.</p>
+<p><strong>Solution:</strong>
+The electric potential <span class="arithmatex">\(V\)</span> at a point due to a system of point charges is the algebraic sum of the potentials due to each individual charge:
+$$ V = \sum_{i} V_i = \sum_{i} k \frac{q_i}{r_i} $$
+where <span class="arithmatex">\(k\)</span> is Coulomb's constant (<span class="arithmatex">\(k \approx 8.99 \times 10^9\text{ N m}^2 / \text{C}^2\)</span>), <span class="arithmatex">\(q_i\)</span> are the individual charges, and <span class="arithmatex">\(r_i\)</span> is the distance from each charge to the point of interest.</p>
+<p>Let the side of the square be <span class="arithmatex">\(a = 1.0\text{ m}\)</span>. 
+The distance from any corner of the square to its center is half the length of the diagonal:
+$$ r_1 = r_2 = r_3 = r_4 = r = \frac{a\sqrt{2}}{2} = \frac{1.0\text{ m}}{\sqrt{2}} = \frac{\sqrt{2}}{2}\text{ m} $$</p>
+<p>The given charges are:
+* <span class="arithmatex">\(q_1 = +1\text{ C}\)</span>
+* <span class="arithmatex">\(q_2 = -2\text{ C}\)</span>
+* <span class="arithmatex">\(q_3 = +3\text{ C}\)</span>
+* <span class="arithmatex">\(q_4 = -4\text{ C}\)</span></p>
+<p>Substitute these values into the potential formula:
+$$ V = k \left( \frac{q_1}{r} + \frac{q_2}{r} + \frac{q_3}{r} + \frac{q_4}{r} \right) = \frac{k}{r} (q_1 + q_2 + q_3 + q_4) $$</p>
+<p>Calculate the sum of the charges:
+$$ \sum_{i=1}^4 q_i = +1 - 2 + 3 - 4 = -2\text{ C} $$</p>
+<p>Now, plug in the values for <span class="arithmatex">\(k\)</span>, <span class="arithmatex">\(r\)</span>, and the sum of charges:
+$$ V = \frac{8.99 \times 10^9}{\frac{\sqrt{2}}{2}} \cdot (-2) $$
+$$ V = 8.99 \times 10^9 \cdot \sqrt{2} \cdot (-2) $$
+$$ V = -17.98 \times 10^9 \cdot \sqrt{2} \approx -17.98 \times 10^9 \cdot 1.414 $$
+$$ V \approx -2.54 \times 10^{10}\text{ V} $$</p>
+<p><strong>Answer:</strong>
+The electric potential at the center of the square is approximately <strong><span class="arithmatex">\(-2.54 \times 10^{10}\text{ V}\)</span></strong>.</p>
 
 
 

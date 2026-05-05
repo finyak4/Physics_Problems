@@ -25,7 +25,7 @@
     
     
       
-        <title>Solution 03 - Physics basics</title>
+        <title>Solution 3: Biot-Savart Law - Physics basics</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#solution-3-biot-savart-law" class="md-skip">
+          Przejdź do treści
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -109,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Solution 03
+              Solution 3: Biot-Savart Law
             
           </span>
         </div>
@@ -1370,6 +1375,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Spis treści
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Solution
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1386,9 +1423,35 @@
 
 
 
-  <h1>Solution 03</h1>
-
-
+<h1 id="solution-3-biot-savart-law">Solution 3: Biot-Savart Law</h1>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>A small segment of a line wire of length <span class="arithmatex">\(0.1 \text{ m}\)</span> carries a current of <span class="arithmatex">\(3 \text{ A}\)</span>. The segment is located at a distance of <span class="arithmatex">\(0.2 \text{ m}\)</span> from a point <span class="arithmatex">\(P\)</span>. Calculate the magnetic field at point <span class="arithmatex">\(P\)</span> due to this current segment (assume the segment is perpendicular to the line connecting it to point <span class="arithmatex">\(P\)</span>).</p>
+<h2 id="step-by-step-solution">Step-by-Step Solution</h2>
+<p><strong>1. Recall the Biot-Savart Law:</strong></p>
+<p>The magnitude of the magnetic field <span class="arithmatex">\(dB\)</span> produced by a small segment of wire of length <span class="arithmatex">\(dl\)</span> carrying current <span class="arithmatex">\(I\)</span> at a point located at a distance <span class="arithmatex">\(r\)</span> is given by:</p>
+<div class="arithmatex">\[ dB = \frac{\mu_0 I dl \sin\theta}{4\pi r^2} \]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\mu_0 = 4\pi \times 10^{-7} \text{ T}\cdot\text{m/A}\)</span> is the vacuum permeability.</li>
+<li><span class="arithmatex">\(\theta\)</span> is the angle between the current element vector <span class="arithmatex">\(d\mathbf{l}\)</span> and the position vector <span class="arithmatex">\(\mathbf{r}\)</span> pointing from the element to the point.</li>
+</ul>
+<p><strong>2. Identify the given values:</strong></p>
+<ul>
+<li>Current, <span class="arithmatex">\(I = 3 \text{ A}\)</span></li>
+<li>Length of the wire segment, <span class="arithmatex">\(dl = 0.1 \text{ m}\)</span></li>
+<li>Distance to point <span class="arithmatex">\(P\)</span>, <span class="arithmatex">\(r = 0.2 \text{ m}\)</span></li>
+<li>Angle, <span class="arithmatex">\(\theta = 90^\circ\)</span> (since the segment is perpendicular to the line connecting it to point <span class="arithmatex">\(P\)</span>).</li>
+</ul>
+<p><strong>3. Calculate the magnetic field:</strong></p>
+<p>Since <span class="arithmatex">\(\sin(90^\circ) = 1\)</span>, the formula simplifies to:</p>
+<div class="arithmatex">\[ B \approx dB = \frac{\mu_0 I dl}{4\pi r^2} \]</div>
+<p>Substitute the known values into the equation:</p>
+<div class="arithmatex">\[ B = \frac{(4\pi \times 10^{-7} \text{ T}\cdot\text{m/A}) (3 \text{ A}) (0.1 \text{ m})}{4\pi (0.2 \text{ m})^2} \]</div>
+<div class="arithmatex">\[ B = 10^{-7} \times \frac{0.3}{0.04} \text{ T} \]</div>
+<div class="arithmatex">\[ B = 10^{-7} \times 7.5 \text{ T} \]</div>
+<div class="arithmatex">\[ B = 7.5 \times 10^{-7} \text{ T} = 0.75 \text{ μT} \]</div>
+<p><strong>Final Answer:</strong>
+The magnetic field at point <span class="arithmatex">\(P\)</span> due to this current segment is <strong><span class="arithmatex">\(7.5 \times 10^{-7} \text{ T}\)</span></strong> (or <span class="arithmatex">\(0.75 \text{ μT}\)</span>).</p>
 
 
 
